@@ -13,13 +13,13 @@
 					<iyz>0</iyz>
 					<izz>0.166667</izz>
 				</inertia>
-				<pose frame=''>0 0 0 0 -0 0</pose>
+				<pose frame=''>0 0 0.175 0 0 0</pose>
 			</inertial>
 			<self_collide>0</self_collide>
 			<kinematic>0</kinematic>
 			<gravity>1</gravity>
 			<visual name='visual'>
-				<pose frame=''>0 0 0 0 -0 0</pose>
+				<pose frame=''>0 0 0 0 0 0</pose>
 				<geometry>
 					<polyline>
 						<height>0.35</height>
@@ -160,7 +160,7 @@
 					<iyz>0</iyz>
 					<izz>0.166667</izz>
 				</inertia>
-				<pose frame=''>0 0 0 0 -0 0</pose>
+				<pose frame=''>0 0 0.01185 0 -0 0</pose>
 			</inertial>
 			<self_collide>0</self_collide>
 			<kinematic>0</kinematic>
@@ -413,7 +413,7 @@
 					<iyz>0</iyz>
 					<izz>0.166667</izz>
 				</inertia>
-				<pose frame=''>0 0 0 0 -0 0</pose>
+				<pose frame=''>0 0 0.01185 0 -0 0</pose>
 			</inertial>
 			<self_collide>0</self_collide>
 			<kinematic>0</kinematic>
