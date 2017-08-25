@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="default">
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- A testing model that includes the Velodyne sensor model -->
+    <model name="MODEL_NAME">
+      <include>
+        <uri>file:///home/rodrigo/model_editor_models/MODEL_NAME</uri>
+      </include>
+
+      <!-- Attach the plugin to this model -->
+      <plugin name="MODEL_NAME_plugin" filename="libMODEL_NAME_plugin.so"/>
+    </model>
+
+  </world>
+</sdf>
