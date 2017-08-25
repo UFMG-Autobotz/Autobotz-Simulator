@@ -264,7 +264,7 @@
 						<normal_map>__default__</normal_map>
 					</shader>
 				</material>
-				<cast_shadows>1</cast_shadows>
+				<cast_shadows>0</cast_shadows> <!-- Coloquei em 0 por enquanto para nao atrapalhar o movimento -->
 				<transparency>0</transparency>
 			</visual>
 			<collision name='collision'>
@@ -357,8 +357,8 @@
 				<surface>
 					<friction>
 						<ode>
-							<mu>1</mu>
-							<mu2>1</mu2>
+							<mu>O</mu> <!-- Coloquei em zero por enquanto para nao atrapalhar o movimento -->
+							<mu2>O</mu2>
 							<fdir1>0 0 0</fdir1>
 							<slip1>0</slip1>
 							<slip2>0</slip2>
@@ -709,7 +709,7 @@
 				<surface>
 					<friction>
 						<ode>
-							<mu>1</mu>
+							<mu>0.8</mu>
 							<mu2>1</mu2>
 							<fdir1>0 0 0</fdir1>
 							<slip1>0</slip1>
@@ -808,7 +808,7 @@
 				<surface>
 					<friction>
 						<ode>
-							<mu>1</mu>
+							<mu>0.8</mu>
 							<mu2>1</mu2>
 							<fdir1>0 0 0</fdir1>
 							<slip1>0</slip1>
@@ -907,7 +907,7 @@
 				<surface>
 					<friction>
 						<ode>
-							<mu>1</mu>
+							<mu>0.8</mu>
 							<mu2>1</mu2>
 							<fdir1>0 0 0</fdir1>
 							<slip1>0</slip1>
@@ -1006,7 +1006,7 @@
 				<surface>
 					<friction>
 						<ode>
-							<mu>1</mu>
+							<mu>0.8</mu>
 							<mu2>1</mu2>
 							<fdir1>0 0 0</fdir1>
 							<slip1>0</slip1>
