@@ -13,7 +13,7 @@
     <!-- A testing model that includes the Velodyne sensor model -->
     <model name="MODEL_NAME">
       <include>
-        <uri>file:///home/rodrigo/model_editor_models/MODEL_NAME</uri>
+        <uri>model://velodyne</uri>
       </include>
 
       <!-- Attach the plugin to this model -->
