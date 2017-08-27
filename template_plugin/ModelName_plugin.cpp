@@ -1,24 +1,35 @@
-#ifndef _MODEL_NAME_PLUGIN_HH_
-#define _MODEL_NAME_PLUGIN_HH_
+#ifndef _MODELNAME_PLUGIN_HH_
+#define _MODELNAME_PLUGIN_HH_
 
+#include <iostream>
 #include <vector>
+#include <thread>
+#include <string>
+#include <algorithm>
 
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
-#include <gazebo/transport/transport.hh>
-#include <gazebo/msgs/msgs.hh>
 
-#include <thread>
 #include "ros/ros.h"
 #include "ros/callback_queue.h"
 #include "ros/subscribe_options.h"
 #include "std_msgs/Float32.h"
 
+bool invalidChar (char c){
+	return !((c>=47 && c <=57) || (c>=65 && c <=90) || (c>=97 && c <=122) );
+}
+
+void validate_str(std::string & str){
+	std::replace_if( str.begin(), str.end(), invalidChar, '_' );
+}
+
 namespace gazebo{
-	/// \brief A plugin to control a MODEL_NAME.
-	class MODEL_NAMEPlugin : public ModelPlugin{
+
+	/// \brief A plugin to control a ModelName.
+	class ModelNamePlugin : public ModelPlugin{
+
 		/// \brief Constructor
-		public: MODEL_NAMEPlugin() {}
+		public: ModelNamePlugin() {}
 
 		/// \brief The load function is called by Gazebo when the plugin is
 		/// inserted into simulation
@@ -34,7 +45,7 @@ namespace gazebo{
 			std::cerr << " Joints found\n\n";
 
 			if (this->n_joints == 0){
-				std::cerr << "Invalid joint count, MODEL_NAME plugin not loaded\n";
+				std::cerr << "Invalid joint count, ModelName plugin not loaded\n";
 				return;
 			}
 
@@ -66,24 +77,6 @@ namespace gazebo{
 				this->SetVelocity(velocity, i);
 			}
 
-			// Create the node
-			this->node = transport::NodePtr(new transport::Node());
-			#if GAZEBO_MAJOR_VERSION < 8
-			this->node->Init(this->model->GetWorld()->GetName());
-			#else
-			this->node->Init(this->model->GetWorld()->Name());
-			#endif
-
-			for (int i = 0; i < this->n_joints; ++i){
-				// Create a topic name
-				std::string topicName = "~/" + this->model->GetName() + "/joint_vel" + this->joints_vector[i]->GetScopedName();
-
-				// TODO: use boost bind to pass the ID to the callback, in order to differentiate the joints dynamically
-
-				// Subscribe to the topic, and register a callback
-				this->sub_vector.push_back(this->node->Subscribe(topicName, &MODEL_NAMEPlugin::OnMsg, this));
-			}
-
 			// Initialize ros, if it has not already bee initialized.
 			if (!ros::isInitialized()){
 				int argc = 0;
@@ -91,48 +84,42 @@ namespace gazebo{
 				ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
 			}
 
-			// Create our ROS node. This acts in a similar manner to
-			// the Gazebo node
+			// Create our ROS node. This acts in a similar manner to the Gazebo node
 			this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
 
+			std::cerr << "Creating ROS topics:\n\n";
+
 			for (int i = 0; i < this->n_joints; ++i){
+				// Create a topic name
+				std::string topicName = "/" + this->model->GetName() + "/joint_vel_" + this->joints_vector[i]->GetScopedName();
+				validate_str(topicName);
+				std::cerr << topicName << "\n";
+
 				// Create a named topic, and subscribe to it.
-				ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>(
-					"/" + this->model->GetName() + "/jointtopic_vel" + this->joints_vector[i]->GetScopedName(),
-					1, boost::bind(&MODEL_NAMEPlugin::OnRosMsg, this, _1), ros::VoidPtr(), &this->rosQueue);
-				
-				this->rosNode->subscribe(so); // ESSA LINHA NÃO EXISTE, APENAS DEBUG. DA PROBLEMA NESSA PARTE NA LINHA DE BAIXO
-				
-				// this->rosSub_vector.push_back(this->rosNode->subscribe(so));
+				ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>( topicName, 1,
+						boost::bind(&ModelNamePlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
+
+				this->rosSub_vector.push_back(this->rosNode->subscribe(so));
 			}
+			std::cerr << "\n";
 
 			// Spin up the queue helper thread.
-			this->rosQueueThread = std::thread(std::bind(&MODEL_NAMEPlugin::QueueThread, this));
+			this->rosQueueThread = std::thread(std::bind(&ModelNamePlugin::QueueThread, this));
 		}
 
-		/// \brief Set the velocity of the MODEL_NAME
+		/// \brief Set the velocity of the ModelName
 		/// \param[in] _vel New target velocity
 		public: void SetVelocity(const double &_vel, int joint_ID){
 			// Set the joint's target velocity.
-			this->model->GetJointController()->SetVelocityTarget(this->joints_vector[joint_ID]->GetScopedName(), _vel);
-		}
-
-		/// \brief Handle incoming message
-		/// \param[in] _msg Repurpose a vector3 message. This function will
-		/// only use the x component.
-		private: void OnMsg(ConstVector3dPtr &_msg){
-			for (int i = 0; i < this->n_joints; ++i){
-				this->SetVelocity(_msg->x(), i);
-			}
+			this->model->GetJointController()->SetVelocityTarget(
+					this->joints_vector[joint_ID]->GetScopedName(), _vel);
 		}
 
 		/// \brief Handle an incoming message from ROS
 		/// \param[in] _msg A float value that is used to set the velocity
-		/// of the MODEL_NAME.
-		public: void OnRosMsg(const std_msgs::Float32ConstPtr &_msg){
-			for (int i = 0; i < this->n_joints; ++i){
-				this->SetVelocity(_msg->data, i);
-			}
+		/// of the ModelName.
+		public: void OnRosMsg(const std_msgs::Float32ConstPtr &_msg, const int joint_ID){
+			this->SetVelocity(_msg->data, joint_ID);
 		}
 
 		/// \brief ROS helper function that processes messages
@@ -143,24 +130,16 @@ namespace gazebo{
 			}
 		}
 
-		/// \brief A node used for transport
-		private: transport::NodePtr node;
-
-		/// \brief A subscriber to a named topic.
-		private: std::vector<transport::SubscriberPtr> sub_vector;
-
 		/// \brief Pointer to the model.
 		private: physics::ModelPtr model;
 
-		/// \brief Pointer to the joints.
+		/// \brief Pointer to the joint.
 		private: std::vector<physics::JointPtr> joints_vector;
-		// private: physics::JointPtr joint;
 
 		private: int n_joints;
 
 		/// \brief A PID controller for the joint.
 		private: std::vector<common::PID> pid_vector;
-		// private: common::PID pid;
 
 		/// \brief A node use for ROS transport
 		private: std::unique_ptr<ros::NodeHandle> rosNode;
@@ -176,6 +155,6 @@ namespace gazebo{
 	};
 
 	// Tell Gazebo about this plugin, so that Gazebo can call Load on this plugin.
-	GZ_REGISTER_MODEL_PLUGIN(MODEL_NAMEPlugin)
+	GZ_REGISTER_MODEL_PLUGIN(ModelNamePlugin)
 }
 #endif

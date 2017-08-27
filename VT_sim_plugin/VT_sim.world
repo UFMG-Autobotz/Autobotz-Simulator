@@ -10,14 +10,14 @@
       <uri>model://ground_plane</uri>
     </include>
 
-    <!-- A testing model that includes the Velodyne sensor model -->
-    <model name="MODEL_NAME">
+    <!-- A testing model that includes the VT_sim sensor model -->
+    <model name="VT_sim">
       <include>
-        <uri>model://velodyne</uri>
+        <uri>model://VT_sim</uri>
       </include>
 
       <!-- Attach the plugin to this model -->
-      <plugin name="MODEL_NAME_plugin" filename="libMODEL_NAME_plugin.so"/>
+      <plugin name="VT_sim_control" filename="libvt_sim_plugin.so"/>
     </model>
 
   </world>
