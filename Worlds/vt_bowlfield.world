@@ -20,7 +20,7 @@
     </include>
 
     <include>
-      <uri>model://Field</uri>
+      <uri>model://Field_bowl</uri>
     </include>
 
     <include>

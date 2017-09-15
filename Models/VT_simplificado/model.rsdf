@@ -3,7 +3,6 @@
 <%
 
   # CORES
-
   # pneu
   pneu_r = 0
   pneu_g = 0
@@ -15,8 +14,10 @@
   chassi_b = 0.1
 
   # SUPERFICIE
-
   mu = 1000
+
+  # JUNTAS
+  friction = 100
 
 %>
 
@@ -541,7 +542,7 @@
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
           <damping>0</damping>
-          <friction>0</friction>
+          <friction><% friction %></friction>
         </dynamics>
       </axis>
       <physics>
@@ -574,7 +575,7 @@
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
           <damping>0</damping>
-          <friction>0</friction>
+          <friction><% friction %></friction>
         </dynamics>
       </axis>
       <physics>
@@ -640,7 +641,7 @@
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
           <damping>0</damping>
-          <friction>0</friction>
+          <friction><% friction %></friction>
         </dynamics>
       </axis>
       <physics>
