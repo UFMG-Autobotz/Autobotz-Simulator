@@ -18,7 +18,7 @@ class Main_Window(QtGui.QMainWindow):
 		self.setDockOptions( QtGui.QMainWindow.AllowTabbedDocks )
 		# self.setDockOptions( QtGui.QMainWindow.ForceTabbedDocks )
 
-		self.slider_groups_file = 'topics_teste.yaml'
+		self.slider_groups_file = 'topics_vt.yaml'
 
 		self.my_menu = self.menuBar()
 

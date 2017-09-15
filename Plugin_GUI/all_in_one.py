@@ -11,10 +11,10 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 from general_utils import get_yaml_dict
 
-def qt_Line(orient, tipo): # HLine, VLine / Plain, Raised, Sunken 
+def qt_Line(orient, tipo): # HLine, VLine / Plain, Raised, Sunken
 	linha = QtGui.QFrame()
 	linha.setFrameShape( [QtGui.QFrame.HLine, QtGui.QFrame.VLine][orient] )
-	linha.setFrameShadow( [QtGui.QFrame.Plain, QtGui.QFrame.Raised, QtGui.QFrame.Sunken][tipo] ) 
+	linha.setFrameShadow( [QtGui.QFrame.Plain, QtGui.QFrame.Raised, QtGui.QFrame.Sunken][tipo] )
 	return linha
 
 class Controller_App():
@@ -38,7 +38,7 @@ class Main_Window(QtGui.QMainWindow):
 		self.setDockOptions( QtGui.QMainWindow.AllowTabbedDocks )
 		# self.setDockOptions( QtGui.QMainWindow.ForceTabbedDocks )
 
-		self.slider_groups_file = 'topics_teste.yaml'
+		self.slider_groups_file = 'topics_vt.yaml'
 
 		self.my_menu = self.menuBar()
 
@@ -365,7 +365,7 @@ class Sliders_Window(QtGui.QWidget):
 
 				self.radio_buttons[-1].append([QtGui.QRadioButton("Once"), QtGui.QRadioButton("Stream")])
 				self.radio_buttons[-1][-1][0].setChecked(True)
-				
+
 				self.radio_buttons_groups[-1][-1].addButton(self.radio_buttons[-1][-1][0])
 				self.radio_buttons_groups[-1][-1].addButton(self.radio_buttons[-1][-1][1])
 				radio_hbox.addWidget(self.radio_buttons[-1][-1][0])
