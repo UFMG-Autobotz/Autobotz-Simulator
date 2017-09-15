@@ -25,7 +25,7 @@
 
     <include>
       <uri>model://VT_simplificado</uri>
-      <pose>0 0 6 0 0 0</pose>
+      <pose>0 0 9.915 0 0 0</pose>
     </include>
 
   </world>
