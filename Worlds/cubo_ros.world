@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="default">
+
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <model name="box">
+      <include>
+        <uri>model://box/</uri>
+      </include>
+
+      <plugin name="rosConnection" filename="librosConnection.so">
+        <dforce>0.0001</dforce>
+        <dlimit>2</dlimit>
+      </plugin>
+
+    </model>
+
+  </world>
+</sdf>
