@@ -1,5 +1,5 @@
 template_plugin/build
-VT_sim_plugin/build
+
 Plugin_GUI/DockTitleBar.pyc
 Plugin_GUI/general_utils.pyc
 Plugin_GUI/Graphs.pyc
@@ -7,3 +7,8 @@ Plugin_GUI/Image.pyc
 Plugin_GUI/Main_Window.pyc
 Plugin_GUI/qt_utils.pyc
 Plugin_GUI/Slider.pyc
+
+Plugins/VT_sim/build
+Plugins/apply_force/build
+Plugins/push_model/build
+Plugins/ros_connection/build

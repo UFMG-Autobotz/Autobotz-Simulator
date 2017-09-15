@@ -17,7 +17,7 @@
   mu = 1000
 
   # JUNTAS
-  friction = 100
+  friction = 500
 
 %>
 
