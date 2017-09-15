@@ -145,7 +145,7 @@
             <name>Gazebo/Grey</name>
           </script>
           <ambient>0.3 0.3 0.3 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
+          <diffuse>1 1 1 1</diffuse>
           <specular>0.01 0.01 0.01 1</specular>
           <emissive>0 0 0 1</emissive>
           <shader type='vertex'>
@@ -243,7 +243,7 @@
             <name>Gazebo/Grey</name>
           </script>
           <ambient>0.3 0.3 0.3 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
+          <diffuse>1 1 1 1</diffuse>
           <specular>0.01 0.01 0.01 1</specular>
           <emissive>0 0 0 1</emissive>
           <shader type='vertex'>
@@ -341,7 +341,7 @@
             <name>Gazebo/Grey</name>
           </script>
           <ambient>0.3 0.3 0.3 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
+          <diffuse>1 1 1 1</diffuse>
           <specular>0.01 0.01 0.01 1</specular>
           <emissive>0 0 0 1</emissive>
           <shader type='vertex'>
@@ -439,7 +439,7 @@
             <name>Gazebo/Grey</name>
           </script>
           <ambient>0.3 0.3 0.3 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
+          <diffuse>1 1 1 1</diffuse>
           <specular>0.01 0.01 0.01 1</specular>
           <emissive>0 0 0 1</emissive>
           <shader type='vertex'>
@@ -544,7 +544,7 @@
       <child>roda_BR_link</child>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <axis>
-        <xyz>0 0 -1</xyz>
+        <xyz>0 0 1</xyz>
         <use_parent_model_frame>0</use_parent_model_frame>
         <limit>
           <lower>-1.79769e+308</lower>
@@ -610,7 +610,7 @@
       <child>roda_FR_link</child>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <axis>
-        <xyz>0 0 -1</xyz>
+        <xyz>0 0 1</xyz>
         <use_parent_model_frame>0</use_parent_model_frame>
         <limit>
           <lower>-1.79769e+308</lower>
