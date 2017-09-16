@@ -14,10 +14,10 @@
   chassi_b = 0.1
 
   # SUPERFICIE
-  mu = 1000
+  mu = 50
 
   # JUNTAS
-  friction = 1
+  friction = 0
 
 %>
 
