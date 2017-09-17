@@ -12,5 +12,4 @@ Plugins/VT_sim/build
 Plugins/apply_force/build
 Plugins/push_model/build
 Plugins/ros_connection/build
-Plugins/TEMPLATE_plugin/build
 Plugins/template_plugin/build

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force
+CMAKE_SOURCE_DIR = /home/barbara/Simulacao/VT_sim/Plugins/apply_force
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/build
+CMAKE_BINARY_DIR = /home/barbara/Simulacao/VT_sim/Plugins/apply_force/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/apply_force.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/apply_force.dir/flags.make
 
 CMakeFiles/apply_force.dir/apply_force.cc.o: CMakeFiles/apply_force.dir/flags.make
 CMakeFiles/apply_force.dir/apply_force.cc.o: ../apply_force.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/apply_force.dir/apply_force.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/apply_force.dir/apply_force.cc.o -c /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/apply_force.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/barbara/Simulacao/VT_sim/Plugins/apply_force/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/apply_force.dir/apply_force.cc.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/apply_force.dir/apply_force.cc.o -c /home/barbara/Simulacao/VT_sim/Plugins/apply_force/apply_force.cc
 
 CMakeFiles/apply_force.dir/apply_force.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/apply_force.dir/apply_force.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/apply_force.cc > CMakeFiles/apply_force.dir/apply_force.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/barbara/Simulacao/VT_sim/Plugins/apply_force/apply_force.cc > CMakeFiles/apply_force.dir/apply_force.cc.i
 
 CMakeFiles/apply_force.dir/apply_force.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/apply_force.dir/apply_force.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/apply_force.cc -o CMakeFiles/apply_force.dir/apply_force.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/barbara/Simulacao/VT_sim/Plugins/apply_force/apply_force.cc -o CMakeFiles/apply_force.dir/apply_force.cc.s
 
 CMakeFiles/apply_force.dir/apply_force.cc.o.requires:
 
@@ -90,12 +90,6 @@ apply_force_EXTERNAL_OBJECTS =
 
 libapply_force.so: CMakeFiles/apply_force.dir/apply_force.cc.o
 libapply_force.so: CMakeFiles/apply_force.dir/build.make
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libSimTKsimbody.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libSimTKmath.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libSimTKcommon.so
-libapply_force.so: /usr/lib/libblas.so
-libapply_force.so: /usr/lib/liblapack.so
-libapply_force.so: /usr/lib/libblas.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_client.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_gui.so
@@ -125,6 +119,7 @@ libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libpthread.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libsdformat.so
+libapply_force.so: /usr/lib/x86_64-linux-gnu/libignition-math2.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgreMain.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
@@ -134,27 +129,7 @@ libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libpthread.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgreTerrain.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgrePaging.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libignition-transport3.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libprotobuf.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libignition-msgs0.so.0.7.0
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libignition-math3.so.3.2.0
-libapply_force.so: /usr/lib/liblapack.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_client.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_gui.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_sensors.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_rendering.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_physics.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_ode.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_transport.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_msgs.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_util.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_common.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_gimpact.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_opcode.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_opende_ou.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_math.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libgazebo_ccd.so
+libapply_force.so: /usr/lib/x86_64-linux-gnu/libignition-math2.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_signals.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_system.so
@@ -166,30 +141,13 @@ libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libpthread.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libsdformat.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgreMain.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgreTerrain.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgrePaging.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libignition-transport3.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_signals.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_system.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_regex.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_iostreams.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libpthread.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libsdformat.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgreMain.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgreTerrain.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgrePaging.so
-libapply_force.so: /usr/lib/x86_64-linux-gnu/libignition-transport3.so
 libapply_force.so: /usr/lib/x86_64-linux-gnu/libprotobuf.so
+libapply_force.so: /usr/lib/x86_64-linux-gnu/libsdformat.so
+libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgreMain.so
+libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgreTerrain.so
+libapply_force.so: /usr/lib/x86_64-linux-gnu/libOgrePaging.so
 libapply_force.so: CMakeFiles/apply_force.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libapply_force.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/barbara/Simulacao/VT_sim/Plugins/apply_force/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libapply_force.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/apply_force.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -206,6 +164,6 @@ CMakeFiles/apply_force.dir/clean:
 .PHONY : CMakeFiles/apply_force.dir/clean
 
 CMakeFiles/apply_force.dir/depend:
-	cd /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/build /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/build /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/build/CMakeFiles/apply_force.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/barbara/Simulacao/VT_sim/Plugins/apply_force/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/barbara/Simulacao/VT_sim/Plugins/apply_force /home/barbara/Simulacao/VT_sim/Plugins/apply_force /home/barbara/Simulacao/VT_sim/Plugins/apply_force/build /home/barbara/Simulacao/VT_sim/Plugins/apply_force/build /home/barbara/Simulacao/VT_sim/Plugins/apply_force/build/CMakeFiles/apply_force.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/apply_force.dir/depend
 

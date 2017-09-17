@@ -1,7 +1,6 @@
 #include <boost/bind.hpp>
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
-#include <gazebo/physics/ode/ODELink.hh>
 #include <gazebo/common/common.hh>
 #include <stdio.h>
 

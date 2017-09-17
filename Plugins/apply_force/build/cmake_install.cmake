@@ -1,4 +1,4 @@
-# Install script for directory: /home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force
+# Install script for directory: /home/barbara/Simulacao/VT_sim/Plugins/apply_force
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/barbara/Simulacao/Testes/Empurrar_cubo/Plugins/apply_force/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/barbara/Simulacao/VT_sim/Plugins/apply_force/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
