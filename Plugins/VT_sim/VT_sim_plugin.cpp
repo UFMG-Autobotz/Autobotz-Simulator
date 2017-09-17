@@ -23,155 +23,175 @@ void validate_str(std::string & str){
 	std::replace_if( str.begin(), str.end(), invalidChar, '_' );
 }
 
-namespace gazebo{
+namespace gazebo {
 
 	/// \brief A plugin to control a VT_sim.
-	class VT_simPlugin : public ModelPlugin{
+	class VT_simPlugin : public ModelPlugin {
 
-		/// \brief Constructor
-		public: VT_simPlugin() {}
+	/// \brief Constructor
+	public: VT_simPlugin() {
+	}
 
-		/// \brief The load function is called by Gazebo when the plugin is
-		/// inserted into simulation
-		/// \param[in] _model A pointer to the model that this plugin is
-		/// attached to.
-		/// \param[in] _sdf A pointer to the plugin's SDF element.
-		public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf){
-			// Safety check
+	/// \brief The load function is called by Gazebo when the plugin is
+	/// inserted into simulation
+	/// \param[in] _model A pointer to the model that this plugin is
+	/// attached to.
+	/// \param[in] _sdf A pointer to the plugin's SDF element.
+	public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf){
+		// error check
+		if (!_model || !_sdf) {
+			gzerr << "No visual or SDF element specified. Plugin won't load." << std::endl;
+			return;
+		}
 
-      this->kp = _sdf->Get<double>("pid_kp");
+		// read variables
+		this->kp = 1;
+		if (_sdf->HasElement("pid_kp")) {
+			this->kp = _sdf->Get<double>("pid_kp");
+		}
 
-      this->updateConnection = event::Events::ConnectWorldUpdateBegin(
-          boost::bind(&VT_simPlugin::OnUpdate, this, _1));
+		this->ki = 0;
+		if (_sdf->HasElement("pid_ki")) {
+			this->ki = _sdf->Get<double>("pid_ki");
+		}
 
-			this->n_joints = _model->GetJointCount();
+		this->kd = 0;
+		if (_sdf->HasElement("pid_kd")) {
+			this->kd = _sdf->Get<double>("pid_kd");
+		}
+
+		this->updateConnection = event::Events::ConnectWorldUpdateBegin(
+		        boost::bind(&VT_simPlugin::OnUpdate, this, _1));
+
+		this->n_joints = _model->GetJointCount();
+		std::cerr << "\n";
+		std::cerr << this->n_joints;
+		std::cerr << " Joints found\n\n";
+
+		if (this->n_joints == 0) {
+			std::cerr << "Invalid joint count, VT_sim plugin not loaded\n";
+			return;
+		}
+
+		// Store the model pointer for convenience.
+		this->model = _model;
+
+		// Get the first joint. We are making an assumption about the model
+		// having one joint that is the rotational joint.
+		this->joints_vector = _model->GetJoints();
+
+		// this->jController = this->model->GetJointController();
+		// this->jController.reset(new physics::JointController(this->model));
+
+		for (int i = 0; i < this->n_joints; ++i) {
+			std::cerr << this->joints_vector[i]->GetScopedName();
 			std::cerr << "\n";
-			std::cerr << this->n_joints;
-			std::cerr << " Joints found\n\n";
+			// Setup a P-controller, with a gain of 0.1.
+			this->pid_vector.push_back(common::PID(this->kp, this->ki, this->kd));
+			// Apply the P-controller to the joint.
+			this->model->GetJointController()->SetVelocityPID(this->joints_vector[i]->GetScopedName(), this->pid_vector.back());
+		}
+		std::cerr << "\n";
 
-			if (this->n_joints == 0){
-				std::cerr << "Invalid joint count, VT_sim plugin not loaded\n";
-				return;
-			}
+		// Default to zero velocity
+		double velocity = 0;
 
-			// Store the model pointer for convenience.
-			this->model = _model;
+		// Check that the velocity element exists, then read the value
+		if (_sdf->HasElement("velocity"))
+			velocity = _sdf->Get<double>("velocity");
 
-			// Get the first joint. We are making an assumption about the model
-			// having one joint that is the rotational joint.
-			this->joints_vector = _model->GetJoints();
-
-      // this->jController = this->model->GetJointController();
-      // this->jController.reset(new physics::JointController(this->model));
-
-			for (int i = 0; i < this->n_joints; ++i){
-				std::cerr << this->joints_vector[i]->GetScopedName();
-				std::cerr << "\n";
-				// Setup a P-controller, with a gain of 0.1.
-				this->pid_vector.push_back(common::PID(this->kp, 0, 0));
-				// Apply the P-controller to the joint.
-				this->model->GetJointController()->SetVelocityPID(this->joints_vector[i]->GetScopedName(), this->pid_vector.back());
-			}
-			std::cerr << "\n";
-
-			// Default to zero velocity
-			double velocity = 0;
-
-			// Check that the velocity element exists, then read the value
-			if (_sdf->HasElement("velocity"))
-				velocity = _sdf->Get<double>("velocity");
-
-			for (int i = 0; i < this->n_joints; ++i){
-				this->SetVelocity(velocity, i);
-			}
-
-			// Initialize ros, if it has not already bee initialized.
-			if (!ros::isInitialized()){
-				int argc = 0;
-				char **argv = NULL;
-				ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
-			}
-
-			// Create our ROS node. This acts in a similar manner to the Gazebo node
-			this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
-
-			std::cerr << "Creating ROS topics:\n\n";
-
-			for (int i = 0; i < this->n_joints; ++i){
-				// Create a topic name
-				std::string topicName = "/" + this->model->GetName() + "/joint_vel_" + this->joints_vector[i]->GetScopedName();
-				validate_str(topicName);
-				std::cerr << topicName << "\n";
-
-				// Create a named topic, and subscribe to it.
-				ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>( topicName, 1,
-						boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
-
-				this->rosSub_vector.push_back(this->rosNode->subscribe(so));
-			}
-			std::cerr << "\n";
-
-			// Spin up the queue helper thread.
-			this->rosQueueThread = std::thread(std::bind(&VT_simPlugin::QueueThread, this));
+		for (int i = 0; i < this->n_joints; ++i) {
+			this->SetVelocity(velocity, i);
 		}
 
-		/// \brief Set the velocity of the VT_sim
-		/// \param[in] _vel New target velocity
-		public: void SetVelocity(const double &_vel, int joint_ID){
-			// Set the joint's target velocity.
-			this->model->GetJointController()->SetVelocityTarget(
-					this->joints_vector[joint_ID]->GetScopedName(), _vel);
-
+		// Initialize ros, if it has not already bee initialized.
+		if (!ros::isInitialized()) {
+			int argc = 0;
+			char **argv = NULL;
+			ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
 		}
 
-		/// \brief Handle an incoming message from ROS
-		/// \param[in] _msg A float value that is used to set the velocity
-		/// of the VT_sim.
-		public: void OnRosMsg(const std_msgs::Float32ConstPtr &_msg, const int joint_ID){
-			this->SetVelocity(_msg->data, joint_ID);
+		// Create our ROS node. This acts in a similar manner to the Gazebo node
+		this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
+
+		std::cerr << "Creating ROS topics:\n\n";
+
+		for (int i = 0; i < this->n_joints; ++i) {
+			// Create a topic name
+			std::string topicName = "/" + this->model->GetName() + "/joint_vel_" + this->joints_vector[i]->GetScopedName();
+			validate_str(topicName);
+			std::cerr << topicName << "\n";
+
+			// Create a named topic, and subscribe to it.
+			ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>( topicName, 1,
+			                                                                             boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
+
+			this->rosSub_vector.push_back(this->rosNode->subscribe(so));
 		}
+		std::cerr << "\n";
 
-		/// \brief ROS helper function that processes messages
-		private: void QueueThread(){
-			static const double timeout = 0.01;
-			while (this->rosNode->ok()){
-				this->rosQueue.callAvailable(ros::WallDuration(timeout));
-			}
+		// Spin up the queue helper thread.
+		this->rosQueueThread = std::thread(std::bind(&VT_simPlugin::QueueThread, this));
+	}
+
+	/// \brief Set the velocity of the VT_sim
+	/// \param[in] _vel New target velocity
+	public: void SetVelocity(const double &_vel, int joint_ID){
+		// Set the joint's target velocity.
+		this->model->GetJointController()->SetVelocityTarget(
+		        this->joints_vector[joint_ID]->GetScopedName(), _vel);
+
+	}
+
+	/// \brief Handle an incoming message from ROS
+	/// \param[in] _msg A float value that is used to set the velocity
+	/// of the VT_sim.
+	public: void OnRosMsg(const std_msgs::Float32ConstPtr &_msg, const int joint_ID){
+		this->SetVelocity(_msg->data, joint_ID);
+	}
+
+	/// \brief ROS helper function that processes messages
+	private: void QueueThread(){
+		static const double timeout = 0.01;
+		while (this->rosNode->ok()) {
+			this->rosQueue.callAvailable(ros::WallDuration(timeout));
 		}
+	}
 
-    public: void OnUpdate(const common::UpdateInfo & /*_info*/) {
-        this->model->GetJointController()->Update();
-    }
+	public: void OnUpdate(const common::UpdateInfo & /*_info*/) {
+		this->model->GetJointController()->Update();
+	}
 
-		/// \brief Pointer to the model.
-		private: physics::ModelPtr model;
+	/// \brief Pointer to the model.
+	private: physics::ModelPtr model;
 
-		/// \brief Pointer to the joint.
-		private: std::vector<physics::JointPtr> joints_vector;
+	/// \brief Pointer to the joint.
+	private: std::vector<physics::JointPtr> joints_vector;
 
-		private: int n_joints;
+	private: int n_joints;
 
-		/// \brief A PID controller for the joint.
-		private: std::vector<common::PID> pid_vector;
+	/// \brief A PID controller for the joint.
+	private: std::vector<common::PID> pid_vector;
 
-		/// \brief A node use for ROS transport
-		private: std::unique_ptr<ros::NodeHandle> rosNode;
+	/// \brief A node use for ROS transport
+	private: std::unique_ptr<ros::NodeHandle> rosNode;
 
-		/// \brief A ROS subscriber
-		private: std::vector<ros::Subscriber> rosSub_vector;
+	/// \brief A ROS subscriber
+	private: std::vector<ros::Subscriber> rosSub_vector;
 
-		/// \brief A ROS callbackqueue that helps process messages
-		private: ros::CallbackQueue rosQueue;
+	/// \brief A ROS callbackqueue that helps process messages
+	private: ros::CallbackQueue rosQueue;
 
-		/// \brief A thread the keeps running the rosQueue
-		private: std::thread rosQueueThread;
+	/// \brief A thread the keeps running the rosQueue
+	private: std::thread rosQueueThread;
 
-    private: std::unique_ptr<physics::JointController> jController;
+	private: std::unique_ptr<physics::JointController> jController;
 
-    // events
-    private: event::ConnectionPtr updateConnection;
+	// events
+	private: event::ConnectionPtr updateConnection;
 
-    private: double kp;
+	// pid gains
+	private: double kp, ki, kd;
 	};
 
 	// Tell Gazebo about this plugin, so that Gazebo can call Load on this plugin.

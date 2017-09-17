@@ -10,4 +10,4 @@ export GAZEBO_MODEL_PATH=$(pwd)/Models:$GAZEBO_MODEL_PATH
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/ros_connection/build:${GAZEBO_PLUGIN_PATH}
 
 # iniciar gazebo com mundo parado
-gazebo Worlds/cubo_ros.world -u
+gazebo Worlds/cubo_ros.world -u --verbose

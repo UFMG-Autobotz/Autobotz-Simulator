@@ -14,4 +14,4 @@ export GAZEBO_MODEL_PATH=$(pwd)/Models:$GAZEBO_MODEL_PATH
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/VT_sim/import:${GAZEBO_PLUGIN_PATH}
 
 # iniciar gazebo com mundo parado
-gazebo Worlds/vt_flatfield.world -u
+gazebo Worlds/vt_flatfield.world -u --verbose

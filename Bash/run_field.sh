@@ -11,4 +11,4 @@ export GAZEBO_RESOURCE_PATH=$(pwd)/Textures:$GAZEBO_RESOURCE_PATH
 export GAZEBO_MODEL_PATH=$(pwd)/Models:$GAZEBO_MODEL_PATH
 
 # iniciar gazebo com mundo parado
-gazebo Worlds/vt_bowlfield.world -u
+gazebo Worlds/vt_bowlfield.world -u --verbose
