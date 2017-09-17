@@ -1,2 +1,0 @@
-export GAZEBO_MODEL_PATH=Models:$GAZEBO_MODEL_PATH
-gazebo

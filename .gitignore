@@ -1,14 +1,16 @@
 template_plugin/build
 
-Plugin_GUI/DockTitleBar.pyc
-Plugin_GUI/general_utils.pyc
-Plugin_GUI/Graphs.pyc
-Plugin_GUI/Image.pyc
-Plugin_GUI/Main_Window.pyc
-Plugin_GUI/qt_utils.pyc
-Plugin_GUI/Slider.pyc
+Modules/GUI/DockTitleBar.pyc
+Modules/GUI/general_utils.pyc
+Modules/GUI/Graphs.pyc
+Modules/GUI/Image.pyc
+Modules/GUI/Main_Window.pyc
+Modules/GUI/qt_utils.pyc
+Modules/GUI/Slider.pyc
 
 Plugins/VT_sim/build
 Plugins/apply_force/build
 Plugins/push_model/build
 Plugins/ros_connection/build
+Plugins/TEMPLATE_plugin/build
+Plugins/template_plugin/build
