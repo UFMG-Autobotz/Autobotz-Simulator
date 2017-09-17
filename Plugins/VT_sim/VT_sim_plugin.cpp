@@ -44,6 +44,9 @@ namespace gazebo {
 			return;
 		}
 
+		// Store the model pointer for convenience.
+		this->model = _model;
+
 		// read variables
 		this->kp = 1;
 		if (_sdf->HasElement("pid_kp")) {
@@ -63,33 +66,27 @@ namespace gazebo {
 		this->updateConnection = event::Events::ConnectWorldUpdateBegin(
 		        boost::bind(&VT_simPlugin::OnUpdate, this, _1));
 
+		// get joints
 		this->n_joints = _model->GetJointCount();
-		std::cerr << "\n";
-		std::cerr << this->n_joints;
-		std::cerr << " Joints found\n\n";
+		std::cout << "------------" << std::endl;
+		gzmsg << this->n_joints << " Joints found" << std::endl;
+		std::cout << "------------" << std::endl;
 
 		if (this->n_joints == 0) {
-			std::cerr << "Invalid joint count, VT_sim plugin not loaded\n";
+			gzerr << "Invalid joint count, VT_sim plugin not loaded" << std::endl;
 			return;
 		}
 
-		// Store the model pointer for convenience.
-		this->model = _model;
-
-		// Get the first joint. We are making an assumption about the model
-		// having one joint that is the rotational joint.
 		this->joints_vector = _model->GetJoints();
 
 		// this->jController = this->model->GetJointController();
 		// this->jController.reset(new physics::JointController(this->model));
 
+		this->pid = common::PID(this->kp, this->ki, this->kd);
+
 		for (int i = 0; i < this->n_joints; ++i) {
-			std::cerr << this->joints_vector[i]->GetScopedName();
-			std::cerr << "\n";
-			// Setup a P-controller, with a gain of 0.1.
-			this->pid_vector.push_back(common::PID(this->kp, this->ki, this->kd));
-			// Apply the P-controller to the joint.
-			this->model->GetJointController()->SetVelocityPID(this->joints_vector[i]->GetScopedName(), this->pid_vector.back());
+			gzmsg << this->joints_vector[i]->GetScopedName() << std::endl;
+			this->model->GetJointController()->SetVelocityPID(this->joints_vector[i]->GetScopedName(), this->pid);
 		}
 		std::cerr << "\n";
 
@@ -171,7 +168,7 @@ namespace gazebo {
 	private: int n_joints;
 
 	/// \brief A PID controller for the joint.
-	private: std::vector<common::PID> pid_vector;
+	private: common::PID pid;
 
 	/// \brief A node use for ROS transport
 	private: std::unique_ptr<ros::NodeHandle> rosNode;
