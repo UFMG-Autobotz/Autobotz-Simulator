@@ -45,30 +45,46 @@ namespace gazebo {
 			return;
 		}
 
-		// Store the model pointer for convenience.
+		// Store the model and sdf pointers for convenience.
 		this->model = _model;
+		this->sdf = _sdf;
 
-		// read variables
+
+		this->ReadVariables();
+		this->GetJoints();
+		this->SetPIDControler();
+
+		// set initial velocity to zero
+		for (int i = 0; i < this->n_joints; ++i) {
+			this->SetVelocity(0, i);
+		}
+
+		this->ROSCommunication();
+
+		this->updateConnection = event::Events::ConnectWorldUpdateEnd(
+			boost::bind(&VT_simPlugin::OnUpdate, this));
+	}
+
+	private: void ReadVariables() {
 		this->kp = 1;
-		if (_sdf->HasElement("pid_kp")) {
-			this->kp = _sdf->Get<double>("pid_kp");
+		if (this->sdf->HasElement("pid_kp")) {
+			this->kp = this->sdf->Get<double>("pid_kp");
 		}
 
 		this->ki = 0;
-		if (_sdf->HasElement("pid_ki")) {
-			this->ki = _sdf->Get<double>("pid_ki");
+		if (this->sdf->HasElement("pid_ki")) {
+			this->ki = this->sdf->Get<double>("pid_ki");
 		}
 
 		this->kd = 0;
-		if (_sdf->HasElement("pid_kd")) {
-			this->kd = _sdf->Get<double>("pid_kd");
+		if (this->sdf->HasElement("pid_kd")) {
+			this->kd = this->sdf->Get<double>("pid_kd");
 		}
 
-		this->updateConnection = event::Events::ConnectWorldUpdateBegin(
-		        boost::bind(&VT_simPlugin::OnUpdate, this, _1));
+	}
 
-		// get joints
-		this->n_joints = _model->GetJointCount();
+	private: void GetJoints() {
+		this->n_joints = this->model->GetJointCount();
 		std::cout << "------------" << std::endl;
 		gzmsg << this->n_joints << " Joints found" << std::endl;
 		std::cout << "------------" << std::endl;
@@ -78,30 +94,29 @@ namespace gazebo {
 			return;
 		}
 
-		this->joints_vector = _model->GetJoints();
+		this->joints_vector = this->model->GetJoints();
+	}
 
-		// this->jController = this->model->GetJointController();
-		// this->jController.reset(new physics::JointController(this->model));
-
+	private: void SetPIDControler() {
 		this->pid = common::PID(this->kp, this->ki, this->kd);
 
 		for (int i = 0; i < this->n_joints; ++i) {
 			gzmsg << this->joints_vector[i]->GetScopedName() << std::endl;
 			this->model->GetJointController()->SetVelocityPID(this->joints_vector[i]->GetScopedName(), this->pid);
 		}
-		std::cerr << "\n";
+		std::cout << "------------" << std::endl;
+	}
 
-		// Default to zero velocity
-		double velocity = 0;
+	/// \brief Set the velocity of the VT_sim
+	/// \param[in] _vel New target velocity
+	public: void SetVelocity(const double &_vel, int joint_ID){
+		// Set the joint's target velocity.
+		this->model->GetJointController()->SetVelocityTarget(
+			this->joints_vector[joint_ID]->GetScopedName(), _vel);
 
-		// Check that the velocity element exists, then read the value
-		if (_sdf->HasElement("velocity"))
-			velocity = _sdf->Get<double>("velocity");
+	}
 
-		for (int i = 0; i < this->n_joints; ++i) {
-			this->SetVelocity(velocity, i);
-		}
-
+	private: void ROSCommunication() {
 		// Initialize ros, if it has not already bee initialized.
 		if (!ros::isInitialized()) {
 			int argc = 0;
@@ -109,10 +124,10 @@ namespace gazebo {
 			ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
 		}
 
-		// Create our ROS node
+		// Create joint ROS nodes
 		this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
 
-		ROS_INFO("Creating ROS topics:\n\n");
+		ROS_INFO_STREAM("Creating ROS topics:" << std::endl);
 
 		for (int i = 0; i < this->n_joints; ++i) {
 			// Create a topic name
@@ -126,19 +141,10 @@ namespace gazebo {
 
 			this->rosSub_vector.push_back(this->rosNode->subscribe(so));
 		}
-		std::cerr << "\n";
+		std::cout << "------------" << std::endl;
 
 		// Spin up the queue helper thread.
 		this->rosQueueThread = std::thread(std::bind(&VT_simPlugin::QueueThread, this));
-	}
-
-	/// \brief Set the velocity of the VT_sim
-	/// \param[in] _vel New target velocity
-	public: void SetVelocity(const double &_vel, int joint_ID){
-		// Set the joint's target velocity.
-		this->model->GetJointController()->SetVelocityTarget(
-		        this->joints_vector[joint_ID]->GetScopedName(), _vel);
-
 	}
 
 	/// \brief Handle an incoming message from ROS
@@ -156,12 +162,15 @@ namespace gazebo {
 		}
 	}
 
-	public: void OnUpdate(const common::UpdateInfo & /*_info*/) {
+	public: void OnUpdate() {
 		this->model->GetJointController()->Update();
 	}
 
 	/// \brief Pointer to the model.
 	private: physics::ModelPtr model;
+
+	/// \brief Pointer to the sdf.
+	private: sdf::ElementPtr sdf;
 
 	/// \brief Pointer to the joint.
 	private: std::vector<physics::JointPtr> joints_vector;
