@@ -12,6 +12,7 @@
 
 #include "ros/ros.h"
 #include "ros/callback_queue.h"
+#include <ros/console.h>
 #include "ros/subscribe_options.h"
 #include "std_msgs/Float32.h"
 
@@ -108,20 +109,20 @@ namespace gazebo {
 			ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
 		}
 
-		// Create our ROS node. This acts in a similar manner to the Gazebo node
+		// Create our ROS node
 		this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
 
-		std::cerr << "Creating ROS topics:\n\n";
+		ROS_INFO("Creating ROS topics:\n\n");
 
 		for (int i = 0; i < this->n_joints; ++i) {
 			// Create a topic name
-			std::string topicName = "/" + this->model->GetName() + "/joint_vel_" + this->joints_vector[i]->GetScopedName();
+			std::string topicName = "/" + this->model->GetName() + "/joint_vel_" + this->joints_vector[i]->GetName();
 			validate_str(topicName);
-			std::cerr << topicName << "\n";
+			ROS_INFO_STREAM(topicName);
 
 			// Create a named topic, and subscribe to it.
 			ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>( topicName, 1,
-			                                                                             boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
+			    boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
 
 			this->rosSub_vector.push_back(this->rosNode->subscribe(so));
 		}

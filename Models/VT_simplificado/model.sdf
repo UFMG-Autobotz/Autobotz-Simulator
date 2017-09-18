@@ -3,8 +3,8 @@
 
 
 <sdf version='1.6'>
-  <model name='VT_1'>
-    <link name='chassi_link'>
+  <model name='VT'>
+    <link name='chassi'>
       <pose frame=''>-0.01207 -0.1115 0.188412 1.5708 -0 -3.14159</pose>
       <inertial>
         <mass>4</mass>
@@ -114,7 +114,7 @@
         </surface>
       </collision>
     </link>
-    <link name='roda_BL_link'>
+    <link name='roda_BL'>
       <pose frame=''>-0.191591 0.263502 0.185627 1.57079 -0.004471 -3.14159</pose>
       <inertial>
         <mass>1</mass>
@@ -212,7 +212,7 @@
         </surface>
       </collision>
     </link>
-    <link name='roda_BR_link'>
+    <link name='roda_BR'>
       <pose frame=''>-0.191927 -0.137551 0.189824 1.5708 0 3.13159</pose>
       <inertial>
         <mass>1</mass>
@@ -310,7 +310,7 @@
         </surface>
       </collision>
     </link>
-    <link name='roda_FL_link'>
+    <link name='roda_FL'>
       <pose frame=''>0.127472 0.263501 0.186997 1.5708 -0.004471 -3.14159</pose>
       <inertial>
         <mass>1</mass>
@@ -408,7 +408,7 @@
         </surface>
       </collision>
     </link>
-    <link name='roda_FR_link'>
+    <link name='roda_FR'>
       <pose frame=''>0.127453 -0.136501 0.191196 1.5708 -0.004471 -3.14159</pose>
       <inertial>
         <mass>1</mass>
@@ -506,9 +506,9 @@
         </surface>
       </collision>
     </link>
-    <joint name='chassi_link_JOINT_BL' type='revolute'>
-      <parent>chassi_link</parent>
-      <child>roda_BL_link</child>
+    <joint name='chassi_rodaBL' type='revolute'>
+      <parent>chassi</parent>
+      <child>roda_BL</child>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
@@ -539,9 +539,9 @@
         </ode>
       </physics>
     </joint>
-    <joint name='chassi_link_JOINT_BR' type='revolute'>
-      <parent>chassi_link</parent>
-      <child>roda_BR_link</child>
+    <joint name='chassi_rodaBR' type='revolute'>
+      <parent>chassi</parent>
+      <child>roda_BR</child>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
@@ -572,9 +572,9 @@
         </ode>
       </physics>
     </joint>
-    <joint name='chassi_link_JOINT_FL' type='revolute'>
-      <parent>chassi_link</parent>
-      <child>roda_FL_link</child>
+    <joint name='chassi_rodaFL' type='revolute'>
+      <parent>chassi</parent>
+      <child>roda_FL</child>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
@@ -605,9 +605,9 @@
         </ode>
       </physics>
     </joint>
-    <joint name='chassi_link_JOINT_FR' type='revolute'>
-      <parent>chassi_link</parent>
-      <child>roda_FR_link</child>
+    <joint name='chassi_rodaFR' type='revolute'>
+      <parent>chassi</parent>
+      <child>roda_FR</child>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
