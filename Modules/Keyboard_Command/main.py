@@ -3,23 +3,44 @@
 
 from PyQt4 import QtGui
 from PyQt4 import QtCore
+
 import sys
 import numpy as np
 import yaml
+
+import rospy
+from std_msgs.msg import Float32
 
 class Window(QtGui.QWidget):
     def __init__(self, config):
         super(Window, self).__init__()
 
+        self.loadConfig(config)
+
+        self.velR = self.velL = 0
+        self.keys = np.array([0, 0, 0, 0])
+        self.initUI();
+
+    def loadConfig(self, config):
         with open(config, 'r') as f:
             dados = yaml.load(f)
 
         self.vl = dados['VelLinha']
         self.vc = dados['VelCurva']
 
-        self.velR = self.velL = 0
-        self.keys = np.array([0, 0, 0, 0])
-        self.initUI();
+        self.initROS(dados)
+
+    def initROS(self, dados):
+        rospy.init_node('keyboardControl', anonymous=True)
+
+        self.pubL = []
+        for topic in dados['Esquerda']:
+            self.pubL.append(rospy.Publisher(topic, Float32, queue_size = 100));
+
+        self.pubR = []
+        for topic in dados['Direita']:
+            self.pubR.append(rospy.Publisher(topic, Float32, queue_size = 100));
+
 
     def initUI(self):
         self.displayVelL = QtGui.QLabel('Velocidade roda esquerda: ' + str(self.velL) + ' rads/s', self)
@@ -59,6 +80,12 @@ class Window(QtGui.QWidget):
 
         self.displayVelL.setText('Velocidade roda esquerda: ' + str(self.velL) + ' rads/s');
         self.displayVelR.setText('Velocidade roda direita: ' + str(self.velR) + ' rads/s');
+
+        for topic in self.pubL:
+            topic.publish(self.velL)
+
+        for topic in self.pubR:
+            topic.publish(self.velR)
 
     def keyReleaseEvent(self, event):
         if event.isAutoRepeat():
