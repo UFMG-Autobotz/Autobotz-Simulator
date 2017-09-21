@@ -4,19 +4,21 @@
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 import sys
-import math
-import numpy
+import numpy as np
+import yaml
 
 class Window(QtGui.QWidget):
-
-    def __init__(self, arg):
+    def __init__(self, config):
         super(Window, self).__init__()
 
-        self.vl = arg[0]
-        self.va = arg[1]
+        with open(config, 'r') as f:
+            dados = yaml.load(f)
+
+        self.vl = dados['VelLinha']
+        self.vc = dados['VelCurva']
 
         self.velR = self.velL = 0
-        self.keys = numpy.array([0, 0, 0, 0])
+        self.keys = np.array([0, 0, 0, 0])
         self.initUI();
 
     def initUI(self):
@@ -52,8 +54,8 @@ class Window(QtGui.QWidget):
 
     def setVelocity(self):
         direcao = -2*self.keys[1] + 1
-        self.velL = numpy.dot(numpy.array([self.vl, -self.vl, self.va*direcao, -self.va*direcao]), self.keys);
-        self.velR = numpy.dot(numpy.array([self.vl, -self.vl, -self.va*direcao, self.va*direcao]), self.keys);
+        self.velL = np.dot(np.array([self.vl, -self.vl, self.vc*direcao, -self.vc*direcao]), self.keys);
+        self.velR = np.dot(np.array([self.vl, -self.vl, -self.vc*direcao, self.vc*direcao]), self.keys);
 
         self.displayVelL.setText('Velocidade roda esquerda: ' + str(self.velL) + ' rads/s');
         self.displayVelR.setText('Velocidade roda direita: ' + str(self.velR) + ' rads/s');
@@ -65,29 +67,20 @@ class Window(QtGui.QWidget):
         self.keyMap(event, 0)
         event.accept()
 
-def argParser(args):
-    lista = [0, 0]
-
-    if len(args) > 1:
-        lista[0] = float(args[1])
-    else:
-        lista[0] = 10
-
-    if len(args) > 2:
-        lista[1] = float(args[1])
-    else:
-        lista[1] = 0.25*lista[0]
-
-    return lista
-
 def main():
     app = QtGui.QApplication(sys.argv)
 
-    w = Window(argParser(sys.argv))
+    if len(sys.argv) <= 1:
+        print "Numero invalido de argumentos"
+        quit()
+
+    w = Window(sys.argv[1])
     w.resize(400, 100)
     w.move(300, 300)
     w.setWindowTitle('Simple')
     w.show()
+
+
 
     sys.exit(app.exec_())
 
