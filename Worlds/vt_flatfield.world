@@ -21,6 +21,11 @@
       <uri>model://Field_flat</uri>
     </include>
 
+    <include>
+      <uri>model://construction_cone</uri>
+      <pose>5 0 9.915 0 0 0</pose>
+    </include>
+
     <model name="VT">
       <include>
         <uri>model://VT_simplificado</uri>
