@@ -1,11 +1,4 @@
-Esquerda:
-  ["/VT/joint_vel_VT__chassi_rodaBL", /VT/joint_vel_VT__chassi_rodaFL]
-
-Direita:
-  [/VT/joint_vel_VT__chassi_rodaBR, /VT/joint_vel_VT__chassi_rodaFR]
-
-VelLinha:
-  10
-
-VelCurva:
-  9
+Left: ["/VT/joint_vel_VT__chassi_rodaBL", /VT/joint_vel_VT__chassi_rodaFL]
+Right: [/VT/joint_vel_VT__chassi_rodaBR, /VT/joint_vel_VT__chassi_rodaFR]
+VelStraight: 10
+VelCurve: 9
