@@ -4,20 +4,22 @@
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 import sys
+import math
+import numpy
 
 class Window(QtGui.QWidget):
 
     def __init__(self, arg):
         super(Window, self).__init__()
 
-        self.velLinear = arg[0]
-        self.velAngular = arg[1]
+        self.vl = arg[0]
+        self.va = arg[1]
 
         self.velR = self.velL = 0
+        self.keys = numpy.array([0, 0, 0, 0])
+        self.initUI();
 
-        self.initIU();
-
-    def initIU(self):
+    def initUI(self):
         self.displayVelL = QtGui.QLabel('Velocidade roda esquerda: ' + str(self.velL) + ' rads/s', self)
         self.displayVelL.move(20, 25)
         self.displayVelL.resize(300, 20)
@@ -26,63 +28,41 @@ class Window(QtGui.QWidget):
         self.displayVelR.move(20, 55)
         self.displayVelR.resize(300, 20)
 
+    def keyMap(self, event, status):
+        if event.key() == QtCore.Qt.Key_Up:
+            self.keys[0] = status
+
+        if event.key() == QtCore.Qt.Key_Down:
+            self.keys[1] = status
+
+        if event.key() == QtCore.Qt.Key_Left:
+            self.keys[3] = status
+
+        if event.key() == QtCore.Qt.Key_Right:
+            self.keys[2] = status
+
+        self.setVelocity()
 
     def keyPressEvent(self, event):
         if event.isAutoRepeat():
             return
 
-        key = event.key()
-        left = key == QtCore.Qt.Key_Left
-        right = key == QtCore.Qt.Key_Right
-        up = key == QtCore.Qt.Key_Up
-        down = key == QtCore.Qt.Key_Down
-
-        if up:
-            self.velR += self.velLinear
-            self.velL += self.velLinear
-        elif down:
-            self.velR -= self.velLinear
-            self.velL -= self.velLinear
-        elif right:
-            self.velR -= self.velAngular
-            self.velL += self.velAngular
-        elif left:
-            self.velR += self.velAngular
-            self.velL -= self.velAngular
-
-        if (up or down or right or left):
-            self.displayVelL.setText('Velocidade roda esquerda: ' + str(self.velL) + ' rads/s');
-            self.displayVelR.setText('Velocidade roda direita: ' + str(self.velR) + ' rads/s');
-
+        self.keyMap(event, 1)
         event.accept()
+
+    def setVelocity(self):
+        direcao = -2*self.keys[1] + 1
+        self.velL = numpy.dot(numpy.array([self.vl, -self.vl, self.va*direcao, -self.va*direcao]), self.keys);
+        self.velR = numpy.dot(numpy.array([self.vl, -self.vl, -self.va*direcao, self.va*direcao]), self.keys);
+
+        self.displayVelL.setText('Velocidade roda esquerda: ' + str(self.velL) + ' rads/s');
+        self.displayVelR.setText('Velocidade roda direita: ' + str(self.velR) + ' rads/s');
 
     def keyReleaseEvent(self, event):
         if event.isAutoRepeat():
             return
 
-        key = event.key()
-        left = key == QtCore.Qt.Key_Left
-        right = key == QtCore.Qt.Key_Right
-        up = key == QtCore.Qt.Key_Up
-        down = key == QtCore.Qt.Key_Down
-
-        if up:
-            self.velR -= self.velLinear
-            self.velL -= self.velLinear
-        elif down:
-            self.velR += self.velLinear
-            self.velL += self.velLinear
-        elif right:
-            self.velR += self.velAngular
-            self.velL -= self.velAngular
-        elif left:
-            self.velR -= self.velAngular
-            self.velL += self.velAngular
-
-        if (up or down or right or left):
-            self.displayVelL.setText('Velocidade roda esquerda: ' + str(self.velL) + ' rads/s');
-            self.displayVelR.setText('Velocidade roda direita: ' + str(self.velR) + ' rads/s');
-
+        self.keyMap(event, 0)
         event.accept()
 
 def argParser(args):
