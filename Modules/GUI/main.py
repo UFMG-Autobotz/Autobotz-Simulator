@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import rospy
+import rospy, sys
 from std_msgs.msg import Float32
 from PyQt4 import QtGui
 from Main_Window import Main_Window
-import sys
 
-class Controller_App():
+class Telemetry_App():
 	def __init__(self, args, node_name = "joint_plugin_controller"):
 		rospy.init_node(node_name, anonymous=True)
 		self.app = QtGui.QApplication(args)
@@ -19,5 +18,5 @@ class Controller_App():
 		sys.exit(self.app.exec_())
 
 if __name__ == '__main__':
-	c = Controller_App(sys.argv)
+	c = Telemetry_App(sys.argv)
 	c.run()

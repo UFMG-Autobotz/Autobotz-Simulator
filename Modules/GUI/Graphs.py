@@ -7,10 +7,15 @@ from std_msgs.msg import Float32
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
+from general_utils import get_yaml_dict
+from RTPlotter import RTPlotter
+
 class Graphs_Window(QtGui.QWidget):
-	def __init__(self, parent = None):
+	def __init__(self, configs_file, parent = None):
 		super(Graphs_Window, self).__init__(parent)
 		self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+		self.configs_file = configs_file
+		self.subs = [[]]
 		self.update_topics()
 		self.create_window()
 
@@ -27,14 +32,8 @@ class Graphs_Window(QtGui.QWidget):
 					for topic in self.active_topics:
 						self.cb[i][j].addItem( topic[0] )
 
-	def selectionchange(self,i):
-		current_choice = str(self.graph_type_choice.currentText())
-		if current_choice == 'Y vs t':
-			self.stacked_windows.setCurrentIndex(0)
-		elif current_choice == 'X vs Y':
-			self.stacked_windows.setCurrentIndex(1)
-		elif current_choice == 'X vs Y vs Z':
-			self.stacked_windows.setCurrentIndex(2)
+	def selectionchange(self,i=None):
+		self.stacked_windows.setCurrentIndex(i)
 
 	def new_screen(self,n_cb):
 		self.cb.append([])
@@ -51,10 +50,47 @@ class Graphs_Window(QtGui.QWidget):
 		new_widget.setLayout(layout)
 		return new_widget
 
+	def new_graph(self):
+		if self.graph_window is not None:
+			self.graph_window.hide()
+			self.graph_window.close()
+		if len(self.subs) > 0:
+			for i in range(len(self.subs)):
+				if len(self.subs[i]) > 0:
+					for j in range(len(self.subs[i])):
+						self.subs[i][j].unregister()
+		self.subs = [[]]
+		self.graph_specs = get_yaml_dict(self.configs_file)
+		self.graph_specs =  {k.lower(): v for k, v in self.graph_specs.items() if v is not None}
+		self.graph_specs['dims'] = self.dims
+		self.graph_specs['parent'] = self
+		self.graph_window = RTPlotter(**self.graph_specs)
+		self.splitter.addWidget(self.graph_window)
+		self.splitter.setStretchFactor(1,1)
+
+	def new_curve(self):
+		dims = self.graph_type_choice.currentIndex() + 1
+		if dims != self.dims or self.graph_window is None:
+			self.dims = dims
+			self.new_graph()
+		self.graph_window.add_curve()
+
+		@self.graph_window.data_wrapper
+		def callback_data(data, dim, n_curve):
+			return (data, dim, n_curve)
+
+		for i in range(self.dims):
+			sub_name = str(self.cb[self.dims-1][i].currentText())
+			n_curve = self.graph_window.n_curves -1
+			self.subs[-1].append(rospy.Subscriber(sub_name, Float32, lambda data, dim=i, n_curve=n_curve: callback_data(data.data, dim, n_curve)))
+		self.subs.append([])
+
 	def create_window(self):
 		layout = QtGui.QHBoxLayout()
-		label = QtGui.QLabel(u"Lugar onde serão exibidos gráficos plotados a partir de tópicos do ROS")
-		label.setAlignment(QtCore.Qt.AlignCenter)
+
+		self.graph_window = None
+		self.dims = 1
+		self.n_curves = 0
 
 		self.selection_widget = QtGui.QWidget()
 		choice_layout = QtGui.QVBoxLayout()
@@ -64,26 +100,37 @@ class Graphs_Window(QtGui.QWidget):
 		self.graph_type_choice = QtGui.QComboBox()
 		self.graph_type_choice.addItem('Y vs t')
 		self.graph_type_choice.addItem('X vs Y')
-		self.graph_type_choice.addItem('X vs Y vs Z')
+		# self.graph_type_choice.addItem('X vs Y vs Z')
 
-		initial_choice = str(self.graph_type_choice.currentText())
 		self.graph_type_choice.currentIndexChanged.connect(self.selectionchange)
 
 		self.stacked_windows = QtGui.QStackedWidget(self)
-		self.op_1 = self.new_screen(1)
-		self.op_2 = self.new_screen(2)
-		self.op_3 = self.new_screen(3)
-		self.stacked_windows.addWidget (self.op_1)
-		self.stacked_windows.addWidget (self.op_2)
-		self.stacked_windows.addWidget (self.op_3)
+		self.options = []
+		for i in range(2):
+			self.options.append(self.new_screen(i+1))
+			self.stacked_windows.addWidget(self.options[-1])
+
+		self.graph_type_choice.setCurrentIndex(0)
+		self.stacked_windows.setCurrentIndex(0)
+
+		self.plot_button = QtGui.QPushButton('Plot')
+		self.plot_button.clicked.connect( self.new_curve )
+
 
 		choice_layout.addWidget(self.graph_type_choice)
 		choice_layout.addWidget(self.stacked_windows)
+		choice_layout.addWidget(self.plot_button)
+		choice_layout.addStretch(10)
+
 		self.selection_widget.setLayout(choice_layout)
+
+		# label = QtGui.QLabel(u"Lugar onde serão exibidos gráficos plotados a partir de tópicos do ROS")
+		# label.setAlignment(QtCore.Qt.AlignCenter)
 
 		self.splitter = QtGui.QSplitter(QtCore.Qt.Horizontal)
 		self.splitter.addWidget(self.selection_widget)
-		self.splitter.addWidget(label)
-
 		layout.addWidget(self.splitter)
 		self.setLayout(layout)
+		self.new_graph()
+		# self.splitter.addWidget(self.graph_window)
+		# self.splitter.addWidget(label)

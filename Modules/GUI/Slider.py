@@ -13,23 +13,34 @@ from general_utils import get_yaml_dict
 from qt_utils import qt_Line
 
 class Sliders_Window(QtGui.QWidget):
-	def __init__(self, groups_file, parent = None):
+	def __init__(self, configs_file, parent = None):
 		super(Sliders_Window, self).__init__(parent)
 		self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-		specs = get_yaml_dict(groups_file)
+		specs = get_yaml_dict(configs_file)
 		self.init_groups(specs)
 		self.create_window()
 
 	def init_groups(self, specs):
 		self.groups = []
 		self.pubs = []
-		for key in sorted(specs.keys()):
+		self.subs = []
+
+		for k, key in enumerate( sorted( specs.keys() ) ):
 			self.groups.append(specs[key])
 			self.pubs.append([])
-			for topic_group in self.groups[-1]['topicos']:
+			self.subs.append([])
+
+			for pub_group in self.groups[-1]['pubs']:
 				self.pubs[-1].append([])
-				for topic_name in topic_group:
-					self.pubs[-1][-1].append(rospy.Publisher(topic_name, Float32, queue_size=1))
+				for pub_name in pub_group:
+					self.pubs[-1][-1].append(rospy.Publisher(pub_name, Float32, queue_size=1))
+
+			if 'subs' in self.groups[-1]:
+				for i, sub_group in enumerate(self.groups[-1]['subs']):
+					self.subs[-1].append([])
+					for j, sub_name in enumerate(sub_group):
+						rospy.Subscriber(sub_name[1], Float32, lambda data, topic=k, slider=i, name=j: self.sub_callback(data.data, topic, slider, name))
+						self.subs[-1][-1].append(sub_name[0] + ' = ')
 
 	def change_value(self, topic, slider, tipo, info):
 		_min, _max, ticks = info
@@ -43,7 +54,7 @@ class Sliders_Window(QtGui.QWidget):
 		else:
 			value = round(_min + (_max-_min)*slider_value/ticks, 3)
 
-		self.current_values[ topic, slider ] = value
+		self.current_set_values[ topic, slider ] = value
 		self.display_values[ topic ][ slider ].setText(str(value))
 
 		if self.radio_buttons[topic][slider][1].isChecked() and self.keep_publish[topic][slider] == True:
@@ -64,7 +75,7 @@ class Sliders_Window(QtGui.QWidget):
 				value = int(value)
 
 			self.sliders[ topic ][ slider ].setValue( int((value-_min)*ticks/(_max-_min)) )
-			self.current_values[ topic, slider ] = value
+			self.current_set_values[ topic, slider ] = value
 			self.display_values[ topic ][ slider ].setText(str(value))
 
 			if self.radio_buttons[topic][slider][1].isChecked() == False and self.keep_publish[topic][slider] == True:
@@ -72,18 +83,24 @@ class Sliders_Window(QtGui.QWidget):
 		except:
 			pass
 
+	def sub_callback(self, value, topic, slider, ID):
+		self.current_get_values[topic][slider][ID] = value
+		self.sub_labels[topic][slider][ID].setText(self.subs[topic][slider][ID]+str(value))
+
 	def publish(self, topic, slider):
 		if self.radio_buttons[topic][slider][1].isChecked():
 			self.keep_publish[topic][slider] = True
 		for pub in self.pubs[ topic ][ slider ]:
-			pub.publish( self.current_values[ topic, slider ] )
+			pub.publish( self.current_set_values[ topic, slider ] )
 
 	def create_window(self):
 		layout = QtGui.QHBoxLayout()
-		self.current_values = np.zeros((len(self.groups), 1))
+		self.current_set_values = np.zeros((len(self.groups), 1))
+		self.current_get_values = np.zeros((len(self.groups), 1, 1))
 		self.display_values = []
 		self.sliders = []
 		self.pub_buttons = []
+		self.sub_labels = []
 		self.radio_buttons = []
 		self.radio_buttons_groups = []
 		self.keep_publish = []
@@ -95,23 +112,40 @@ class Sliders_Window(QtGui.QWidget):
 			label.setAlignment(QtCore.Qt.AlignCenter)
 
 			n_sliders = len(group['sliders'])
-			diff = n_sliders - self.current_values.shape[1]
+			diff = n_sliders - self.current_set_values.shape[1]
 			if diff > 0:
-				self.current_values = np.column_stack( ( self.current_values, np.zeros( ( len(self.groups), diff ) ) ) )
+				self.current_set_values = np.column_stack( ( self.current_set_values, np.zeros( ( len(self.groups), diff ) ) ) )
+				self.current_get_values = np.column_stack( ( self.current_get_values, np.zeros( ( len(self.groups), diff , self.current_get_values.shape[2] ) ) ) )
 
 			self.display_values.append([])
 			self.sliders.append([])
 			self.pub_buttons.append([])
+			self.sub_labels.append([])
 			self.radio_buttons.append([])
 			self.radio_buttons_groups.append([])
 			self.keep_publish.append([])
 
 			sliders_hbox = QtGui.QHBoxLayout()
 			for i in xrange(n_sliders):
+
 				value_vbox = QtGui.QVBoxLayout()
 
 				slider_label = QtGui.QLabel(group['sliders'][i])
 				slider_label.setAlignment(QtCore.Qt.AlignCenter)
+
+				if 'subs' in group:
+					n_subs = len(group['subs'][i])
+					diff2 = n_subs - self.current_get_values.shape[2]
+					if diff2 > 0:
+						self.current_get_values = np.dstack( ( self.current_get_values, np.zeros( (len(self.groups), self.current_get_values.shape[1], diff2 ) ) ) )
+
+					subs_hbox = QtGui.QHBoxLayout()
+					self.sub_labels[-1].append([])
+					for sub in self.subs[k][i]:
+						sub_label = QtGui.QLabel(sub + '?')
+						sub_label.setAlignment(QtCore.Qt.AlignCenter)
+						self.sub_labels[-1][-1].append(sub_label)
+						subs_hbox.addWidget(self.sub_labels[-1][-1][-1])
 
 				self.sliders[-1].append(QtGui.QSlider(QtCore.Qt.Vertical))
 				_min = float(group['range'][i][0])
@@ -152,6 +186,8 @@ class Sliders_Window(QtGui.QWidget):
 				radio_hbox.addWidget(self.radio_buttons[-1][-1][1])
 
 				value_vbox.addWidget(slider_label)
+				if 'subs' in group:
+					value_vbox.addLayout(subs_hbox)
 				value_vbox.addWidget(self.display_values[-1][-1])
 				value_vbox.addWidget(self.pub_buttons[-1][-1])
 				value_vbox.addLayout(radio_hbox)

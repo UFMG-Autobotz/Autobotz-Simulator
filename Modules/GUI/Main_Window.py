@@ -18,7 +18,8 @@ class Main_Window(QtGui.QMainWindow):
 		self.setDockOptions( QtGui.QMainWindow.AllowTabbedDocks )
 		# self.setDockOptions( QtGui.QMainWindow.ForceTabbedDocks )
 
-		self.slider_groups_file = 'topics_vt.yaml'
+		self.sliders_config_file = 'configs/slider_config_teste.yaml'
+		self.graphs_config_file = 'configs/graph_config_teste.yaml'
 
 		self.my_menu = self.menuBar()
 
@@ -61,12 +62,12 @@ class Main_Window(QtGui.QMainWindow):
 	def controller_action(self,q):
 		if q.text() == 'Nova aba':
 			self.new_Dock('Slider')
-			self.dockList[-1].setWidget(Sliders_Window(self.slider_groups_file, self.dockList[-1]))
+			self.dockList[-1].setWidget(Sliders_Window(self.sliders_config_file, self.dockList[-1]))
 
 	def graph_Plotter_action(self,q):
 		if q.text() == 'Nova aba':
 			self.new_Dock('Graph')
-			self.dockList[-1].setWidget(Graphs_Window(self.dockList[-1]))
+			self.dockList[-1].setWidget(Graphs_Window(self.graphs_config_file, self.dockList[-1]))
 
 	def image_Viewer_action(self,q):
 		if q.text() == 'Nova aba':

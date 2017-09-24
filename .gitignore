@@ -6,6 +6,7 @@ Modules/GUI/Graphs.pyc
 Modules/GUI/Image.pyc
 Modules/GUI/Main_Window.pyc
 Modules/GUI/qt_utils.pyc
+Modules/GUI/RTPlotter.pyc
 Modules/GUI/Slider.pyc
 
 Plugins/VT_sim/build
