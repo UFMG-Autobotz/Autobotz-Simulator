@@ -134,3 +134,11 @@ class Graphs_Window(QtGui.QWidget):
 		self.new_graph()
 		# self.splitter.addWidget(self.graph_window)
 		# self.splitter.addWidget(label)
+
+if __name__ == '__main__':
+	import sys
+	app = QtGui.QApplication(sys.argv)
+	w = Graphs_Window('configs/graph_config_teste.yaml')
+	w.setWindowTitle('PyQT Slider')
+	w.show()
+	app.exec_()

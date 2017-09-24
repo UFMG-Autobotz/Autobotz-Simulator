@@ -1,5 +1,6 @@
 Esquerda:
   nome: "Esquerda"
+  stream_freq: 10 #Hz
   pubs:
   - ["", ""]
   - ["", ""]

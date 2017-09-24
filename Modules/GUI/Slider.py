@@ -57,10 +57,8 @@ class Sliders_Window(QtGui.QWidget):
 		self.current_set_values[ topic, slider ] = value
 		self.display_values[ topic ][ slider ].setText(str(value))
 
-		if self.radio_buttons[topic][slider][1].isChecked() and self.keep_publish[topic][slider] == True:
+		if self.radio_buttons[topic][slider][1].isChecked() and self.onchange_publish[topic][slider] == True:
 			self.publish(topic, slider)
-		else:
-			self.keep_publish[topic][slider] = False
 
 	def enterPress(self, topic, slider, tipo, info):
 		text_value = self.display_values[ topic ][ slider ].text()
@@ -78,8 +76,6 @@ class Sliders_Window(QtGui.QWidget):
 			self.current_set_values[ topic, slider ] = value
 			self.display_values[ topic ][ slider ].setText(str(value))
 
-			if self.radio_buttons[topic][slider][1].isChecked() == False and self.keep_publish[topic][slider] == True:
-				self.keep_publish[topic][slider] = False
 		except:
 			pass
 
@@ -89,9 +85,26 @@ class Sliders_Window(QtGui.QWidget):
 
 	def publish(self, topic, slider):
 		if self.radio_buttons[topic][slider][1].isChecked():
-			self.keep_publish[topic][slider] = True
+			self.onchange_publish[topic][slider] = True
+		elif self.radio_buttons[topic][slider][2].isChecked():
+			self.stream_publish[topic][slider] = True
+			self.start_timer(topic, slider)
 		for pub in self.pubs[ topic ][ slider ]:
 			pub.publish( self.current_set_values[ topic, slider ] )
+
+	def start_timer(self, topic, slider):
+		freq = self.groups[topic]['stream_freq']
+		self.stream_timer[topic][slider].start(1000.0 / freq)
+
+	def stop_timer(self, topic, slider):       
+		self.stream_timer[topic][slider].stop()
+
+	def radio_response(self, topic, slider, button):
+		if button == 0 or button == 1:
+			self.stream_publish[topic][slider] = False
+			self.stop_timer(topic, slider)
+		if button == 0 or button == 2:
+			self.onchange_publish[topic][slider] = False
 
 	def create_window(self):
 		layout = QtGui.QHBoxLayout()
@@ -103,7 +116,9 @@ class Sliders_Window(QtGui.QWidget):
 		self.sub_labels = []
 		self.radio_buttons = []
 		self.radio_buttons_groups = []
-		self.keep_publish = []
+		self.onchange_publish = []
+		self.stream_publish = []
+		self.stream_timer = []
 
 		for k, group in enumerate(self.groups):
 			group_vbox = QtGui.QVBoxLayout()
@@ -123,7 +138,9 @@ class Sliders_Window(QtGui.QWidget):
 			self.sub_labels.append([])
 			self.radio_buttons.append([])
 			self.radio_buttons_groups.append([])
-			self.keep_publish.append([])
+			self.onchange_publish.append([])
+			self.stream_publish.append([])
+			self.stream_timer.append([])
 
 			sliders_hbox = QtGui.QHBoxLayout()
 			for i in xrange(n_sliders):
@@ -172,18 +189,30 @@ class Sliders_Window(QtGui.QWidget):
 				self.pub_buttons[-1].append(QtGui.QPushButton('Publish'))
 				self.pub_buttons[-1][-1].clicked.connect( lambda _, topic=k, slider=i: self.publish(topic, slider) )
 
-				self.keep_publish[-1].append(False)
+				self.onchange_publish[-1].append(False)
+				self.stream_publish[-1].append(False)
+				self.stream_timer[-1].append(QtCore.QTimer(self))
+				self.stream_timer[-1][-1].timeout.connect(lambda topic=k, slider=i: self.publish(topic, slider))
+				self.stream_timer[-1][-1].setSingleShot(False)
+				# self.stop_timer(k,i)
 
 				radio_hbox = QtGui.QHBoxLayout()
 				self.radio_buttons_groups[-1].append(QtGui.QButtonGroup())
 
-				self.radio_buttons[-1].append([QtGui.QRadioButton("Once"), QtGui.QRadioButton("Stream")])
+				self.radio_buttons[-1].append([QtGui.QRadioButton("Once"), QtGui.QRadioButton("OnChange"), QtGui.QRadioButton("Stream")])
 				self.radio_buttons[-1][-1][0].setChecked(True)
+				self.radio_buttons[-1][-1][0].clicked.connect( lambda _, topic=k, slider=i, button_ID=0: self.radio_response(topic, slider, button_ID) )
+				self.radio_buttons[-1][-1][1].clicked.connect( lambda _, topic=k, slider=i, button_ID=1: self.radio_response(topic, slider, button_ID) )
+				self.radio_buttons[-1][-1][2].clicked.connect( lambda _, topic=k, slider=i, button_ID=2: self.radio_response(topic, slider, button_ID) )
 				
 				self.radio_buttons_groups[-1][-1].addButton(self.radio_buttons[-1][-1][0])
 				self.radio_buttons_groups[-1][-1].addButton(self.radio_buttons[-1][-1][1])
+				self.radio_buttons_groups[-1][-1].addButton(self.radio_buttons[-1][-1][2])
 				radio_hbox.addWidget(self.radio_buttons[-1][-1][0])
+				radio_hbox.addStretch(1)
 				radio_hbox.addWidget(self.radio_buttons[-1][-1][1])
+				radio_hbox.addStretch(1)
+				radio_hbox.addWidget(self.radio_buttons[-1][-1][2])
 
 				value_vbox.addWidget(slider_label)
 				if 'subs' in group:
@@ -201,3 +230,12 @@ class Sliders_Window(QtGui.QWidget):
 				layout.addWidget( qt_Line(1,2) )
 
 		self.setLayout(layout)
+
+if __name__ == '__main__':
+	rospy.init_node('teste_slider', anonymous=True)
+	import sys
+	app = QtGui.QApplication(sys.argv)
+	w = Sliders_Window('configs/slider_config_teste.yaml')
+	w.setWindowTitle('PyQT Slider')
+	w.show()
+	app.exec_()

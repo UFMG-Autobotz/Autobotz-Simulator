@@ -1,5 +1,6 @@
 Velodyne:
   nome: "Velodyne"
+  stream_freq: 5 #Hz
   pubs:
   - ["/my_velodyne/vel_cmd"]
   # subs:

@@ -73,3 +73,11 @@ class Main_Window(QtGui.QMainWindow):
 		if q.text() == 'Nova aba':
 			self.new_Dock('Image')
 			self.dockList[-1].setWidget(Image_Window(self.dockList[-1]))
+
+if __name__ == '__main__':
+	import sys
+	app = QtGui.QApplication(sys.argv)
+	w = Main_Window()
+	w.setWindowTitle('PyQT Main Window')
+	w.show()
+	app.exec_()

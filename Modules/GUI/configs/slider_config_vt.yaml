@@ -1,5 +1,6 @@
 VT:
   nome: "VT"
+  stream_freq: 20 #Hz
   pubs:
   - ["/VT/joint_vel_VT__chassi_rodaBL", /VT/joint_vel_VT__chassi_rodaFL]
   - [/VT/joint_vel_VT__chassi_rodaBR, /VT/joint_vel_VT__chassi_rodaFR]
