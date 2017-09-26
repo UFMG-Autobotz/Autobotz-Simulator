@@ -95,6 +95,10 @@ namespace gazebo {
 		}
 
 		this->joints_vector = this->model->GetJoints();
+		
+		for (int i = 0; i < this->joints_vector.size(); i++)
+			gzmsg << this->joints_vector[i]->GetType() << std::endl;
+
 	}
 
 	private: void SetPIDControler() {
@@ -155,7 +159,7 @@ namespace gazebo {
 	}
 
 	/// \brief ROS helper function that processes messages
-	private: void QueueThread(){
+	private: void QueueThread() {
 		static const double timeout = 0.01;
 		while (this->rosNode->ok()) {
 			this->rosQueue.callAvailable(ros::WallDuration(timeout));

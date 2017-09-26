@@ -14,3 +14,4 @@ Plugins/apply_force/build
 Plugins/push_model/build
 Plugins/ros_connection/build
 Plugins/template_plugin/build
+Plugins/get_joints/build
