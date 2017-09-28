@@ -92,12 +92,12 @@ class Graphs_Window(QtGui.QWidget):
 		self.dims = 1
 		self.n_curves = 0
 
-		self.selection_widget = QtGui.QWidget()
+		self.selection_widget = QtGui.QWidget(self)
 		choice_layout = QtGui.QVBoxLayout()
 
 		self.cb = []
 
-		self.graph_type_choice = QtGui.QComboBox()
+		self.graph_type_choice = QtGui.QComboBox(self)
 		self.graph_type_choice.addItem('Y vs t')
 		self.graph_type_choice.addItem('X vs Y')
 		# self.graph_type_choice.addItem('X vs Y vs Z')
@@ -116,10 +116,15 @@ class Graphs_Window(QtGui.QWidget):
 		self.plot_button = QtGui.QPushButton('Plot')
 		self.plot_button.clicked.connect( self.new_curve )
 
+		self.clear_button = QtGui.QPushButton('Clear')
+		self.clear_button.clicked.connect( self.new_graph )
 
 		choice_layout.addWidget(self.graph_type_choice)
 		choice_layout.addWidget(self.stacked_windows)
+		choice_layout.addStretch(1)
 		choice_layout.addWidget(self.plot_button)
+		choice_layout.addStretch(1)
+		choice_layout.addWidget(self.clear_button)
 		choice_layout.addStretch(10)
 
 		self.selection_widget.setLayout(choice_layout)

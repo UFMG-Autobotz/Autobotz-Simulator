@@ -20,6 +20,7 @@ class Main_Window(QtGui.QMainWindow):
 
 		self.sliders_config_file = 'configs/slider_config_teste.yaml'
 		self.graphs_config_file = 'configs/graph_config_teste.yaml'
+		self.image_config_file = 'configs/image_config_teste.yaml'
 
 		self.my_menu = self.menuBar()
 
@@ -28,17 +29,24 @@ class Main_Window(QtGui.QMainWindow):
 		# self.exit_action.triggered.connect(exit)
 		# self.file_menu.addAction(exit_action)
 
-		self.sliders_window = self.my_menu.addMenu("Controller")
-		self.sliders_window.addAction("Nova aba")
-		self.sliders_window.triggered[QtGui.QAction].connect(self.controller_action)
+		self.tele_op = self.my_menu.addMenu("Teleop")
 
-		self.graphs_window = self.my_menu.addMenu("Graph Plotter")
+		self.sliders_window = self.tele_op.addMenu("Sliders")
+		self.sliders_window.addAction("Nova aba")
+		self.sliders_window.triggered[QtGui.QAction].connect(self.sliders_action)
+		self.sliders_window.addAction("Set config")
+
+		self.telemetry = self.my_menu.addMenu("Telemetry")
+
+		self.graphs_window = self.telemetry.addMenu("Graph Plotter")
 		self.graphs_window.addAction("Nova aba")
 		self.graphs_window.triggered[QtGui.QAction].connect(self.graph_Plotter_action)
+		self.graphs_window.addAction("Set config")
 
-		self.image_window = self.my_menu.addMenu("Image Viewer")
+		self.image_window = self.telemetry.addMenu("Image Viewer")
 		self.image_window.addAction("Nova aba")
 		self.image_window.triggered[QtGui.QAction].connect(self.image_Viewer_action)
+		self.image_window.addAction("Set config")
 
 		self.dockList = []
 		self.dockTitleList = []
@@ -59,7 +67,7 @@ class Main_Window(QtGui.QMainWindow):
 		# if len(self.dockList) > 1:
 		# 	self.tabifyDockWidget(self.dockList[-2],self.dockList[-1])
 
-	def controller_action(self,q):
+	def sliders_action(self,q):
 		if q.text() == 'Nova aba':
 			self.new_Dock('Slider')
 			self.dockList[-1].setWidget(Sliders_Window(self.sliders_config_file, self.dockList[-1]))
@@ -72,7 +80,7 @@ class Main_Window(QtGui.QMainWindow):
 	def image_Viewer_action(self,q):
 		if q.text() == 'Nova aba':
 			self.new_Dock('Image')
-			self.dockList[-1].setWidget(Image_Window(self.dockList[-1]))
+			self.dockList[-1].setWidget(Image_Window(self.image_config_file, self.dockList[-1]))
 
 if __name__ == '__main__':
 	import sys
