@@ -1,34 +1,15 @@
 #ifndef _VT_SIM_PLUGIN_HH_
 #define _VT_SIM_PLUGIN_HH_
 
-#include <iostream>
-#include <vector>
-#include <thread>
-#include <string>
-#include <sstream>
-#include <algorithm>
-
-#include <gazebo/gazebo.hh>
-#include <gazebo/physics/physics.hh>
-#include <gazebo/math/gzmath.hh>
+#include "Data.hpp"
 
 #include "ros/ros.h"
 #include "ros/callback_queue.h"
 #include <ros/console.h>
 #include "ros/subscribe_options.h"
 #include "std_msgs/Float32.h"
+#include <thread>
 
-#include "getJoints.hh"
-
-// #include <sdf/sdf.hh>
-
-bool invalidChar (char c){
-	return !((c>=47 && c <=57) || (c>=65 && c <=90) || (c>=97 && c <=122) );
-}
-
-void validate_str(std::string & str){
-	std::replace_if( str.begin(), str.end(), invalidChar, '_' );
-}
 
 namespace gazebo {
 
@@ -38,6 +19,15 @@ namespace gazebo {
 	/// \brief Constructor
 public:
 	VT_simPlugin() {
+		// Initialize ROS
+		if (!ros::isInitialized()) {
+			int argc = 0;
+			char **argv = NULL;
+			ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
+		}
+
+		// Create ROS node
+		this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
 	}
 
 	/// \brief The load function is called by Gazebo when the plugin is
@@ -53,125 +43,95 @@ public:
 			return;
 		}
 
-		// this->SetPIDControler();
-		//
-		// this->ROSCommunication();
+		this->joint_data.reset(new Data(_model, _sdf));
+		this->joint_data->ReadVariables();
 
-		// this->updateConnection = event::Events::ConnectWorldUpdateEnd(
-		// 	boost::bind(&VT_simPlugin::OnUpdate, this));
+		this->SetPIDControler(_model);
+
+		// Spin up the queue helper thread.
+		this->rosQueueThread = std::thread(std::bind(&VT_simPlugin::QueueThread, this));
+
+		this->updateConnection = event::Events::ConnectWorldUpdateEnd(
+			boost::bind(&VT_simPlugin::OnUpdate, this));
 	}
 
 private:
-	// void SetPIDControler() {
-	// 	this->jController.reset(new physics::JointController(this->model));
-	// 	if (this->all) {
-	// 		this->vel_pid = common::PID(this->vel_pid_gains[0], this->vel_pid_gains[1], this->vel_pid_gains[2]);
-	// 		this->pos_pid = common::PID(this->pos_pid_gains[0], this->pos_pid_gains[1], this->pos_pid_gains[2]);
-	//
-	// 		for (int i = 0; i < this->n_joints; i++) {
-	// 			std::string name = this->joints_vector[i]->GetScopedName();
-	// 			gzmsg << name << std::endl;
-	//
-	// 			unsigned int type = this->joints_vector[i]->GetType();
-	// 			if (type == REVOLUTE || type == PRISMATIC) {
-	// 				this->jController->AddJoint(model->GetJoint(name));
-	//
-	// 				this->jController->SetVelocityPID(name, this->vel_pid);
-	// 				this->jController->SetVelocityTarget(name, 0);
-	//
-	// 				this->jController->SetPositionPID(name, this->pos_pid);
-	// 				this->jController->SetPositionTarget(name, 0);
-	// 			}
-	// 		}
-	// 		std::cout << "------------" << std::endl;
-	// 	} else {
-	// 		for (int i = 0; i < this->n_joints; i++) {
-	// 			this->jController->AddJoint(this->joints[i].joint);
-	//
-	// 			this->jController->SetVelocityPID(this->joints[i].name, this->vel_pid);
-	// 			this->jController->SetVelocityTarget(this->joints[i].name, 0);
-	//
-	// 			this->jController->SetPositionPID(this->joints[i].name, this->pos_pid);
-	// 			this->jController->SetPositionTarget(this->joints[i].name, 0);
-	//
-	// 		}
-	// 	}
-	//
-	// }
+	void SetPIDControler(physics::ModelPtr _model) {
+		this->jController.reset(new physics::JointController(_model));  // create joint controller
 
-	/// \brief Set the velocity of the VT_sim
-	/// \param[in] _vel New target velocity
-// public:void SetVelocity(const double &_vel, int joint_ID){
-// 		// Set the joint's target velocity.
-// 		this->jController->SetVelocityTarget(
-// 			this->joints_vector[joint_ID]->GetScopedName(), _vel);
-//
-// 	}
+		int jointCount = this->joint_data->GetJointCount();  // get number of valid joints
+		joint_param *currentJoint;
 
-// private:
-// 	void ROSCommunication() {
-// 		// Initialize ros, if it has not already bee initialized.
-// 		if (!ros::isInitialized()) {
-// 			int argc = 0;
-// 			char **argv = NULL;
-// 			ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
-// 		}
-//
-// 		// Create joint ROS nodes
-// 		this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
-//
-// 		ROS_INFO_STREAM("Creating ROS topics:" << std::endl);
-//
-// 		for (int i = 0; i < this->n_joints; ++i) {
-// 			// Create a topic name
-// 			unsigned int type = this->joints_vector[i]->GetType();
-// 			if (type == REVOLUTE || type == PRISMATIC) {
-// 				std::string topicName = "/" + this->model->GetName() + "/joint_vel_" + this->joints_vector[i]->GetName();
-// 				validate_str(topicName);
-// 				ROS_INFO_STREAM(topicName);
-//
-// 				// Create a named topic, and subscribe to it.
-// 				ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>( topicName, 1,
-// 				    boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
-//
-// 				this->rosSub_vector.push_back(this->rosNode->subscribe(so));
-// 			}
-// 		}
-// 		std::cout << "------------" << std::endl;
-//
-// 		// Spin up the queue helper thread.
-// 		this->rosQueueThread = std::thread(std::bind(&VT_simPlugin::QueueThread, this));
-// 	}
+		for (int i = 0; i < jointCount; i++) {
+			// add current joint to de controller
+			currentJoint = this->joint_data->GetJoint(i);
+			if(currentJoint->valid) {
+				this->jController->AddJoint(currentJoint->joint);
 
-	/// \brief Handle an incoming message from ROS
-	/// \param[in] _msg A float value that is used to set the velocity
-	/// of the VT_sim.
-// public:
-// 	void OnRosMsg(const std_msgs::Float32ConstPtr &_msg, const int joint_ID){
-// 		this->SetVelocity(_msg->data, joint_ID);
-// 	}
-//
-// 	/// \brief ROS helper function that processes messages
-// private:
-// 	void QueueThread() {
-// 		static const double timeout = 0.01;
-// 		while (this->rosNode->ok()) {
-// 			this->rosQueue.callAvailable(ros::WallDuration(timeout));
-// 		}
-// 	}
-//
-// public:
-// 	void OnUpdate() {
-// 		this->jController->Update();
-// 	}
+				if (currentJoint->velocity) {
+					// set velocity PID and set initial velocity to zero
+					this->jController->SetVelocityPID(currentJoint->name, currentJoint->vel_pid);
+					this->jController->SetVelocityTarget(currentJoint->name, 0);
 
+					// create subscriber
+					ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>(currentJoint->veltopic, 100,
+							boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
+					this->rosSub_vector.push_back(this->rosNode->subscribe(so));
+				}
 
+				if (currentJoint->position) {
+					// set position PID and set initial position to zero
+					this->jController->SetPositionPID(currentJoint->name, currentJoint->pos_pid);
+					this->jController->SetPositionTarget(currentJoint->name, 0);
 
+					// create subscriber
+					ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>(currentJoint->postopic, 100,
+							boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
+					this->rosSub_vector.push_back(this->rosNode->subscribe(so));
+				}
+			}
+		}
+	}
 
+	// / \brief Set the velocity of the VT_sim
+	// / \param[in] _vel New target velocity
+public:
+	void SetVelocity(const double &_vel, int joint_ID){
+		// Set the joint's target velocity
+		this->jController->SetVelocityTarget(
+			this->joint_data->GetJoint(joint_ID)->name, _vel);
+	}
 
-	/// \brief A PID controller for the joint.
-	private: common::PID vel_pid, pos_pid;
+public:
+	void SetPosition(const double &_pos, int joint_ID){
+			// Set the joint's target position
+			this->jController->SetPositionTarget(
+				this->joint_data->GetJoint(joint_ID)->name, _pos);
+	}
 
+	// / \brief Handle an incoming message from ROS
+	// / \param[in] _msg A float value that is used to set the velocity
+	// / of the VT_sim.
+public:
+	void OnRosMsg(const std_msgs::Float32ConstPtr &_msg, const int joint_ID){
+		this->SetVelocity(_msg->data, joint_ID);
+	}
+
+	/// \brief ROS helper function that processes messages
+private:
+	void QueueThread() {
+		static const double timeout = 0.01;
+		while (this->rosNode->ok()) {
+			this->rosQueue.callAvailable(ros::WallDuration(timeout));
+		}
+	}
+
+public:
+	void OnUpdate() {
+		this->jController->Update();
+	}
+
+	private: std::unique_ptr<Data> joint_data;
 
 	/// \brief A node use for ROS transport
 	private: std::unique_ptr<ros::NodeHandle> rosNode;
@@ -189,7 +149,6 @@ private:
 
 	// events
 	private: event::ConnectionPtr updateConnection;
-
 
 	};
 
