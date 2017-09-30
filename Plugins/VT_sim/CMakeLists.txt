@@ -12,5 +12,9 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
+
+add_library(GetJoints getJoints.cpp)
+target_link_libraries(GetJoints ${GAZEBO_libraries})
+
 add_library(vt_sim_plugin SHARED VT_sim_plugin.cpp)
-target_link_libraries(vt_sim_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES})
+target_link_libraries(vt_sim_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES} GetJoints)
