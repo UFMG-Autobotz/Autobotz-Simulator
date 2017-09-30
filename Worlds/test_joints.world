@@ -11,7 +11,7 @@
     </include>
 
     <!-- A testing model that includes the VT_sim sensor model -->
-    <model name="VT_sim">
+    <model name="Demo joint types">
       <include>
         <uri>model://demo_joint_types</uri>
       </include>

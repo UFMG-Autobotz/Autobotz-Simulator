@@ -33,7 +33,18 @@
       </include>
 
       <plugin name="vt_sim plugin" filename="libvt_sim_plugin.so">
-        <pid_kp>5</pid_kp>
+        <pos_pid>10 0 0</pos_pid>
+        <joint1 name="VT::chassi_rodaBL" vel_topic="vel" pos_topic="pos">
+          <pos_pid>5 0 0</pos_pid>
+          <vel_pid>1 0 0</vel_pid>
+          <velocity>true</velocity>
+          <position>true</position>
+        </joint1>
+        <teste name="abc" tipo="a">
+            <sub>5.2</sub>
+        </teste>
+        <controlador1 name="c1">"a"</controlador1>
+        <controlador2>"b"</controlador2>
       </plugin>
     </model>
 
