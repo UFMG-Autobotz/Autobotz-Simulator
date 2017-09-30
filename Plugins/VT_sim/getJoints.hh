@@ -16,8 +16,8 @@ typedef struct _joint_param{
   bool valid;
   std::string name;
   physics::JointPtr joint;
-  math::Vector3 vel_pid_gains;
-  math::Vector3 pos_pid_gains;
+  common::PID vel_pid;
+  common::PID pos_pid;
   bool velocity;
   bool position;
   std::string veltopic;
@@ -30,21 +30,12 @@ public:
   void ReadVariables();
 
 private:
-  /// \brief Pointer to the model.
 	physics::ModelPtr model;
-
-	/// \brief Pointer to the sdf.
 	sdf::ElementPtr sdf;
-
-  // pid gains
-  math::Vector3 vel_pid_gains, pos_pid_gains;
 
   std::vector<joint_param> joints;
   bool all = false;
-  int n_joints;
 
-  /// \brief Pointer to the joint.
-	private: std::vector<physics::JointPtr> joints_vector;
 };
 
 #endif
