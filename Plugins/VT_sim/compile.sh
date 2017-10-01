@@ -3,6 +3,4 @@ mkdir import
 cd build
 cmake ..
 make
-# cp libvt_sim_plugin.so ../import/
-# cp libData.so ../import/
 rm -rf *

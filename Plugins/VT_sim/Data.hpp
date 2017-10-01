@@ -38,6 +38,8 @@ namespace gazebo {
   public:
     Data(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     void ReadVariables();
+    void ShowJoints();
+
     joint_param *GetJoint(int idx);
     int GetJointCount();
 

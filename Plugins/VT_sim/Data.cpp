@@ -6,14 +6,20 @@ namespace gazebo {
   	return !((c>=47 && c <=57) || (c>=65 && c <=90) || (c>=97 && c <=122) );
   }
 
+  /*-------------------*/
+
   void validate_str(std::string & str) {
   	std::replace_if(str.begin(), str.end(), invalidChar, '_');
   }
+
+  /*-------------------*/
 
   Data::Data(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
     this->model = _model;
     this->sdf = _sdf;
   }
+
+  /*-------------------*/
 
   void Data::ReadVariables() {
     joint_param currentJoint;
@@ -182,9 +188,38 @@ namespace gazebo {
   	}
   }
 
+  /*-------------------*/
+
+  void Data::ShowJoints() {
+    int n_joints = this->joints.size();
+    std::cout << std::endl << "------------------------" << std::endl;
+    gzmsg << n_joints << " joints:" << std::endl;
+    std::cout << "------------------------" << std::endl;
+
+    for (int i = 0; i < n_joints; i++) {
+
+      std::string control = " (not controlled)";
+      if (this->joints[i].valid) {
+        if (this->joints[i].velocity && this->joints[i].position) {
+          control = " (controlling velocity and position)";
+        } else if (this->joints[i].velocity) {
+          control = " (controlling velocity)";
+        } else if (this->joints[i].position) {
+          control = " (controlling position)";
+        }
+      }
+      gzmsg << this->joints[i].name << control << std::endl;
+    }
+    std::cout << "------------------------" << std::endl << std::endl;
+  }
+
+  /*-------------------*/
+
   int Data::GetJointCount() {
     return this->joints.size();
   }
+
+  /*-------------------*/
 
   joint_param *Data::GetJoint(int idx) {
     return &this->joints[idx];
