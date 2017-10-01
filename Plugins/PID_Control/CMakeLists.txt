@@ -13,11 +13,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
 
-add_library(Data SHARED Data.cpp)
-target_link_libraries(Data ${GAZEBO_libraries})
+add_library(data SHARED Data.cpp)
+target_link_libraries(data ${GAZEBO_libraries})
 
-add_library(vt_sim_plugin SHARED VT_sim_plugin.cpp)
-target_link_libraries(vt_sim_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES} Data)
+add_library(pid_control_plugin SHARED PIDControlPlugin.cpp)
+target_link_libraries(pid_control_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES} data)
 
 set(dir ${CMAKE_CURRENT_SOURCE_DIR}/import/)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)

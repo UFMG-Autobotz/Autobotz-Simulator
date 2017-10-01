@@ -40,6 +40,18 @@ namespace gazebo {
   		global_pos_pid = this->sdf->Get<math::Vector3>("pid");
   	}
 
+    // read global velocity (if false or not set, velocity won't be controlled)
+    bool global_velocity = false;
+    if (this->sdf->HasElement("velocity")) {
+      global_velocity = this->sdf->Get<bool>("velocity");
+    }
+
+    // read global position (if false or not set, position won't be controlled)
+    bool global_position = false;
+    if (this->sdf->HasElement("position")) {
+      global_position = this->sdf->Get<bool>("position");
+    }
+
   	// read joints
   	sdf::ElementPtr jointParameter;
 
@@ -98,13 +110,13 @@ namespace gazebo {
       currentJoint.pos_pid = common::PID(pos_pid[0], pos_pid[1], pos_pid[2]);
 
       // read specific joint's velocity (if false or not set, velocity won't be controlled)
-  		currentJoint.velocity = false;
+  		currentJoint.velocity = global_velocity;
   		if (jointParameter->HasElement("velocity")) {
   			currentJoint.velocity = jointParameter->Get<bool>("velocity");
   		}
 
       // read specific joint's position (if false or not set, position won't be controlled)
-  		currentJoint.position = false;
+  		currentJoint.position = global_position;
   		if (jointParameter->HasElement("position")) {
   			currentJoint.position = jointParameter->Get<bool>("position");
   		}
@@ -141,18 +153,6 @@ namespace gazebo {
 
     // if no joint is specified (idx not incremented)
   	if (idx == 1) {
-      // read global velocity (if false or not set, velocity won't be controlled)
-      bool global_velocity = false;
-  		if (this->sdf->HasElement("velocity")) {
-  			global_velocity = this->sdf->Get<bool>("velocity");
-  		}
-
-      // read global position (if false or not set, position won't be controlled)
-      bool global_position = false;
-  		if (this->sdf->HasElement("position")) {
-  			global_position = this->sdf->Get<bool>("position");
-  		}
-
       // save all valid joints on the joints vector
       int total_n_joints = this->model->GetJointCount();
     	std::vector<physics::JointPtr> allJoints = this->model->GetJoints();

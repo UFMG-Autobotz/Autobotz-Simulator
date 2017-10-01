@@ -1,5 +1,5 @@
-#ifndef _VT_SIM_PLUGIN_HH_
-#define _VT_SIM_PLUGIN_HH_
+#ifndef _PID_CONTROL_PLUGIN_HH_
+#define _PID_CONTROL_PLUGIN_HH_
 
 #include "Data.hpp"
 
@@ -13,14 +13,11 @@
 
 namespace gazebo {
 
-	/// \brief A plugin to control a VT_sim.
-	class VT_simPlugin : public ModelPlugin {
+	class PIDControlPlugin : public ModelPlugin {
 
-	/// \brief Constructor
 public:
-
 	// Constructor
-	VT_simPlugin() {
+	PIDControlPlugin() {
 		// Initialize ROS
 		if (!ros::isInitialized()) {
 			int argc = 0;
@@ -48,10 +45,10 @@ public:
 		this->SetPIDControler(_model);
 
 		// Spin up the queue helper thread.
-		this->rosQueueThread = std::thread(std::bind(&VT_simPlugin::QueueThread, this));
+		this->rosQueueThread = std::thread(std::bind(&PIDControlPlugin::QueueThread, this));
 
 		this->updateConnection = event::Events::ConnectWorldUpdateEnd(
-			boost::bind(&VT_simPlugin::OnUpdate, this));
+			boost::bind(&PIDControlPlugin::OnUpdate, this));
 	}
 
 	/*-------------------*/
@@ -79,7 +76,7 @@ public:
 
 					// create subscriber
 					ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>(currentJoint->veltopic, 100,
-							boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
+							boost::bind(&PIDControlPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
 					this->rosSub_vector.push_back(this->rosNode->subscribe(so));
 
 					ROS_INFO_STREAM(currentJoint->veltopic);
@@ -92,7 +89,7 @@ public:
 
 					// create subscriber
 					ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>(currentJoint->postopic, 100,
-							boost::bind(&VT_simPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
+							boost::bind(&PIDControlPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
 					this->rosSub_vector.push_back(this->rosNode->subscribe(so));
 
 					ROS_INFO_STREAM(currentJoint->postopic);
@@ -156,6 +153,6 @@ private:
 	};
 
 	// Tell Gazebo about this plugin, so that Gazebo can call Load on this plugin.
-	GZ_REGISTER_MODEL_PLUGIN(VT_simPlugin)
+	GZ_REGISTER_MODEL_PLUGIN(PIDControlPlugin)
 }
 #endif
