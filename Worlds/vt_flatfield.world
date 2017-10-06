@@ -36,6 +36,11 @@
         <velocity>true</velocity>
         <pid>10 0 0</pid>
       </plugin>
+
+      <plugin name="sensor_feedback plugin" filename="libsensor_feedback_plugin.so">
+        <velocity>true</velocity>
+        <pid>10 0 0</pid>
+      </plugin>
     </model>
 
   </world>
