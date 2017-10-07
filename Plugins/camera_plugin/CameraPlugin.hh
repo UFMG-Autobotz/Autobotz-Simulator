@@ -28,7 +28,7 @@
 #include "ros/callback_queue.h"
 #include <ros/console.h>
 #include "ros/subscribe_options.h"
-#include "std_msgs/Float32.h"
+#include "sensor_msgs/Image.h"
 #include <thread>
 
 namespace gazebo

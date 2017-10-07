@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 # Find ROS
 find_package(roscpp REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 include_directories(${roscpp_INCLUDE_DIRS})
-include_directories(${std_msgs_INCLUDE_DIRS})
+include_directories(${sensor_msgs_INCLUDE_DIRS})
 
 # Find Gazebo
 find_package(gazebo REQUIRED)

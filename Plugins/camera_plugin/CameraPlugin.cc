@@ -79,22 +79,33 @@ void CameraPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
 
   this->parentSensor->SetActive(true);
 
-  this->rosPub = this->rosNode->advertise<std_msgs::Float32>("/VT/camera", 1000);
+  this->rosPub = this->rosNode->advertise<sensor_msgs::Image>("/VT/camera", 1000);
 }
 
 /////////////////////////////////////////////////
-void CameraPlugin::OnNewFrame(const unsigned char * /*_image*/,
-                              unsigned int /*_width*/,
-                              unsigned int /*_height*/,
-                              unsigned int /*_depth*/,
-                              const std::string &/*_format*/)
+void CameraPlugin::OnNewFrame(const unsigned char * _image,
+                              unsigned int _width,
+                              unsigned int _height,
+                              unsigned int _depth,
+                              const std::string &_format)
 {
   /*rendering::Camera::SaveFrame(_image, this->width,
     this->height, this->depth, this->format,
     "/tmp/camera/me.jpg");
     */
 
-    std_msgs::Float32 teste;
-    teste.data = 8;
-    this->rosPub.publish(teste);
+    sensor_msgs::Image frame;
+    frame.height = _height;
+    frame.width = _width;
+    frame.encoding = "rgb8";
+    frame.step = 3 * _width;
+
+    int size = frame.height * frame.step;
+    for (int i = 0; i < size; i += 1) {
+      frame.data.push_back(_image[i]);
+    }
+
+    // sensor_msgs::fillImage(frame, "rgb8", _height, _width, 3*_width, _image);
+
+    this->rosPub.publish(frame);
 }

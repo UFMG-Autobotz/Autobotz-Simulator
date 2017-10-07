@@ -34,7 +34,7 @@
 
       <plugin name="vt_sim plugin" filename="libpid_control_plugin.so">
         <velocity>true</velocity>
-        <pid>10 0 0</pid>
+        <pid>5 0 0</pid>
       </plugin>
 
     </model>
