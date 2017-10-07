@@ -527,13 +527,8 @@
     </link>
 
     <!-- http://www.robopgmr.com/?p=5539 -->
-    <!-- [Wrn] [ODEFixedJoint.cc:93] ODEFixedJoint: called method GetVelocity that is not valid for joints of type fixed.
-    [Err] [Joint.cc:925] Calling Joint::SetForce with an index [0] out of range
-    [Err] [ODEJoint.cc:1137] Something's wrong, joint [VT::VT::chassi_camera] index [0] out of range. -->
-    <!-- TODO modificar o plugin para so controlar a velocidade de juntas de revoluçao -->
-
     <include>
-      <uri>model://camera</uri>
+      <uri>model://camera_ros</uri>
       <pose>0.08 0 0.225 0 0 0</pose>
     </include>
 
