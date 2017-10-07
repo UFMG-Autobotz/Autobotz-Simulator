@@ -15,7 +15,7 @@ This tag has two required attributes:
 * **name:** A unique name, scoped to its parent.
 * **filename:** libpid_control_plugin.so
 
-In order to configure the plugin, other tags can be added. More on configuration on the [settins section](#Setings).
+In order to configure the plugin, other tags can be added. More on configuration on the [settings section](#settings).
 
 ###### Example:
 
