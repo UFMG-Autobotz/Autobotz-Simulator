@@ -91,8 +91,13 @@ void CameraPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
   this->parentSensor->SetActive(true);
 
   std::string topic_name = _sensor->GetTopic();
-  // validate_str(topic_name);
   this->rosPub = this->rosNode->advertise<sensor_msgs::Image>(topic_name.erase(0, 1), 1000);
+
+  std::cout << std::endl << "------------------------" << std::endl;
+  ROS_INFO_STREAM("Camera Plugin publishing to ROS topic:");
+  std::cout << "------------------------" << std::endl;
+  ROS_INFO_STREAM(topic_name);
+  std::cout << "------------------------" << std::endl << std::endl;
 }
 
 /////////////////////////////////////////////////

@@ -60,7 +60,7 @@ public:
 		joint_param *currentJoint;
 
 		std::cout << std::endl << "------------------------" << std::endl;
-		ROS_INFO_STREAM("Subscribing to ROS topics:");
+		ROS_INFO_STREAM("PID Control subscribing to ROS topics:");
 		std::cout << "------------------------" << std::endl;
 
 		for (int i = 0; i < jointCount; i++) {

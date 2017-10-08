@@ -8,6 +8,7 @@ Modules/GUI/Main_Window.pyc
 Modules/GUI/qt_utils.pyc
 Modules/GUI/RTPlotter.pyc
 Modules/GUI/Slider.pyc
+Modules/GUI/Vision.pyc
 
 Plugins/VT_sim/build
 Plugins/apply_force/build
