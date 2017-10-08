@@ -31,10 +31,8 @@
 #include "sensor_msgs/Image.h"
 #include <thread>
 
-namespace gazebo
-{
-  class GAZEBO_VISIBLE CameraPlugin : public SensorPlugin
-  {
+namespace gazebo {
+  class GAZEBO_VISIBLE CameraPlugin : public SensorPlugin {
     public: CameraPlugin();
 
     /// \brief Destructor

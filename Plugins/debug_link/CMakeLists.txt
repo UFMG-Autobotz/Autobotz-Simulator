@@ -13,8 +13,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
 
-add_library(sensor_feedback_plugin SHARED SensorFeedbackPlugin.cpp)
-target_link_libraries(sensor_feedback_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES})
+add_library(debug_link_plugin SHARED DebugLink.cc)
+target_link_libraries(debug_link_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES})
 
 set(import ${CMAKE_CURRENT_SOURCE_DIR}/import/)
 set(LIBRARY_OUTPUT_PATH ${import} CACHE PATH "Build directory" FORCE)

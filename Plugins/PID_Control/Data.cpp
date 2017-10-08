@@ -95,7 +95,7 @@ namespace gazebo {
       math::Vector3 vel_pid = global_vel_pid; // if no PID gains are given, use the global ones
   		if (jointParameter->HasElement("vel_pid")) {
   			vel_pid = jointParameter->Get<math::Vector3>("vel_pid");
-  		} else if (this->sdf->HasElement("pid")) {
+  		} else if (jointParameter->HasElement("pid")) {
   			vel_pid = jointParameter->Get<math::Vector3>("pid");
   		}
       currentJoint.vel_pid = common::PID(vel_pid[0], vel_pid[1], vel_pid[2]);
@@ -104,7 +104,7 @@ namespace gazebo {
       math::Vector3 pos_pid = global_pos_pid; // if no PID gains are given, use the global ones
   		if (jointParameter->HasElement("pos_pid")) {
   			pos_pid = jointParameter->Get<math::Vector3>("pos_pid");
-  		} else if (this->sdf->HasElement("pid")) {
+  		} else if (jointParameter->HasElement("pid")) {
   			pos_pid = jointParameter->Get<math::Vector3>("pid");
   		}
       currentJoint.pos_pid = common::PID(pos_pid[0], pos_pid[1], pos_pid[2]);

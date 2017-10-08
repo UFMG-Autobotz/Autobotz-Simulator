@@ -18,17 +18,6 @@
 #include "gazebo/sensors/DepthCameraSensor.hh"
 #include "CameraPlugin.hh"
 
-bool invalidChar (char c) {
-  return !((c>=47 && c <=57) || (c>=65 && c <=90) || (c>=97 && c <=122) );
-}
-
-/*-------------------*/
-
-void validate_str(std::string & str) {
-  std::replace_if(str.begin(), str.end(), invalidChar, '/');
-}
-
-
 using namespace gazebo;
 GZ_REGISTER_SENSOR_PLUGIN(CameraPlugin)
 
