@@ -18,6 +18,17 @@
 #include "gazebo/sensors/DepthCameraSensor.hh"
 #include "CameraPlugin.hh"
 
+bool invalidChar (char c) {
+  return !((c>=47 && c <=57) || (c>=65 && c <=90) || (c>=97 && c <=122) );
+}
+
+/*-------------------*/
+
+void validate_str(std::string & str) {
+  std::replace_if(str.begin(), str.end(), invalidChar, '/');
+}
+
+
 using namespace gazebo;
 GZ_REGISTER_SENSOR_PLUGIN(CameraPlugin)
 
@@ -79,7 +90,9 @@ void CameraPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
 
   this->parentSensor->SetActive(true);
 
-  this->rosPub = this->rosNode->advertise<sensor_msgs::Image>("/VT/camera", 1000);
+  std::string topic_name = _sensor->GetTopic();
+  // validate_str(topic_name);
+  this->rosPub = this->rosNode->advertise<sensor_msgs::Image>(topic_name.erase(0, 1), 1000);
 }
 
 /////////////////////////////////////////////////
@@ -89,11 +102,6 @@ void CameraPlugin::OnNewFrame(const unsigned char * _image,
                               unsigned int _depth,
                               const std::string &_format)
 {
-  /*rendering::Camera::SaveFrame(_image, this->width,
-    this->height, this->depth, this->format,
-    "/tmp/camera/me.jpg");
-    */
-
     sensor_msgs::Image frame;
     frame.height = _height;
     frame.width = _width;
@@ -104,8 +112,6 @@ void CameraPlugin::OnNewFrame(const unsigned char * _image,
     for (int i = 0; i < size; i += 1) {
       frame.data.push_back(_image[i]);
     }
-
-    // sensor_msgs::fillImage(frame, "rgb8", _height, _width, 3*_width, _image);
 
     this->rosPub.publish(frame);
 }

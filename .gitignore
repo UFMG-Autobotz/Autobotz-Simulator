@@ -15,3 +15,4 @@ Plugins/push_model/build
 Plugins/ros_connection/build
 Plugins/template_plugin/build
 Plugins/get_joints/build
+Plugins/camera_plugin/build

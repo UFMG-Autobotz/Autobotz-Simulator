@@ -126,7 +126,7 @@ namespace gazebo {
         if (jointParameter->HasAttribute("vel_topic")) {
   			  currentJoint.veltopic = "/" + jointParameter->GetAttribute("vel_topic")->GetAsString();
   		  } else {  // if velocity topic isn't given, use default name
-  			  currentJoint.veltopic = "/" + this->model->GetName() + "/joint_vel_" + currentJoint.joint->GetName();
+  			  currentJoint.veltopic = "/" + currentJoint.joint->GetScopedName() + "/joint_vel";
         }
         validate_str(currentJoint.veltopic);
   		}
@@ -136,7 +136,7 @@ namespace gazebo {
         if (jointParameter->HasAttribute("pos_topic")) {
   			  currentJoint.postopic = "/" + jointParameter->GetAttribute("pos_topic")->GetAsString();
   		  } else {  // if position topic isn't given, use default name
-  			  currentJoint.postopic = "/" + this->model->GetName() + "/joint_pos_" + currentJoint.joint->GetName();
+  			  currentJoint.postopic = "/" + currentJoint.joint->GetScopedName() + "/joint_pos";
         }
         validate_str(currentJoint.postopic);
   		}
@@ -173,11 +173,11 @@ namespace gazebo {
 
         // create topic names
         if (currentJoint.velocity) {
-    			currentJoint.veltopic = "/" + this->model->GetName() + "/joint_vel_" + currentJoint.joint->GetName();
+    			currentJoint.veltopic = "/" + currentJoint.joint->GetScopedName() + "/joint_vel";
           validate_str(currentJoint.veltopic);
     		}
         if (currentJoint.position) {
-    			currentJoint.postopic = "/" + this->model->GetName() + "/joint_pos_" + currentJoint.joint->GetName();
+    			currentJoint.postopic = "/" + currentJoint.joint->GetScopedName() + "/joint_pos";
           validate_str(currentJoint.postopic);
     		}
 
@@ -193,7 +193,7 @@ namespace gazebo {
   void Data::ShowJoints() {
     int n_joints = this->joints.size();
     std::cout << std::endl << "------------------------" << std::endl;
-    gzmsg << n_joints << " joints:" << std::endl;
+    gzmsg << "PID Control found "<< n_joints << " joints:" << std::endl;
     std::cout << "------------------------" << std::endl;
 
     for (int i = 0; i < n_joints; i++) {
