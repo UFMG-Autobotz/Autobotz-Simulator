@@ -1,0 +1,13 @@
+material VSS_Player/newtag
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture change_tag.png
+      }
+    }
+  }
+}

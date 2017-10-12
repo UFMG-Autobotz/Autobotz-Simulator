@@ -2,6 +2,11 @@
 <sdf version="1.5">
   <world name="default">
 
+    <plugin name="config" filename="libPlayers_Config.so">
+      <param1 model="player1">VSS_Player/tag</param1>
+      <param2 model="player2">VSS_Player/newtag</param2>
+    </plugin>
+
     <!-- A global light source -->
     <include>
       <uri>model://sun</uri>
@@ -12,12 +17,25 @@
       <uri>model://ground_plane</uri>
     </include>
 
-    <model name="player">
+    <model name="player1">
       <include>
         <uri>model://VSS_Player/</uri>
+        <pose>-0.2 0 0 0 0 0</pose>
       </include>
 
-      <plugin name="player plugin" filename="libpid_control_plugin.so">
+      <plugin name="player 1 plugin" filename="libpid_control_plugin.so">
+        <velocity>true</velocity>
+        <pid>0.001 0 0</pid>
+      </plugin>
+    </model>
+
+    <model name="player2">
+      <include>
+        <uri>model://VSS_Player/</uri>
+        <pose>0.2 0 0 0 0 3.14</pose>
+      </include>
+
+      <plugin name="player2 plugin" filename="libpid_control_plugin.so">
         <velocity>true</velocity>
         <pid>0.001 0 0</pid>
       </plugin>
@@ -26,7 +44,6 @@
     <model name="ball">
       <include>
         <uri>model://VSS_Ball/</uri>
-        <pose>0.2 0 0 0 0 0</pose>
       </include>
     </model>
 

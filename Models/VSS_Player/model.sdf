@@ -23,17 +23,43 @@
         </inertia>
       </inertial>
 
-      <collision name ='chassi_collision'>
-        <pose>0 0 0.035 0 0 0</pose>
+      <collision name ='chassi_kicker_collision'>
         <geometry>
-          <box><size>0.08 0.08 0.07</size></box>
+          <polyline>
+            <height>0.04</height>
+            <point>0.04 0.04</point>
+            <point>-0.04 0.04</point>
+            <point>-0.04 -0.04</point>
+            <point>0.04 -0.04</point>
+            <point> 0.032 0</point>
+          </polyline>
         </geometry>
       </collision>
 
-      <visual name ='chassi_body_visual'>
-        <pose>0 0 0.03499650000000001 0 0 0</pose>
+      <collision name ='chassi_body_collision'>
+        <pose>0 0 0.055 0 0 0</pose>
         <geometry>
-          <box><size>0.08 0.08 0.06999300000000001</size></box>
+          <box><size>0.08 0.08 0.03</size></box>
+        </geometry>
+      </collision>
+
+      <visual name ='chassi_kicker_visual'>
+        <geometry>
+          <polyline>
+            <height>0.04</height>
+            <point>0.04 0.04</point>
+            <point>-0.04 0.04</point>
+            <point>-0.04 -0.04</point>
+            <point>0.04 -0.04</point>
+            <point> 0.032 0</point>
+          </polyline>
+        </geometry>
+      </visual>
+
+      <visual name ='chassi_body_visual'>
+        <pose>0 0 0.0549985 0 0 0</pose>
+        <geometry>
+          <box><size>0.08 0.08 0.029997</size></box>
         </geometry>
       </visual>
 
@@ -47,10 +73,12 @@
           <script>
             <uri>file://Scripts</uri>
             <uri>file://Textures</uri>
-            <name>VSS_Player/tag</name>
           </script>
         </material>
+
+        <plugin name="texture" filename="libchange_texture.so"> </plugin>
       </visual>
+
     </link>
 
     <link name ='left_wheel'>

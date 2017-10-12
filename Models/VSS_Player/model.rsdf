@@ -10,16 +10,21 @@
   chassi_x = 0.08
   chassi_y = 0.08
   chassi_z = 0.08
-  chassi_dz = 0.01
+  chassi_dz1 = 0.01
+  chassi_dz2 = 0.05
+
+  chassi_kicker_height = chassi_dz2 - chassi_dz1
+  chassi_body_height = chassi_z - chassi_dz2
+  chassi_height = chassi_z - chassi_dz1
 
   # Tag thickness (as a percentage of the chassi height)
   chassi_th = 0.0001
 
   # Inertia
   chassi_density = 700
-  chassi_mass = chassi_density * chassi_x * chassi_y * (chassi_z-chassi_dz)
-  chassi_ixx  = (chassi_mass/12.0) * (chassi_y**2 + (chassi_z-chassi_dz)**2)
-  chassi_iyy  = (chassi_mass/12.0) * ((chassi_z-chassi_dz)**2 + chassi_x**2)
+  chassi_mass = chassi_density * chassi_x * chassi_y * (chassi_z-chassi_dz1)
+  chassi_ixx  = (chassi_mass/12.0) * (chassi_y**2 + (chassi_z-chassi_dz1)**2)
+  chassi_iyy  = (chassi_mass/12.0) * ((chassi_z-chassi_dz1)**2 + chassi_x**2)
   chassi_izz  = (chassi_mass/12.0) * (chassi_x**2 + chassi_y**2)
 
   #WHEELS
@@ -43,7 +48,7 @@
 
   #BALL WHEEL
   # Geometry
-  ball_radius = chassi_dz
+  ball_radius = chassi_dz1
 
   # Position
   ball_dx = 0.02
@@ -66,9 +71,9 @@
     <pose>0 0 0 0 0 0</pose>
 
     <link name ='chassi'>
-      <pose>0 0 <%= chassi_dz %> 0 0 0</pose>
+      <pose>0 0 <%= chassi_dz1 %> 0 0 0</pose>
       <inertial>
-        <pose>0 0 <%= 0.5*(chassi_z - chassi_dz)  %> 0 0 0</pose>
+        <pose>0 0 <%= 0.5*chassi_height  %> 0 0 0</pose>
         <mass> <%= chassi_mass %></mass>
         <inertia>
           <ixx><%= chassi_ixx %></ixx>
@@ -80,34 +85,62 @@
         </inertia>
       </inertial>
 
-      <collision name ='chassi_collision'>
-        <pose>0 0 <%= 0.5*(chassi_z - chassi_dz)  %> 0 0 0</pose>
+      <collision name ='chassi_kicker_collision'>
         <geometry>
-          <box><size><%= chassi_x %> <%= chassi_y %> <%= chassi_z - chassi_dz %></size></box>
+          <polyline>
+            <height><%= chassi_kicker_height %></height>
+            <point><%= 0.5*chassi_x %> <%= 0.5*chassi_y %></point>
+            <point><%= -0.5*chassi_x %> <%= 0.5*chassi_y %></point>
+            <point><%= -0.5*chassi_x %> <%= -0.5*chassi_y %></point>
+            <point><%= 0.5*chassi_x %> <%= -0.5*chassi_y %></point>
+            <point> <%= 0.4*chassi_x %> 0</point>
+          </polyline>
         </geometry>
       </collision>
 
-      <visual name ='chassi_body_visual'>
-        <pose>0 0 <%= 0.5*(chassi_z - chassi_dz)*(1 - chassi_th)  %> 0 0 0</pose>
+      <collision name ='chassi_body_collision'>
+        <pose>0 0 <%= chassi_kicker_height + 0.5*chassi_body_height %> 0 0 0</pose>
         <geometry>
-          <box><size><%= chassi_x %> <%= chassi_y %> <%= (1-chassi_th)*(chassi_z - chassi_dz) %></size></box>
+          <box><size><%= chassi_x %> <%= chassi_y %> <%= chassi_body_height %></size></box>
+        </geometry>
+      </collision>
+
+      <visual name ='chassi_kicker_visual'>
+        <geometry>
+          <polyline>
+            <height><%= chassi_kicker_height %></height>
+            <point><%= 0.5*chassi_x %> <%= 0.5*chassi_y %></point>
+            <point><%= -0.5*chassi_x %> <%= 0.5*chassi_y %></point>
+            <point><%= -0.5*chassi_x %> <%= -0.5*chassi_y %></point>
+            <point><%= 0.5*chassi_x %> <%= -0.5*chassi_y %></point>
+            <point> <%= 0.4*chassi_x %> 0</point>
+          </polyline>
+        </geometry>
+      </visual>
+
+      <visual name ='chassi_body_visual'>
+        <pose>0 0 <%= chassi_kicker_height + 0.5*chassi_body_height*(1 - chassi_th)  %> 0 0 0</pose>
+        <geometry>
+          <box><size><%= chassi_x %> <%= chassi_y %> <%= (1-chassi_th)*chassi_body_height %></size></box>
         </geometry>
       </visual>
 
       <visual name ='chassi_tag_visual'>
-        <pose>0 0 <%= (chassi_z - chassi_dz)*(1 - 0.5*chassi_th) %> 0 0 0</pose>
+        <pose>0 0 <%= chassi_height*(1 - 0.5*chassi_th) %> 0 0 0</pose>
         <geometry>
-          <box><size><%= chassi_x %> <%= chassi_y %> <%= chassi_th*(chassi_z - chassi_dz) %></size></box>
+          <box><size><%= chassi_x %> <%= chassi_y %> <%= chassi_th*chassi_height %></size></box>
         </geometry>
 
         <material>
           <script>
             <uri>file://Scripts</uri>
             <uri>file://Textures</uri>
-            <name>VSS_Player/tag</name>
           </script>
         </material>
+
+        <plugin name="texture" filename="libchange_texture.so"> </plugin>
       </visual>
+
     </link>
 
     <link name ='left_wheel'>
