@@ -13,7 +13,7 @@
   chassi_dz = 0.01
 
   # Tag thickness (as a percentage of the chassi height)
-  chassi_th = 0.005
+  chassi_th = 0.0001
 
   # Inertia
   chassi_density = 700

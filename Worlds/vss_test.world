@@ -23,6 +23,13 @@
       </plugin>
     </model>
 
+    <model name="ball">
+      <include>
+        <uri>model://VSS_Ball/</uri>
+        <pose>0.2 0 0 0 0 0</pose>
+      </include>
+    </model>
+
     <model name="camera">
       <include>
         <uri>model://camera_ros</uri>
