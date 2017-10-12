@@ -2,8 +2,7 @@
 
 <%
   # SI units (length in meters)
-
-  pi = 1.570796
+  require_relative 'kicker'
 
   # CHASSI
   # Geometry
@@ -13,6 +12,15 @@
   chassi_dz1 = 0.01
   chassi_dz2 = 0.05
 
+  # Kicker
+  chassi_kicker_dy = 0.015
+  chassi_kicker_radius = 0.05
+  chassi_kicker_resolution = 15
+
+  chassi_kicker_distance = 0.5*chassi_y - chassi_kicker_dy
+  chassi_kicker = Kicker.new(chassi_kicker_distance, chassi_kicker_radius, chassi_kicker_resolution)
+
+  # Heights
   chassi_kicker_height = chassi_dz2 - chassi_dz1
   chassi_body_height = chassi_z - chassi_dz2
   chassi_height = chassi_z - chassi_dz1
@@ -22,9 +30,9 @@
 
   # Inertia
   chassi_density = 700
-  chassi_mass = chassi_density * chassi_x * chassi_y * (chassi_z-chassi_dz1)
-  chassi_ixx  = (chassi_mass/12.0) * (chassi_y**2 + (chassi_z-chassi_dz1)**2)
-  chassi_iyy  = (chassi_mass/12.0) * ((chassi_z-chassi_dz1)**2 + chassi_x**2)
+  chassi_mass = chassi_density * chassi_x * chassi_y * chassi_z_height
+  chassi_ixx  = (chassi_mass/12.0) * (chassi_y**2 + chassi_z_height**2)
+  chassi_iyy  = (chassi_mass/12.0) * (chassi_z_height**2 + chassi_x**2)
   chassi_izz  = (chassi_mass/12.0) * (chassi_x**2 + chassi_y**2)
 
   #WHEELS
@@ -38,7 +46,7 @@
 
   # Inertia
   wheel_density = 1000
-  wheel_mass = wheel_density * pi * wheel_radius**2 * wheel_length
+  wheel_mass = wheel_density * Math::PI * wheel_radius**2 * wheel_length
   wheel_ixx  = (wheel_mass/12.0) * (3*wheel_radius**2 + wheel_length**2)
   wheel_iyy  = (wheel_mass/12.0) * (3*wheel_radius**2 + wheel_length**2)
   wheel_izz  = (wheel_mass/2.0) * wheel_radius**2
@@ -55,7 +63,7 @@
 
   # Inertia
   ball_density = 1000
-  ball_mass = ball_density * pi * ball_radius**3 * 4/3.0
+  ball_mass = ball_density * Math::PI * ball_radius**3 * 4/3.0
   ball_ixx  = (ball_mass/5.0) * 2*ball_radius**2
   ball_iyy  = (ball_mass/5.0) * 2*ball_radius**2
   ball_izz  = (ball_mass/5.0) * 2*ball_radius**2
@@ -93,7 +101,8 @@
             <point><%= -0.5*chassi_x %> <%= 0.5*chassi_y %></point>
             <point><%= -0.5*chassi_x %> <%= -0.5*chassi_y %></point>
             <point><%= 0.5*chassi_x %> <%= -0.5*chassi_y %></point>
-            <point> <%= 0.4*chassi_x %> 0</point>
+            <% for i in 0..chassi_kicker_resolution do %>
+            <point><%= 0.5*chassi_x + chassi_kicker.x(i)%> <%= chassi_kicker.y(i) %></point><% end %>
           </polyline>
         </geometry>
       </collision>
@@ -113,7 +122,8 @@
             <point><%= -0.5*chassi_x %> <%= 0.5*chassi_y %></point>
             <point><%= -0.5*chassi_x %> <%= -0.5*chassi_y %></point>
             <point><%= 0.5*chassi_x %> <%= -0.5*chassi_y %></point>
-            <point> <%= 0.4*chassi_x %> 0</point>
+            <% for i in 0..chassi_kicker_resolution do %>
+            <point><%= 0.5*chassi_x + chassi_kicker.x(i)%> <%= chassi_kicker.y(i) %></point><% end %>
           </polyline>
         </geometry>
 
@@ -158,7 +168,7 @@
     </link>
 
     <link name ='left_wheel'>
-      <pose><%= wheel_dx %> <%= wheel_dy %> <%= wheel_radius %> <%= pi %> 0 0</pose>
+      <pose><%= wheel_dx %> <%= wheel_dy %> <%= wheel_radius %> <%= 0.5*Math::PI %> 0 0</pose>
       <inertial>
         <mass> <%= wheel_mass %></mass>
         <inertia>
@@ -207,7 +217,7 @@
     </link>
 
     <link name ='right_wheel'>
-      <pose><%= wheel_dx %> <%= -wheel_dy %> <%= wheel_radius %> <%= pi %> 0 0</pose>
+      <pose><%= wheel_dx %> <%= -wheel_dy %> <%= wheel_radius %> <%= 0.5*Math::PI %> 0 0</pose>
       <inertial>
         <mass> <%= wheel_mass %></mass>
         <inertia>
