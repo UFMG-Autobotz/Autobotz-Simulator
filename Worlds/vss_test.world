@@ -3,8 +3,8 @@
   <world name="default">
 
     <plugin name="config" filename="libPlayers_Config.so">
-      <param1 model="player1">VSS_Player/tag</param1>
-      <param2 model="player2">VSS_Player/newtag</param2>
+      <param1 model="player1">VSS_Player/yellow1</param1>
+      <param2 model="player2">VSS_Player/blue2</param2>
     </plugin>
 
     <!-- A global light source -->

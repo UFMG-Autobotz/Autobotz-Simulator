@@ -116,6 +116,13 @@
             <point> <%= 0.4*chassi_x %> 0</point>
           </polyline>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
 
       <visual name ='chassi_body_visual'>
@@ -123,6 +130,13 @@
         <geometry>
           <box><size><%= chassi_x %> <%= chassi_y %> <%= (1-chassi_th)*chassi_body_height %></size></box>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
 
       <visual name ='chassi_tag_visual'>
@@ -134,7 +148,7 @@
         <material>
           <script>
             <uri>file://Scripts</uri>
-            <uri>file://Textures</uri>
+            <uri>file://Textures/VSS</uri>
           </script>
         </material>
 
@@ -182,6 +196,13 @@
             <length><%= wheel_length %></length>
           </cylinder>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
     </link>
 
@@ -224,6 +245,13 @@
             <length><%= wheel_length %></length>
           </cylinder>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
     </link>
 
@@ -260,6 +288,13 @@
         <geometry>
           <sphere><radius><%= ball_radius %></radius></sphere>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
     </link>
 

@@ -54,6 +54,13 @@
             <point> 0.032 0</point>
           </polyline>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
 
       <visual name ='chassi_body_visual'>
@@ -61,6 +68,13 @@
         <geometry>
           <box><size>0.08 0.08 0.029997</size></box>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
 
       <visual name ='chassi_tag_visual'>
@@ -72,7 +86,7 @@
         <material>
           <script>
             <uri>file://Scripts</uri>
-            <uri>file://Textures</uri>
+            <uri>file://Textures/VSS</uri>
           </script>
         </material>
 
@@ -120,6 +134,13 @@
             <length>0.01</length>
           </cylinder>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
     </link>
 
@@ -162,6 +183,13 @@
             <length>0.01</length>
           </cylinder>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
     </link>
 
@@ -198,6 +226,13 @@
         <geometry>
           <sphere><radius>0.01</radius></sphere>
         </geometry>
+
+        <material>
+          <script>
+            <uri>file://Scripts</uri>
+            <name>VSS_Player/DarkGrey</name>
+          </script>
+        </material>
       </visual>
     </link>
 
