@@ -30,9 +30,9 @@
 
   # Inertia
   chassi_density = 700
-  chassi_mass = chassi_density * chassi_x * chassi_y * chassi_z_height
-  chassi_ixx  = (chassi_mass/12.0) * (chassi_y**2 + chassi_z_height**2)
-  chassi_iyy  = (chassi_mass/12.0) * (chassi_z_height**2 + chassi_x**2)
+  chassi_mass = chassi_density * chassi_x * chassi_y * chassi_height
+  chassi_ixx  = (chassi_mass/12.0) * (chassi_y**2 + chassi_height**2)
+  chassi_iyy  = (chassi_mass/12.0) * (chassi_height**2 + chassi_x**2)
   chassi_izz  = (chassi_mass/12.0) * (chassi_x**2 + chassi_y**2)
 
   #WHEELS
