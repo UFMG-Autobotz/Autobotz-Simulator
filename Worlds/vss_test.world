@@ -12,10 +12,13 @@
       <uri>model://sun</uri>
     </include>
 
-    <!-- A ground plane -->
-    <include>
-      <uri>model://ground_plane</uri>
-    </include>
+    <model name="court">
+      <include>
+        <uri>model://VSS_Court/</uri>
+        <pose>0 0 -0.0155 0 0 0</pose>
+        <static>true</static>
+      </include>
+    </model>
 
     <model name="player1">
       <include>
@@ -50,7 +53,7 @@
     <model name="camera">
       <include>
         <uri>model://camera_ros</uri>
-        <pose>0 0. 2 0 1.570793 0</pose>
+        <pose>0 0. 2 0 1.570793 1.570793</pose>
         <static>true</static>
       </include>
     </model>

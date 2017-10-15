@@ -4,9 +4,14 @@ cd ..
 erb Models/VSS_Player/model.rsdf > Models/VSS_Player/model.sdf
 erb Models/VSS_Ball/model.rsdf > Models/VSS_Ball/model.sdf
 
-# adicionar caminho para a materiais
+# necessario antes de modificar o GAZEBO_RESOURCE_PATH
 source /usr/share/gazebo/setup.sh
+
+# adicionar caminho para a materiais
 export GAZEBO_RESOURCE_PATH=$(pwd)/Materials:$GAZEBO_RESOURCE_PATH
+
+# adicionar caminho para o stl do campo
+export GAZEBO_RESOURCE_PATH=$(pwd)/Meshs:$GAZEBO_RESOURCE_PATH
 
 # adicionar caminho para os modelos
 export GAZEBO_MODEL_PATH=$(pwd)/Models:$GAZEBO_MODEL_PATH
