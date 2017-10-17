@@ -17,7 +17,9 @@ DebugLink::DebugLink() {
 }
 
 void DebugLink::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf){
-	ROS_INFO_STREAM("oi");
+	std::cout << "cout" << std::endl;
+	ROS_INFO("ros info");
+	gzerr << "gzerr" << std::endl;
 
 	// error check
 	if (!_model || !_sdf) {

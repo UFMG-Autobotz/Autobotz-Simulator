@@ -13,7 +13,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
 
-add_library(data SHARED Data.cpp)
+add_library(data SHARED Data.cc)
 target_link_libraries(data ${GAZEBO_libraries})
 
 add_library(debug_link_plugin SHARED DebugLink.cc)
