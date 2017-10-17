@@ -26,7 +26,7 @@
         <pose>-0.2 0 0 0 0 0</pose>
       </include>
 
-      <plugin name="player 1 plugin" filename="libpid_control_plugin.so">
+      <plugin name="player 1 control" filename="libpid_control_plugin.so">
         <velocity>true</velocity>
         <pid>0.001 0 0</pid>
       </plugin>
@@ -38,9 +38,15 @@
         <pose>0.2 0 0 0 0 3.14</pose>
       </include>
 
-      <plugin name="player2 plugin" filename="libpid_control_plugin.so">
+      <plugin name="player 2 control" filename="libpid_control_plugin.so">
         <velocity>true</velocity>
         <pid>0.001 0 0</pid>
+      </plugin>
+
+      <plugin name="player 2 debug" filename="libdebug_plugin.so">
+        <link1 name="chassi">
+          <pose scope="worldCG">true</pose>
+        </link1>
       </plugin>
     </model>
 

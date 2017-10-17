@@ -17,14 +17,20 @@
 #include "std_msgs/Float32.h"
 #include <thread>
 
+#include "Data.hpp"
+
 namespace gazebo {
 	class DebugLink : public ModelPlugin {
 
 		public: DebugLink();
 		public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
+		private: void setTopics();
+		private: void OnUpdate();
 
+		private: std::unique_ptr<Data> link_data;
 		private: std::unique_ptr<ros::NodeHandle> rosNode;	/// \brief A node use for ROS transport
 		private: std::vector<ros::Publisher> rosPub_vector;  /// \brief A ROS publisher
+		private: event::ConnectionPtr updateConnection; // events
 
 	};
 }
