@@ -58,7 +58,7 @@
 
     <model name="camera">
       <include>
-        <uri>model://camera_ros</uri>
+        <uri>model://VSS_Camera/</uri>
         <pose>0 0. 2 0 1.570793 1.570793</pose>
         <static>true</static>
       </include>
