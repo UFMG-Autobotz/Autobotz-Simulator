@@ -10,6 +10,9 @@ Modules/GUI/RTPlotter.pyc
 Modules/GUI/Slider.pyc
 Modules/GUI/Vision.pyc
 
+Modules/Keyboard_Command/MainWindow.pyc
+Modules/Keyboard_Command/SubWindow.pyc
+
 Plugins/VT_sim/build
 Plugins/apply_force/build
 Plugins/push_model/build
