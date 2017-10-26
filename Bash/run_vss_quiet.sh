@@ -23,5 +23,5 @@ export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/camera_plugin/import:${GAZEBO_PLUGIN_PA
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/change_texture/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/vss_players_config/import:${GAZEBO_PLUGIN_PATH}
 
-# iniciar gazebo com mundo parado
-gzserver Worlds/vss_test.world
+# iniciar gazebo executando o mundo sem interface gráfica
+gzserver Worlds/vss.world

@@ -24,4 +24,4 @@ export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/change_texture/import:${GAZEBO_PLUGIN_P
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/vss_players_config/import:${GAZEBO_PLUGIN_PATH}
 
 # iniciar gazebo com mundo parado
-gazebo Worlds/vss_test.world -u --verbose
+gazebo Worlds/vss.world -u --verbose
