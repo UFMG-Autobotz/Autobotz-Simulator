@@ -24,6 +24,8 @@ namespace gazebo {
   void Data::ReadVariables() {
     link_param currentLink;
 
+    gzmsg << std::endl << "TESTE" << std::endl;
+
     // read global velocity (if false or not set, velocity won't be controlled)
     // bool global_velocity = false;
     // if (this->sdf->HasElement("velocity")) {
@@ -108,7 +110,6 @@ namespace gazebo {
   		idx++;
   		tag.str("");
   		tag << "link" << idx;
-
     }
 
   }
@@ -141,7 +142,7 @@ namespace gazebo {
   /*-------------------*/
 
   int Data::GetLinkCount() {
-    return this->links.size();
+    return 0;
   }
 
   /*-------------------*/

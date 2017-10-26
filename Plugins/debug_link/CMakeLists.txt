@@ -19,5 +19,5 @@ target_link_libraries(data ${GAZEBO_libraries})
 add_library(debug_link_plugin SHARED DebugLink.cc)
 target_link_libraries(debug_link_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES} data)
 
-set(import ${CMAKE_CURRENT_SOURCE_DIR}/import/)
-set(LIBRARY_OUTPUT_PATH ${import} CACHE PATH "Build directory" FORCE)
+set(dir ${CMAKE_CURRENT_SOURCE_DIR}/import/)
+set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)

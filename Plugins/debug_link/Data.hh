@@ -32,10 +32,11 @@ namespace gazebo {
   public:
     Data(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     void ReadVariables();
+    int GetLinkCount();
     // void ShowJoints();
 
     link_param *GetLink(int idx);
-    int GetLinkCount();
+
 
   private:
   	physics::ModelPtr model; // pointer to the parent model

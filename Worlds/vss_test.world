@@ -43,7 +43,7 @@
         <pid>0.001 0 0</pid>
       </plugin>
 
-      <plugin name="player2debug" filename="libdebug_plugin.so">
+      <plugin name="player2debug" filename="libdebug_link_plugin.so">
         <link1 name="chassi">
           <pose scope="worldCG">true</pose>
         </link1>

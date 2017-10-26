@@ -14,12 +14,16 @@ DebugLink::DebugLink() {
 
 	// Create ROS node
 	this->rosNode.reset(new ros::NodeHandle("gazebo_client5"));
+
+  this->pub = this->rosNode->advertise<std_msgs::Float32>("lala", 100);
 }
 
-void DebugLink::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf){
-	std::cout << "cout" << std::endl;
-	ROS_INFO("ros info");
-	gzerr << "gzerr" << std::endl;
+void DebugLink::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
+	std::cout << "oi" << std::endl;
+
+	std_msgs::Float32 teste;
+	teste.data = 10;
+	this->pub.publish(teste);
 
 	// error check
 	if (!_model || !_sdf) {
@@ -33,43 +37,44 @@ void DebugLink::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf){
 
 	this->updateConnection = event::Events::ConnectWorldUpdateEnd(
 		boost::bind(&DebugLink::OnUpdate, this));
+
 }
 
 void DebugLink::setTopics() {
-	int linkCount = this->link_data->GetLinkCount();  // get number of valid links
-	link_param *currentLink;
+	// int linkCount = this->link_data->test();  // get number of valid links
 
-	this->rosPub_vector.resize(linkCount);
-	for (int i = 0; i < linkCount; i++) {
-		currentLink = this->link_data->GetLink(i);
-
-		if(currentLink->valid) {
-			if (currentLink->position) {
-			  this->rosPub_vector[i] = this->rosNode->advertise<std_msgs::Float32>(currentLink->postopic, 100);
-			}
-		}
-	}
+	// link_param *currentLink;
+	//
+	// this->rosPub_vector.resize(linkCount);
+	// for (int i = 0; i < linkCount; i++) {
+	// 	currentLink = this->link_data->GetLink(i);
+	//
+	// 	if(currentLink->valid) {
+	// 		if (currentLink->position) {
+	// 		  this->rosPub_vector[i] = this->rosNode->advertise<std_msgs::Float32>(currentLink->postopic, 100);
+	// 		}
+	// 	}
+	// }
 
 }
 
 void DebugLink::OnUpdate() {
-	int linkCount = this->link_data->GetLinkCount();  // get number of valid links
-	link_param *currentLink;
-	math::Pose linkPose;
+	// int linkCount = this->link_data->GetLinkCount();  // get number of valid links
+	// link_param *currentLink;
+	// math::Pose linkPose;
+	//
+	// for (int i = 0; i < linkCount; i++) {
+	// 	currentLink = this->link_data->GetLink(i);
+	// 	if(currentLink->valid) {
+	// 		if (currentLink->position) {
+	// 		  linkPose = currentLink->link->GetWorldCoGPose();
+	//
+	//
+	// 			std_msgs::Float32 teste;
+	// 			teste.data = 10;
+	// 			this->rosPub_vector[i].publish(teste);
+	// 		}
+	// 	}
+	// }
 
-	for (int i = 0; i < linkCount; i++) {
-		currentLink = this->link_data->GetLink(i);
-		if(currentLink->valid) {
-			if (currentLink->position) {
-			  linkPose = currentLink->link->GetWorldCoGPose();
-
-
-				std_msgs::Float32 teste;
-				teste.data = 10;
-				this->rosPub_vector[i].publish(teste);
-			}
-		}
-	}
-
-	gzmsg << "oi" << std::endl;
 }
