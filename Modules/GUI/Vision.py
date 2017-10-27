@@ -42,13 +42,50 @@ class Vision_Functions():
 			lower_threshold = np.array([colors[color][0], 50, 50])
 			upper_threshold = np.array([colors[color][-1], 255, 255])
 			mask = cv2.inRange(hsv, lower_threshold, upper_threshold)
-			return cv2.bitwise_and(im,im, mask= mask)
+			# Mais filtros para máscara
+			element = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+		    	mask = cv2.erode(mask,element, iterations=2)
+		    	mask = cv2.dilate(mask,element,iterations=2)
+		    	mask = cv2.erode(mask,element)
+			# Cria contornos
+			_, contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+		    	maximumArea = 0
+		    	bestContour = None
+		    	for contour in contours:
+				currentArea = cv2.contourArea(contour)
+				if currentArea > maximumArea:
+			    		bestContour = contour
+			    		maximumArea = currentArea
+		     	# Cria quadrados
+		    	if bestContour is not None:
+				x,y,w,h = cv2.boundingRect(bestContour)
+				cv2.rectangle(im, (x,y),(x+w,y+h), (0,0,255), 1)
+
+			return im
 		else:
 			im_list = []
 			for color in color_list:
 				lower_threshold = np.array([colors[color][0], 50, 50])
 				upper_threshold = np.array([colors[color][-1], 255, 255])
 				mask = cv2.inRange(hsv, lower_threshold, upper_threshold)
+				# Mais filtros para máscara
+				element = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+		    		mask = cv2.erode(mask,element, iterations=2)
+		    		mask = cv2.dilate(mask,element,iterations=2)
+		    		mask = cv2.erode(mask,element)
+				# Cria contornos
+				_, contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+			    	maximumArea = 0
+			    	bestContour = None
+			    	for contour in contours:
+					currentArea = cv2.contourArea(contour)
+					if currentArea > maximumArea:
+				    		bestContour = contour
+				    		maximumArea = currentArea
+				# Cria quadrados
+				if bestContour is not None:
+					x,y,w,h = cv2.boundingRect(bestContour)
+					cv2.rectangle(im_i, (x,y),(x+w,y+h), (0,0,255), 1)
 				im_i = cv2.bitwise_and(im,im, mask= mask)
 				im_list.append(im_i)
 			res = im_list[0]
