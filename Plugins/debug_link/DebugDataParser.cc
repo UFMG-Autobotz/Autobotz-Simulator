@@ -37,7 +37,7 @@ namespace gazebo {
     }
 
   	// read links
-  	sdf::ElementPtr linkParameter, posParameter;
+  	sdf::ElementPtr linkParameter, poseParameter;
 
   	int idx = 1;
   	std::ostringstream tag;
@@ -92,11 +92,11 @@ namespace gazebo {
 
       // read specific joint's pose topic name
   		if (currentLink.pose) {
-        posParameter = linkParameter->GetElementImpl("pose");
-        if (posParameter->HasAttribute("topic")) {
-  			  currentLink.postopic = "/" + posParameter->GetAttribute("topic")->GetAsString();
+        poseParameter = linkParameter->GetElementImpl("pose");
+        if (poseParameter->HasAttribute("topic")) {
+  			  currentLink.postopic = "/" + poseParameter->GetAttribute("topic")->GetAsString();
   		  } else {  // if pose topic isn't given, use default name
-  			  currentLink.postopic = "/" + currentLink.link->GetScopedName() + "/worldcog_pos" ;
+  			  currentLink.postopic = "/" + currentLink.link->GetScopedName() + "/worldcog_pose" ;
         }
         validate_str(currentLink.postopic);
   		}

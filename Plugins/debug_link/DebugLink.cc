@@ -3,6 +3,7 @@
 using namespace gazebo;
 GZ_REGISTER_MODEL_PLUGIN(DebugLink)
 
+/*-------------------*/
 
 DebugLink::DebugLink() {
 	// Initialize ROS
@@ -15,6 +16,8 @@ DebugLink::DebugLink() {
 	// Create ROS node
 	this->rosNode.reset(new ros::NodeHandle("gazebo_client5"));
 }
+
+/*-------------------*/
 
 void DebugLink::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 	// error check
@@ -29,8 +32,9 @@ void DebugLink::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
 	this->updateConnection = event::Events::ConnectWorldUpdateEnd(
 		boost::bind(&DebugLink::OnUpdate, this));
-
 }
+
+/*-------------------*/
 
 void DebugLink::setTopics() {
 	int linkCount = this->link_data->GetLinkCount();  // get number of valid links
@@ -43,14 +47,14 @@ void DebugLink::setTopics() {
 
 		std::cout << currentLink->pose << std::endl;
 
-		if(currentLink->valid) {
-			if (currentLink->pose) {
-			  this->rosPub_vector[i] = this->rosNode->advertise<geometry_msgs::Pose>(currentLink->postopic, 100);
-			}
+		if(currentLink->valid && currentLink->pose) {
+			 this->rosPub_vector[i] = this->rosNode->advertise<geometry_msgs::Pose>(currentLink->postopic, 100);
 		}
 	}
 
 }
+
+/*-------------------*/
 
 void DebugLink::OnUpdate() {
 	int linkCount = this->link_data->GetLinkCount();  // get number of valid links
@@ -59,28 +63,21 @@ void DebugLink::OnUpdate() {
 
 	for (int i = 0; i < linkCount; i++) {
 		currentLink = this->link_data->GetLink(i);
-		if(currentLink->valid) {
-			if (currentLink->pose) {
-			  linkPose = currentLink->link->GetWorldCoGPose();
+		if(currentLink->valid && currentLink->pose) {
+		  linkPose = currentLink->link->GetWorldCoGPose();
 
-				// std::cout << linkPose.pos.x << std::endl;
+			geometry_msgs::Pose currentLink_pose;
 
-				// std_msgs::Float32 teste;
+			currentLink_pose.position.x = linkPose.pos.x;
+			currentLink_pose.position.y = linkPose.pos.y;
+			currentLink_pose.position.z = linkPose.pos.z;
 
-				geometry_msgs::Pose currentLink_pose;
+			currentLink_pose.orientation.x =linkPose.rot.x;
+			currentLink_pose.orientation.y =linkPose.rot.y;
+			currentLink_pose.orientation.z =linkPose.rot.z;
+			currentLink_pose.orientation.w =linkPose.rot.w;
 
-				currentLink_pose.position.x = linkPose.pos.x;
-				currentLink_pose.position.y = linkPose.pos.y;
-				currentLink_pose.position.z = linkPose.pos.z;
-
-				currentLink_pose.orientation.x =linkPose.rot.x;
-				currentLink_pose.orientation.y =linkPose.rot.y;
-				currentLink_pose.orientation.z =linkPose.rot.z;
-				currentLink_pose.orientation.w =linkPose.rot.w;
-
-				// teste.data = 10;
-				this->rosPub_vector[i].publish(currentLink_pose);
-			}
+			this->rosPub_vector[i].publish(currentLink_pose);
 		}
 	}
 
