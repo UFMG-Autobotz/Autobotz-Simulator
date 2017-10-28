@@ -12,12 +12,13 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
+add_library(_pid_control_data_parser SHARED PIDControlDataParser.cc)
+target_link_libraries(_pid_control_data_parser ${GAZEBO_libraries})
 
-add_library(data SHARED Data.cpp)
-target_link_libraries(data ${GAZEBO_libraries})
+add_library(_pid_control_plugin SHARED PIDControlPlugin.cc)
+target_link_libraries(_pid_control_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES} _pid_control_data_parser)
+add_dependencies(_pid_control_plugin _pid_control_data_parser)
 
-add_library(pid_control_plugin SHARED PIDControlPlugin.cpp)
-target_link_libraries(pid_control_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES} data)
-
+# Choose where the plugin will be built
 set(dir ${CMAKE_CURRENT_SOURCE_DIR}/import/)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)

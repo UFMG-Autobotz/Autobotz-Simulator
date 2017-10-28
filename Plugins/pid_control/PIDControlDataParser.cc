@@ -1,4 +1,4 @@
-#include "Data.hpp"
+#include "PIDControlDataParser.hh"
 
 namespace gazebo {
 
@@ -14,14 +14,14 @@ namespace gazebo {
 
   /*-------------------*/
 
-  Data::Data(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
+  PIDControlDataParser::PIDControlDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
     this->model = _model;
     this->sdf = _sdf;
   }
 
   /*-------------------*/
 
-  void Data::ReadVariables() {
+  void PIDControlDataParser::ReadVariables() {
     joint_param currentJoint;
 
     // read global velocity pid gains
@@ -190,7 +190,7 @@ namespace gazebo {
 
   /*-------------------*/
 
-  void Data::ShowJoints() {
+  void PIDControlDataParser::ShowJoints() {
     int n_joints = this->joints.size();
     std::cout << std::endl << "------------------------" << std::endl;
     gzmsg << "PID Control found "<< n_joints << " joints:" << std::endl;
@@ -215,13 +215,13 @@ namespace gazebo {
 
   /*-------------------*/
 
-  int Data::GetJointCount() {
+  int PIDControlDataParser::GetJointCount() {
     return this->joints.size();
   }
 
   /*-------------------*/
 
-  joint_param *Data::GetJoint(int idx) {
+  joint_param *PIDControlDataParser::GetJoint(int idx) {
     return &this->joints[idx];
   }
 

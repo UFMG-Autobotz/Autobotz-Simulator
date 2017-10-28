@@ -17,7 +17,10 @@
       </include>
 
       <!-- Attach the plugin to this model -->
-      <plugin name="VT_sim_control" filename="libvt_sim_plugin.so"/>
+      <plugin name="VT_sim_control" filename="lib_pid_control_plugin.so">
+        <velocity>true</velocity>
+        <pid>5 0 0</pid>
+      </plugin>
     </model>
 
   </world>

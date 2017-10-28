@@ -1,5 +1,5 @@
-#ifndef _DATA_HH_
-#define _DATA_HH_
+#ifndef _DATA_PID_HH_
+#define _DATA_PID_HH_
 
 #include <iostream>
 #include <vector>
@@ -34,20 +34,17 @@ namespace gazebo {
     std::string postopic; // name of the rostopic that will control the position
   } joint_param;
 
-  class Data {
-  public:
-    Data(physics::ModelPtr _model, sdf::ElementPtr _sdf);
-    void ReadVariables();
-    void ShowJoints();
+  class PIDControlDataParser {
 
-    joint_param *GetJoint(int idx);
-    int GetJointCount();
+    public: PIDControlDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf);
+    public: void ReadVariables();
+    public: void ShowJoints();
+    public: joint_param *GetJoint(int idx);
+    public: int GetJointCount();
 
-  private:
-  	physics::ModelPtr model; // pointer to the parent model
-  	sdf::ElementPtr sdf; // pointer to the sdf
-
-    std::vector<joint_param> joints;  // vector with each valid joint data
+  	private: physics::ModelPtr model; // pointer to the parent model
+  	private: sdf::ElementPtr sdf; // pointer to the sdf
+    private: std::vector<joint_param> joints;  // vector with each valid joint data
   };
 
 }

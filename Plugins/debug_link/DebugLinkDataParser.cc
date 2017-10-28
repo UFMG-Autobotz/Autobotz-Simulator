@@ -1,4 +1,4 @@
-#include "DebugDataParser.hh"
+#include "DebugLinkDataParser.hh"
 
 namespace gazebo {
 
@@ -14,14 +14,14 @@ namespace gazebo {
 
   /*-------------------*/
 
-  DebugDataParser::DebugDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
+  DebugLinkDataParser::DebugLinkDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
     this->model = _model;
     this->sdf = _sdf;
   }
 
   /*-------------------*/
 
-  void DebugDataParser::ReadVariables() {
+  void DebugLinkDataParser::ReadVariables() {
     link_param currentLink;
 
     // read global velocity (if false or not set, velocity won't be controlled)
@@ -114,7 +114,7 @@ namespace gazebo {
 
   /*-------------------*/
 
-  // void DebugDataParser::ShowJoints() {
+  // void DebugLinkDataParser::ShowJoints() {
   //   int n_joints = this->joints.size();
   //   std::cout << std::endl << "------------------------" << std::endl;
   //   gzmsg << "PID Control found "<< n_joints << " joints:" << std::endl;
@@ -139,13 +139,13 @@ namespace gazebo {
 
   /*-------------------*/
 
-  int DebugDataParser::GetLinkCount() {
+  int DebugLinkDataParser::GetLinkCount() {
     return links.size();
   }
 
   /*-------------------*/
 
-  link_param *DebugDataParser::GetLink(int idx) {
+  link_param *DebugLinkDataParser::GetLink(int idx) {
     return &this->links[idx];
   }
 

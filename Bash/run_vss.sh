@@ -17,9 +17,9 @@ export GAZEBO_RESOURCE_PATH=$(pwd)/Meshs:$GAZEBO_RESOURCE_PATH
 export GAZEBO_MODEL_PATH=$(pwd)/Models:$GAZEBO_MODEL_PATH
 
 # adicionar caminho para os plugins
-export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/PID_Control/import:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/pid_control/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/debug_link/import:${GAZEBO_PLUGIN_PATH}
-export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/camera_plugin/import:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/camera_ros/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/change_texture/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/vss_players_config/import:${GAZEBO_PLUGIN_PATH}
 

@@ -16,13 +16,13 @@
 */
 
 #include "gazebo/sensors/DepthCameraSensor.hh"
-#include "CameraPlugin.hh"
+#include "CameraRosPlugin.hh"
 
 using namespace gazebo;
-GZ_REGISTER_SENSOR_PLUGIN(CameraPlugin)
+GZ_REGISTER_SENSOR_PLUGIN(CameraRosPlugin)
 
 /////////////////////////////////////////////////
-CameraPlugin::CameraPlugin()
+CameraRosPlugin::CameraRosPlugin()
 : SensorPlugin(), width(0), height(0), depth(0)
 {
   // Initialize ROS
@@ -37,14 +37,14 @@ CameraPlugin::CameraPlugin()
 }
 
 /////////////////////////////////////////////////
-CameraPlugin::~CameraPlugin()
+CameraRosPlugin::~CameraRosPlugin()
 {
   this->parentSensor.reset();
   this->camera.reset();
 }
 
 /////////////////////////////////////////////////
-void CameraPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
+void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
 {
   if (!_sensor)
     gzerr << "Invalid sensor pointer.\n";
@@ -73,7 +73,7 @@ void CameraPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
   this->format = this->camera->ImageFormat();
 
   this->newFrameConnection = this->camera->ConnectNewImageFrame(
-      std::bind(&CameraPlugin::OnNewFrame, this,
+      std::bind(&CameraRosPlugin::OnNewFrame, this,
         std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
         std::placeholders::_4, std::placeholders::_5));
 
@@ -90,7 +90,7 @@ void CameraPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
 }
 
 /////////////////////////////////////////////////
-void CameraPlugin::OnNewFrame(const unsigned char * _image,
+void CameraRosPlugin::OnNewFrame(const unsigned char * _image,
                               unsigned int _width,
                               unsigned int _height,
                               unsigned int _depth,

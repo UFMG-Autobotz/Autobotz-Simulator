@@ -1,5 +1,5 @@
-#ifndef _DATA_DEBUG_HH_
-#define _DATA_DEBUG_HH_
+#ifndef _DEBUG_LINK_DATA_PARSER_HH_
+#define _DEBUG_LINK_DATA_PARSER_HH_
 
 #include <iostream>
 #include <vector>
@@ -32,9 +32,9 @@ namespace gazebo {
 
   /*-------------------*/
 
-  class DebugDataParser {
+  class DebugLinkDataParser {
 
-    public: DebugDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf);
+    public: DebugLinkDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     public: void ReadVariables();
     public: int GetLinkCount();
     // void ShowJoints();

@@ -20,11 +20,13 @@ Plugins/ros_connection/build
 Plugins/template_plugin/build
 Plugins/get_joints/build
 Plugins/camera_plugin/build
+Plugins/debug_link/build
 
-Plugins/PID_Control/import/libdata.so
-Plugins/PID_Control/import/libpid_control_plugin.so
-Plugins/camera_plugin/import/libcamera_plugin.so
+Plugins/pid_control/import/lib_pid_control_data_parser.so
+Plugins/pid_control/import/lib_pid_control_plugin.so
+Plugins/camera_ros/import/lib_camera_ros_plugin.so
 Plugins/change_texture/import/libchange_texture.so
-Plugins/debug_link/import/libdebug_link_plugin.so
+Plugins/debug_link/import/lib_debug_link_data_parser.so
+Plugins/debug_link/import/lib_debug_link_plugin.so
 Plugins/get_joints/import/libget_joints_plugin.so
 Plugins/vss_players_config/import/libPlayers_Config.so

@@ -1,11 +1,11 @@
-#include "DebugLink.hh"
+#include "DebugLinkPlugin.hh"
 
 using namespace gazebo;
-GZ_REGISTER_MODEL_PLUGIN(DebugLink)
+GZ_REGISTER_MODEL_PLUGIN(DebugLinkPlugin)
 
 /*-------------------*/
 
-DebugLink::DebugLink() {
+DebugLinkPlugin::DebugLinkPlugin() {
 	// Initialize ROS
 	if (!ros::isInitialized()) {
 		int argc = 0;
@@ -19,24 +19,24 @@ DebugLink::DebugLink() {
 
 /*-------------------*/
 
-void DebugLink::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
+void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 	// error check
 	if (!_model || !_sdf) {
 		gzerr << "No visual or SDF element specified. Plugin won't load." << std::endl;
 		return;
 	}
 
-	this->link_data.reset(new DebugDataParser(_model, _sdf));
+	this->link_data.reset(new DebugLinkDataParser(_model, _sdf));
 	this->link_data->ReadVariables();
 	this->setTopics();
 
 	this->updateConnection = event::Events::ConnectWorldUpdateEnd(
-		boost::bind(&DebugLink::OnUpdate, this));
+		boost::bind(&DebugLinkPlugin::OnUpdate, this));
 }
 
 /*-------------------*/
 
-void DebugLink::setTopics() {
+void DebugLinkPlugin::setTopics() {
 	int linkCount = this->link_data->GetLinkCount();  // get number of valid links
 
 	link_param *currentLink;
@@ -56,7 +56,7 @@ void DebugLink::setTopics() {
 
 /*-------------------*/
 
-void DebugLink::OnUpdate() {
+void DebugLinkPlugin::OnUpdate() {
 	int linkCount = this->link_data->GetLinkCount();  // get number of valid links
 	link_param *currentLink;
 	math::Pose linkPose;

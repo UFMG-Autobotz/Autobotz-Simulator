@@ -14,8 +14,8 @@
  * limitations under the License.
  *
 */
-#ifndef _GAZEBO_CAMERA_PLUGIN_HH_
-#define _GAZEBO_CAMERA_PLUGIN_HH_
+#ifndef _GAZEBO_CAMERA_ROS_PLUGIN_HH_
+#define _GAZEBO_CAMERA_ROS_PLUGIN_HH_
 
 #include <string>
 
@@ -32,11 +32,9 @@
 #include <thread>
 
 namespace gazebo {
-  class GAZEBO_VISIBLE CameraPlugin : public SensorPlugin {
-    public: CameraPlugin();
-
-    /// \brief Destructor
-    public: virtual ~CameraPlugin();
+  class GAZEBO_VISIBLE CameraRosPlugin : public SensorPlugin {
+    public: CameraRosPlugin();
+    public: ~CameraRosPlugin();
 
     public: virtual void Load(sensors::SensorPtr _sensor, sdf::ElementPtr _sdf);
 

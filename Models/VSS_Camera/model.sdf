@@ -40,7 +40,7 @@
         <always_on>1</always_on>
         <update_rate>30</update_rate>
         <visualize>false</visualize>
-        <plugin name='camera_plugin' filename='libcamera_plugin.so'></plugin>
+        <plugin name='camera_plugin' filename='lib_camera_ros_plugin.so'></plugin>
       </sensor>
     </link>
   </model>

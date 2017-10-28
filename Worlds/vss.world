@@ -26,12 +26,12 @@
         <pose>-0.2 0 0 0 0 0</pose>
       </include>
 
-      <plugin name="player 1 control" filename="libpid_control_plugin.so">
+      <plugin name="player 1 control" filename="lib_pid_control_plugin.so">
         <velocity>true</velocity>
         <pid>0.001 0 0</pid>
       </plugin>
 
-      <plugin name="player 1 debug" filename="libdebug_link_plugin.so">
+      <plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
         <link1 name="player::chassi">
           <pose scope="worldCG" topic="player1/pose">true</pose>
         </link1>
@@ -44,12 +44,12 @@
         <pose>0.2 0 0 0 0 3.14</pose>
       </include>
 
-      <plugin name="player 2 control" filename="libpid_control_plugin.so">
+      <plugin name="player 2 control" filename="lib_pid_control_plugin.so">
         <velocity>true</velocity>
         <pid>0.001 0 0</pid>
       </plugin>
 
-      <plugin name="player 2 debug" filename="libdebug_link_plugin.so">
+      <plugin name="player 2 debug" filename="lib_debug_link_plugin.so">
         <link1 name="player::chassi">
           <pose scope="worldCG" topic="player2/pose">true</pose>
         </link1>
@@ -61,7 +61,7 @@
         <uri>model://VSS_Ball/</uri>
       </include>
 
-      <plugin name="ball debug" filename="libdebug_link_plugin.so">
+      <plugin name="ball debug" filename="lib_debug_link_plugin.so">
         <link1 name="VSS ball::ball">
           <pose scope="worldCG" topic="ball/pose">true</pose>
         </link1>

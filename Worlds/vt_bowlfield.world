@@ -27,8 +27,9 @@
         <pose>0 0 4.941 0 0 0</pose>
       </include>
 
-      <plugin name="vt_sim plugin" filename="libvt_sim_plugin.so">
-        <pid_kp>5</pid_kp>
+      <plugin name="vt_sim plugin" filename="lib_pid_control_plugin.so">
+        <velocity>true</velocity>
+        <pid>5 0 0</pid>
       </plugin>
     </model>
 
