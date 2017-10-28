@@ -1,4 +1,4 @@
-#include "Data.hh"
+#include "DebugDataParser.hh"
 
 namespace gazebo {
 
@@ -14,17 +14,15 @@ namespace gazebo {
 
   /*-------------------*/
 
-  Data::Data(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
+  DebugDataParser::DebugDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
     this->model = _model;
     this->sdf = _sdf;
   }
 
   /*-------------------*/
 
-  void Data::ReadVariables() {
+  void DebugDataParser::ReadVariables() {
     link_param currentLink;
-
-    gzmsg << std::endl << "TESTE" << std::endl;
 
     // read global velocity (if false or not set, velocity won't be controlled)
     // bool global_velocity = false;
@@ -32,10 +30,10 @@ namespace gazebo {
     //   global_velocity = this->sdf->Get<bool>("velocity");
     // }
 
-    // read global position (if false or not set, position won't be controlled)
-    bool global_position = false;
-    if (this->sdf->HasElement("position")) {
-      global_position = this->sdf->Get<bool>("position");
+    // read global pose (if false or not set, pose won't be controlled)
+    bool global_pose = false;
+    if (this->sdf->HasElement("pose")) {
+      global_pose = this->sdf->Get<bool>("pose");
     }
 
   	// read links
@@ -76,10 +74,10 @@ namespace gazebo {
   		// 	currentJoint.velocity = jointParameter->Get<bool>("velocity");
   		// }
 
-      // read specific link's position (if false or not set, position won't be controlled)
-  		currentLink.position = global_position;
-  		if (linkParameter->HasElement("position")) {
-  			currentLink.position = linkParameter->Get<bool>("position");
+      // read specific link's pose (if false or not set, pose won't be controlled)
+  		currentLink.pose = global_pose;
+  		if (linkParameter->HasElement("pose")) {
+  			currentLink.pose = linkParameter->Get<bool>("pose");
   		}
 
       // read specific joint's velocity topic name
@@ -92,13 +90,13 @@ namespace gazebo {
       //   validate_str(currentJoint.veltopic);
   		// }
 
-      // read specific joint's position topic name
-  		if (currentLink.position) {
-        posParameter = linkParameter->GetElementImpl("position");
+      // read specific joint's pose topic name
+  		if (currentLink.pose) {
+        posParameter = linkParameter->GetElementImpl("pose");
         if (posParameter->HasAttribute("topic")) {
   			  currentLink.postopic = "/" + posParameter->GetAttribute("topic")->GetAsString();
-  		  } else {  // if position topic isn't given, use default name
-  			  currentLink.postopic = "/" + currentLink.link->GetScopedName() + "/worldcog_pos";
+  		  } else {  // if pose topic isn't given, use default name
+  			  currentLink.postopic = "/" + currentLink.link->GetScopedName() + "/worldcog_pos" ;
         }
         validate_str(currentLink.postopic);
   		}
@@ -116,7 +114,7 @@ namespace gazebo {
 
   /*-------------------*/
 
-  // void Data::ShowJoints() {
+  // void DebugDataParser::ShowJoints() {
   //   int n_joints = this->joints.size();
   //   std::cout << std::endl << "------------------------" << std::endl;
   //   gzmsg << "PID Control found "<< n_joints << " joints:" << std::endl;
@@ -126,12 +124,12 @@ namespace gazebo {
   //
   //     std::string control = " (not controlled)";
   //     if (this->joints[i].valid) {
-  //       if (this->joints[i].velocity && this->joints[i].position) {
-  //         control = " (controlling velocity and position)";
+  //       if (this->joints[i].velocity && this->joints[i].pose) {
+  //         control = " (controlling velocity and pose)";
   //       } else if (this->joints[i].velocity) {
   //         control = " (controlling velocity)";
-  //       } else if (this->joints[i].position) {
-  //         control = " (controlling position)";
+  //       } else if (this->joints[i].pose) {
+  //         control = " (controlling pose)";
   //       }
   //     }
   //     gzmsg << this->joints[i].name << control << std::endl;
@@ -141,13 +139,13 @@ namespace gazebo {
 
   /*-------------------*/
 
-  int Data::GetLinkCount() {
-    return 0;
+  int DebugDataParser::GetLinkCount() {
+    return links.size();
   }
 
   /*-------------------*/
 
-  link_param *Data::GetLink(int idx) {
+  link_param *DebugDataParser::GetLink(int idx) {
     return &this->links[idx];
   }
 

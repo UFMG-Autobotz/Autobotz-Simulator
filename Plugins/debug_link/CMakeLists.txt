@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 find_package(roscpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 include_directories(${roscpp_INCLUDE_DIRS})
 include_directories(${std_msgs_INCLUDE_DIRS})
+include_directories(${geometry_msgs_INCLUDE_DIRS})
 
 # Find Gazebo
 find_package(gazebo REQUIRED)
@@ -12,12 +14,12 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
-
-add_library(data SHARED Data.cc)
-target_link_libraries(data ${GAZEBO_libraries})
+add_library(debug_data_parser SHARED DebugDataParser.cc)
+target_link_libraries(debug_data_parser ${GAZEBO_libraries})
 
 add_library(debug_link_plugin SHARED DebugLink.cc)
-target_link_libraries(debug_link_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES} data)
+target_link_libraries(debug_link_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES} debug_data_parser)
+add_dependencies(debug_link_plugin debug_data_parser)
 
 set(dir ${CMAKE_CURRENT_SOURCE_DIR}/import/)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)

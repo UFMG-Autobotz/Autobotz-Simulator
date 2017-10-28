@@ -15,9 +15,11 @@
 #include <ros/console.h>
 #include "ros/subscribe_options.h"
 #include "std_msgs/Float32.h"
+#include "geometry_msgs/Pose.h"
+
 #include <thread>
 
-#include "Data.hh"
+#include "DebugDataParser.hh"
 
 namespace gazebo {
 	class DebugLink : public ModelPlugin {
@@ -27,11 +29,11 @@ namespace gazebo {
 		public: void setTopics();
 		public: void OnUpdate();
 
-		private: std::unique_ptr<Data> link_data;
-		private: std::unique_ptr<ros::NodeHandle> rosNode;	/// \brief A node use for ROS transport
+		private: std::unique_ptr<DebugDataParser> link_data;
+		private: std::unique_ptr<ros::NodeHandle> rosNode; /// \brief A node use for ROS transport
 		private: std::vector<ros::Publisher> rosPub_vector;  /// \brief A ROS publisher
 		private: event::ConnectionPtr updateConnection; // events
-		private: ros::Publisher pub:
+		private: ros::Publisher pub;
 	};
 }
 

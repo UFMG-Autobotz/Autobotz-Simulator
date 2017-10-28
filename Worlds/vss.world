@@ -44,7 +44,7 @@
       </plugin>
 
       <plugin name="player2debug" filename="libdebug_link_plugin.so">
-        <link1 name="chassi">
+        <link1 name="player::chassi">
           <pose scope="worldCG">true</pose>
         </link1>
       </plugin>

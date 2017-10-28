@@ -1,5 +1,5 @@
-#ifndef _DATA_HH_
-#define _DATA_HH_
+#ifndef _DATA_DEBUG_HH_
+#define _DATA_DEBUG_HH_
 
 #include <iostream>
 #include <vector>
@@ -15,6 +15,8 @@ namespace gazebo {
   bool invalidChar (char c);
   void validate_str(std::string & str);
 
+  /*-------------------*/
+
   typedef struct _link_param{
     bool valid; // whether this joint is valid (only revolute and prismatic joints are valid)
 
@@ -22,27 +24,26 @@ namespace gazebo {
     physics::LinkPtr link; // pointer to the link
 
     // bool velocity;  // whether the velocity of the link will be controlled
-    bool position;  // whether the position of the link will be controlled
+    bool pose;  // whether the position of the link will be controlled
 
     // std::string veltopic; // name of the rostopic that will control the velocity
     std::string postopic; // name of the rostopic that will control the position
   } link_param;
 
-  class Data {
-  public:
-    Data(physics::ModelPtr _model, sdf::ElementPtr _sdf);
-    void ReadVariables();
-    int GetLinkCount();
+  /*-------------------*/
+
+  class DebugDataParser {
+
+    public: DebugDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf);
+    public: void ReadVariables();
+    public: int GetLinkCount();
     // void ShowJoints();
+    public: link_param *GetLink(int idx);
 
-    link_param *GetLink(int idx);
 
-
-  private:
-  	physics::ModelPtr model; // pointer to the parent model
-  	sdf::ElementPtr sdf; // pointer to the sdf
-
-    std::vector<link_param> links;  // vector with each valid joint data
+  	private: physics::ModelPtr model; // pointer to the parent model
+  	private: sdf::ElementPtr sdf; // pointer to the sdf
+    private: std::vector<link_param> links;  // vector with each valid joint data
   };
 
 }
