@@ -22,6 +22,7 @@ export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/debug_link/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/camera_ros/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/change_texture/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/vss_players_config/import:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/set_model_pose/import:${GAZEBO_PLUGIN_PATH}
 
 # iniciar gazebo com mundo parado
 gazebo Worlds/vss.world -u --verbose

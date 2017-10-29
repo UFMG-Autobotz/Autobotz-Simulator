@@ -7,6 +7,9 @@
       <param2 model="player2">VSS_Player/blue2</param2>
     </plugin>
 
+    <plugin name="set position" filename="lib_set_model_pose_plugin.so">
+    </plugin>
+
     <!-- A global light source -->
     <include>
       <uri>model://sun</uri>
