@@ -25,6 +25,8 @@ void SetModelPosePlugin::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf) {
     return;
   }
 
+	this->world = _world;
+
 	this->model_data.reset(new SetModelPoseDataParser(_world, _sdf));
 	this->model_data->ReadVariables();
 	// this->model_data->ShowJoints();
@@ -65,7 +67,7 @@ void SetModelPosePlugin::Config() {
 
 // Set the joint's target position
 void SetModelPosePlugin::SetPose(math::Pose &_pose, int model_ID) {
-	this->model_data->GetModel(model_ID)->model->SetWorldPose(_pose);
+	this->model_data->GetModel(model_ID)->model->SetWorldPose(_pose, true, true);
 }
 
 /*-------------------*/
@@ -85,7 +87,9 @@ void SetModelPosePlugin::OnRosMsg(const geometry_msgs::PoseConstPtr &_msg, const
 	pose.rot.z = _msg->orientation.z;
 	pose.rot.w = _msg->orientation.w;
 
-	this->SetPose(pose, model_ID);
+	if (world->IsPaused()) {
+		this->SetPose(pose, model_ID);
+	}
 }
 
 /*-------------------*/

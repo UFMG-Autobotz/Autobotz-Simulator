@@ -28,7 +28,6 @@ namespace gazebo {
 		private: std::unique_ptr<ros::NodeHandle> rosNode; /// \brief A node use for ROS transport
 		private: std::vector<ros::Publisher> rosPub_vector;  /// \brief A ROS publisher
 		private: event::ConnectionPtr updateConnection; // events
-		private: ros::Publisher pub;
 
 	};
 }

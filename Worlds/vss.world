@@ -7,8 +7,8 @@
       <param2 model="player2">VSS_Player/blue2</param2>
     </plugin>
 
-    <plugin name="set position" filename="lib_set_model_pose_plugin.so">
-    </plugin>
+    <plugin name="set position" filename="lib_set_model_pose_plugin.so" />
+    <plugin name="reset world" filename="lib_events_plugin.so" />
 
     <!-- A global light source -->
     <include>

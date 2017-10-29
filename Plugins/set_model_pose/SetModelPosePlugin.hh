@@ -26,7 +26,7 @@ namespace gazebo {
 		private: std::vector<ros::Subscriber> rosSub_vector;  /// \brief A ROS subscriber
 		private: ros::CallbackQueue rosQueue; /// \brief A ROS callbackqueue that helps process messages
 		private: std::thread rosQueueThread;/// \brief A thread the keeps running the rosQueue
-
+		private: physics::WorldPtr world;
 	};
 }
 #endif
