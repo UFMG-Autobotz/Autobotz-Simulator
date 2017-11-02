@@ -13,5 +13,6 @@ if __name__ == '__main__':
         try:
             Bola()
             Robo()
+            rospy.spin()
         except rospy.ROSInterruptException: 
             pass

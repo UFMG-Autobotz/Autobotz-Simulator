@@ -10,7 +10,6 @@ class Bola():
     def __init__(self):
         self.pos = Vetor(0, 0)
         rospy.Subscriber("/ball/pose", Pose, self.recebe_dados)
-        rospy.spin()
 
     # recebe posicao da bola
     def recebe_dados(self, msg):

@@ -26,7 +26,6 @@ class Robo():
 
         rospy.Subscriber("/player1/pose", Pose, self.recebe_dados)
         rospy.Subscriber("/player2/pose", Pose, self.recebe_dados_adversario)
-        rospy.spin()
 
         self.vel = 0 #velocidade linear (inicializada como zero)
         self.omega = 0 #velocidade angular (inicializada como zero)
@@ -59,7 +58,6 @@ class Robo():
 
      # recebe posicao e orientacao da visao
     def recebe_dados(self, msg):
-
     	self.pos.x = msg.position.x
     	self.pos.y = msg.position.y
 
@@ -76,21 +74,19 @@ class Robo():
 
 
     def envia_dados(self):
-        omegaE = self.omegaE
-        omegaD = self.omegaD
-    	campo = Campo()
-    	bola = Bola()
+        campo = Campo()
+        bola = Bola()
     	self.encontra_posicao_goleiro(campo, bola)
     	self.encontra_velocidades()
+        omegaE = self.omegaE
+        omegaD = self.omegaD
     	pubR = rospy.Publisher('/player1__player__chassi_right_wheel/joint_vel', Float32, queue_size = 100)
     	pubL = rospy.Publisher('/player1__player__chassi_left_wheel/joint_vel', Float32, queue_size = 100)
     	rate = rospy.Rate(10)
     	while not rospy.is_shutdown():
-            rospy.loginfo(omegaD)
             pubR.publish(omegaD)
             pubL.publish(omegaE)
             rate.sleep()
-
 
 
    #encontra posicao e orientacao desejadas para goleiro
