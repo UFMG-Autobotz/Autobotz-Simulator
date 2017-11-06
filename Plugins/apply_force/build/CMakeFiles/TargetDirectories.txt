@@ -1,3 +1,0 @@
-/home/barbara/Simulacao/VT_sim/Plugins/apply_force/build/CMakeFiles/rebuild_cache.dir
-/home/barbara/Simulacao/VT_sim/Plugins/apply_force/build/CMakeFiles/edit_cache.dir
-/home/barbara/Simulacao/VT_sim/Plugins/apply_force/build/CMakeFiles/apply_force.dir

@@ -11,4 +11,4 @@ Robot:
     Right: [/player2__player__chassi_right_wheel/joint_vel]
     VelStraight: 10
     VelCurve: 9
-    KeyConfig: oklm
+    KeyConfig: arrows

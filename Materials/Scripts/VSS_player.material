@@ -1,0 +1,96 @@
+material VSS_player/DarkGrey
+{
+  technique
+  {
+    pass main
+    {
+      ambient .175 .175 .175  1.0
+      diffuse .175 .175 .175  1.0
+      specular .175 .175 .175 1.000000 1.500000
+    }
+  }
+}
+
+material VSS_player/blue1
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture blue1.png
+      }
+    }
+  }
+}
+
+material VSS_player/blue2
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture blue2.png
+      }
+    }
+  }
+}
+
+material VSS_player/blue3
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture blue3.png
+      }
+    }
+  }
+}
+
+material VSS_player/yellow1
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture yellow1.png
+      }
+    }
+  }
+}
+
+material VSS_player/yellow2
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture yellow2.png
+      }
+    }
+  }
+}
+
+material VSS_player/yellow3
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture yellow3.png
+      }
+    }
+  }
+}

@@ -277,7 +277,7 @@
   </library_lights>
   <library_images>
     <image id="Material_001_Diffuse_Color_png" name="Material_001_Diffuse_Color_png">
-      <init_from>../Materials/Textures/court_material.png</init_from>
+      <init_from>../Materials/Textures/VSS_court_material.png</init_from>
     </image>
   </library_images>
   <library_effects>
