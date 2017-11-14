@@ -1,16 +1,16 @@
-# PID Joint control
-> The *PID_Control* is a Gazebo model plugin used to receive ROS messages to control the velocity and/or position of a joint via Gazebo PID controller. The plugin can be used with revolute and prismatic joints.
+# PID Joint control plugin
+> The *PID Control* is a Gazebo *model* plugin used to receive ROS messages to control the velocity and/or position of a joint via Gazebo PID controller. The plugin can be used with revolute and prismatic joints.
 
 ## How to use
 ### Compile
-On the PID_Control directory run on terminal:
+On the `GENERIC_pid_control` directory run on terminal:
 
 ```
 bash compile.sh
 ```
 
 ### Add plugin
-Use the `plugin` SDF tag to add the PID control to a model.
+Use the `plugin` SDF tag to add the PID control plugin to a model.
 This tag has two required attributes:
 * **name:** A unique name, scoped to its parent.
 * **filename:** lib_pid_control_plugin.so
