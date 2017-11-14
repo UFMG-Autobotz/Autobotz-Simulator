@@ -18,7 +18,7 @@ Plugins/GENERIC_camera_ros/build
 Plugins/GENERIC_change_texture/build
 Plugins/GENERIC_debug_link/build
 Plugins/GENERIC_events/build
-Plugins/GENERIC_pid_control
+Plugins/GENERIC_pid_control/build
 Plugins/GENERIC_set_model_pose/build
 
 Plugins/TEST_get_joints/build
