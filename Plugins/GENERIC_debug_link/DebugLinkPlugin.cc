@@ -45,8 +45,6 @@ void DebugLinkPlugin::setTopics() {
 	for (int i = 0; i < linkCount; i++) {
 		currentLink = this->link_data->GetLink(i);
 
-		std::cout << currentLink->pose << std::endl;
-
 		if(currentLink->valid && currentLink->pose) {
 			 this->rosPub_vector[i] = this->rosNode->advertise<geometry_msgs::Pose>(currentLink->postopic, 100);
 		}
