@@ -2,7 +2,7 @@
 
 Plugin | Scope | Plugin Status | Documentation Status
 ---| --- | --- | ---
-Camera ROS | Generic | Done | In progress
+Camera ROS | Generic | Done | Done
 Change texture | Generic | Done | To do
 Debug link | Generic | In progress | To do
 Events | Generic | In progress | To do

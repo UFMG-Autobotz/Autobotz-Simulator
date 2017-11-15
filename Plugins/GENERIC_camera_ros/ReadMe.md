@@ -1,5 +1,3 @@
-*Doc in progress...*
-
 # Camera ROS plugin
 > The *Camera ROS* is a Gazebo *sensor* plugin used to send Gazebo camera output via ROS messages. The plugin is a modification of the camera plugin that comes with Gazebo.
 
@@ -22,3 +20,6 @@ Before running the world, set the import directory to the GAZEBO_PLUGIN_PATH so 
 ```
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_camera_ros/import:${GAZEBO_PLUGIN_PATH}
 ```
+
+### ROS Message
+The plugin publishes ROS messages of type `sensor_msgs/Image` to send the camera output.

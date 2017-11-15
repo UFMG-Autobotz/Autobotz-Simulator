@@ -118,3 +118,6 @@ The `pid`, `vel_pid` and `pos_pid` tags set the pid gains for the variables cont
   </joint2>
 </plugin>
 ```
+
+### ROS Message
+The plugin subscribes to ROS messages of type `std_msgs/Float32` to receive the position or velocity.
