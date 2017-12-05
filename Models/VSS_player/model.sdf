@@ -122,7 +122,7 @@
           </script>
         </material>
 
-        <plugin name="texture" filename="libchange_texture.so"> </plugin>
+        <plugin name="texture" filename="lib_change_texture.so"> </plugin>
       </visual>
 
     </link>
