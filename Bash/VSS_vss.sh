@@ -1,5 +1,5 @@
-# preparar para rodar mundo
-bash Setup/vss.sh
+# preparar para rodar mundo (script deve ser rodado no mesmo processo)
+. Setup/vss.sh
 
 # iniciar gazebo com mundo parado
 gazebo Worlds/VSS_vss.world -u --verbose
