@@ -28,7 +28,6 @@
         <uri>model://VSS_player/</uri>
         <pose>-0.2 0 0 0 0 0</pose>
       </include>
-      </include>
 
       <plugin name="player 1 control" filename="lib_pid_control_plugin.so">
         <velocity>true</velocity>
