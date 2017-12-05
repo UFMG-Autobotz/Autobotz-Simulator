@@ -26,7 +26,7 @@
     <model name="player1">
       <include>
         <uri>model://VSS_player/</uri>
-        <pose>-0.2 0 0 0 0 0</pose>
+        <pose>-0.65219395 0 0 0 0 1.57</pose>
       </include>
       </include>
 
