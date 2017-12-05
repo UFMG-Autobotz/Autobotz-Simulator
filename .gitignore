@@ -34,7 +34,7 @@ Plugins/VSS_players_config/build
 Plugins/GENERIC_pid_control/import/lib_pid_control_data_parser.so
 Plugins/GENERIC_pid_control/import/lib_pid_control_plugin.so
 Plugins/GENERIC_camera_ros/import/lib_camera_ros_plugin.so
-Plugins/GENERIC_change_texture/import/libchange_texture.so
+Plugins/GENERIC_change_texture/import/lib_change_texture.so
 Plugins/GENERIC_debug_link/import/lib_debug_link_data_parser.so
 Plugins/GENERIC_debug_link/import/lib_debug_link_plugin.so
 Plugins/GENERIC_set_model_pose/import/lib_set_model_pose_data_parser.so
