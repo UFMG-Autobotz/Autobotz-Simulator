@@ -4,6 +4,7 @@ from PyQt4 import QtCore
 import yaml
 
 from SubWindow import SubWindow
+from SubWindowGamepad import SubWindowGamepad
 
 class MainWindow(QtGui.QWidget):
     def __init__(self, config):
@@ -13,7 +14,11 @@ class MainWindow(QtGui.QWidget):
         data = self.loadConfig(config)
         self.subWindows = [];
         for robot in data['Robot']:
-            self.subWindows.append(SubWindow(self, robot))
+            if (robot['KeyConfig'] == 'gamepad' or robot['KeyConfig'] == 'gamepad2'):
+                print("Hellow")
+                self.subWindows.append(SubWindowGamepad(self, robot))
+            else:
+                self.subWindows.append(SubWindow(self, robot))
 
         for idx, subwindow in enumerate(self.subWindows):
 
