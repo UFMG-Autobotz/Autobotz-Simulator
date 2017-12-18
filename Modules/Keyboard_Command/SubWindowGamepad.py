@@ -1,14 +1,16 @@
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 
+import pygame
+
 import numpy as np
 
 import rospy
 from std_msgs.msg import Float32
 
-class SubWindow(QtGui.QWidget):
+class SubWindowGamepad(QtGui.QWidget):
     def __init__(self, parent, data):
-        super(SubWindow, self).__init__(parent)
+        super(SubWindowGamepad, self).__init__(parent)
 
         self.config(data)
 
@@ -38,7 +40,7 @@ class SubWindow(QtGui.QWidget):
 
         if (config == 'oklm'):
             return np.array([QtCore.Qt.Key_O, QtCore.Qt.Key_L, QtCore.Qt.Key_K, QtCore.Qt.Key_M])
-        
+
         return np.array([QtCore.Qt.Key_Up, QtCore.Qt.Key_Down, QtCore.Qt.Key_Left, QtCore.Qt.Key_Right])
 
 
