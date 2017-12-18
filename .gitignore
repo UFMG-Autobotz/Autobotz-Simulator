@@ -12,7 +12,7 @@ Modules/GUI/Vision.pyc
 
 Modules/Keyboard_Command/MainWindow.pyc
 Modules/Keyboard_Command/SubWindow.pyc
-
+Modules/Keyboard_Command/SubWindowGamepad.pyc
 
 Plugins/GENERIC_camera_ros/build
 Plugins/GENERIC_change_texture/build
