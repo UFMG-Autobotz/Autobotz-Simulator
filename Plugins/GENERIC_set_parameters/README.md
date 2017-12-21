@@ -1,5 +1,5 @@
 # Set Parameters plugin
-> The *Set Parameters* is a Gazebo *world* plugin used to set ROS parameters when a world is loaded. The parameters can then be used by other plugins that are not able to receive attributes from the .world file, like sensor plugins and visual plugis
+> The *Set Parameters* is a Gazebo *world* plugin used to set ROS parameters when a world is loaded. The parameters can then be used by other plugins that are not able to receive attributes from the .world file, like sensor and visual plugins
 
 ## How to use
 ### Compile
