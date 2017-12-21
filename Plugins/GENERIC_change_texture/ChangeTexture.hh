@@ -29,9 +29,6 @@
 
 namespace gazebo
 {
-  // Forward declare private data class.
-  class ChangeTexturePluginPrivate;
-
   class GAZEBO_VISIBLE ChangeTexturePlugin : public VisualPlugin {
     public: ChangeTexturePlugin();
 
