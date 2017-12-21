@@ -29,22 +29,7 @@ Before running the world, set the import directory to the GAZEBO_PLUGIN_PATH so 
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_change_texture/import:${GAZEBO_PLUGIN_PATH}
 ```
 
-## Settings
-To set a parameter use the `paramN tag`, where N is the number of the parameter.
-The plugin will look for params tags starting from `param1` and will stop searching when a param is not found, so always start from 1 and don't skip a number.
+## Set Parameters
+To be able to have multiple instances of the same model with different materials this plugin receive a ROS parameter. The parameter name is the name of the model on the world and the its value is the name of the chosen material.
 
-**Note:** The param number is used by the parser to differentiate parameters and is not related to the actual parameters created.
-
-The jointN tag has 1 required attribute: `parameter` wich is the name of the ROS parameter setted. The value goes inside of the tag.
-
-###### Example:
-```xml
-
-<plugin name="config" filename="lib_set_parameters.so">
-  <!-- set ROS parameter: player1 with value "VSS_player/yellow1" -->
-  <param1 parameter="player1">VSS_player/yellow1</param1>
-
-  <!-- set ROS parameter: player2 with value "VSS_player/blue2" -->
-  <param2 parameter="player2">VSS_player/blue2</param2>
-</plugin>
-```
+A tipical way to set the parameter is using the `Set Parameter` plugin.
