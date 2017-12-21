@@ -15,15 +15,15 @@
  *
 */
 
-#include "ChangeTexture.hh"
+#include "ChangeMaterial.hh"
 
 using namespace gazebo;
 
-GZ_REGISTER_VISUAL_PLUGIN(ChangeTexturePlugin)
+GZ_REGISTER_VISUAL_PLUGIN(ChangeMaterialPlugin)
 
 
 
-ChangeTexturePlugin::ChangeTexturePlugin() {
+ChangeMaterialPlugin::ChangeMaterialPlugin() {
   // Initialize ROS
   if (!ros::isInitialized()) {
     int argc = 0;
@@ -38,10 +38,10 @@ ChangeTexturePlugin::ChangeTexturePlugin() {
 
 /*-------------------*/
 
-void ChangeTexturePlugin::Load(rendering::VisualPtr _visual, sdf::ElementPtr _sdf)
+void ChangeMaterialPlugin::Load(rendering::VisualPtr _visual, sdf::ElementPtr _sdf)
 {
   if (!_visual || !_sdf) {
-    gzerr << "No visual or SDF element specified. Change Texture Plugin won't load." << std::endl;
+    gzerr << "No visual or SDF element specified. Change Material Plugin won't load." << std::endl;
     return;
   }
 

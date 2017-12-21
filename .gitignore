@@ -15,11 +15,12 @@ Modules/Keyboard_Command/SubWindow.pyc
 Modules/Keyboard_Command/SubWindowGamepad.pyc
 
 Plugins/GENERIC_camera_ros/build
-Plugins/GENERIC_change_texture/build
+Plugins/GENERIC_change_material/build
 Plugins/GENERIC_debug_link/build
 Plugins/GENERIC_events/build
 Plugins/GENERIC_pid_control/build
 Plugins/GENERIC_set_model_pose/build
+Plugins/GENERIC_set_parameters/build
 
 Plugins/TEST_get_joints/build
 Plugins/TEST_push_model/build
@@ -27,20 +28,16 @@ Plugins/TEST_ros_connection/build
 Plugins/TEST_template_plugin/build
 Plugins/TEST_apply_force/build
 
-Plugins/VSS_players_config/build
-
-
 
 Plugins/GENERIC_pid_control/import/lib_pid_control_data_parser.so
 Plugins/GENERIC_pid_control/import/lib_pid_control_plugin.so
 Plugins/GENERIC_camera_ros/import/lib_camera_ros_plugin.so
-Plugins/GENERIC_change_texture/import/lib_change_texture.so
+Plugins/GENERIC_change_material/import/lib_change_material.so
 Plugins/GENERIC_debug_link/import/lib_debug_link_data_parser.so
 Plugins/GENERIC_debug_link/import/lib_debug_link_plugin.so
 Plugins/GENERIC_set_model_pose/import/lib_set_model_pose_data_parser.so
 Plugins/GENERIC_set_model_pose/import/lib_set_model_pose_plugin.so
 Plugins/GENERIC_events/import/lib_events_plugin.so
+Plugins/GENERIC_set_parameters/import/lib_set_parameters.so
 
 Plugins/TEST_get_joints/import/libget_joints_plugin.so
-
-Plugins/GENERIC_set_parameters/import/lib_set_parameters.so

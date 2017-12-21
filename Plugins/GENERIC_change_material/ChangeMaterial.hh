@@ -14,8 +14,8 @@
  * limitations under the License.
  *
 */
-#ifndef GAZEBO_CHANGETEXTUREPLUGIN_HH_
-#define GAZEBO_CHANGETEXTUREPLUGIN_HH_
+#ifndef GAZEBO_CHANGEMATERIALPLUGIN_HH_
+#define GAZEBO_CHANGEMATERIALPLUGIN_HH_
 
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/rendering/Visual.hh>
@@ -29,9 +29,9 @@
 
 namespace gazebo
 {
-  class GAZEBO_VISIBLE ChangeTexturePlugin : public VisualPlugin {
+  class GAZEBO_VISIBLE ChangeMaterialPlugin : public VisualPlugin {
     // methods
-    public: ChangeTexturePlugin();
+    public: ChangeMaterialPlugin();
     public: virtual void Load(rendering::VisualPtr _visual,
         sdf::ElementPtr _sdf);
 
