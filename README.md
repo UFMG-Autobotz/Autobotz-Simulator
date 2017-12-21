@@ -1,4 +1,4 @@
-# Autobots simulator
+# Autobotz simulator
 
 ## Categories
 Some files and folders are named with tags according to their scope of usage.
