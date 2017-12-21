@@ -41,7 +41,7 @@ ChangeTexturePlugin::ChangeTexturePlugin() {
 void ChangeTexturePlugin::Load(rendering::VisualPtr _visual, sdf::ElementPtr _sdf)
 {
   if (!_visual || !_sdf) {
-    gzerr << "No visual or SDF element specified. Plugin won't load." << std::endl;
+    gzerr << "No visual or SDF element specified. Change Texture Plugin won't load." << std::endl;
     return;
   }
 

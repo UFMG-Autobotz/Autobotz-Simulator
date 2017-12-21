@@ -22,7 +22,6 @@ using namespace gazebo;
 GZ_REGISTER_WORLD_PLUGIN(PlayersConfigPlugin)
 
 
-
 PlayersConfigPlugin::PlayersConfigPlugin() {
   // Initialize ROS
   if (!ros::isInitialized()) {
@@ -33,15 +32,13 @@ PlayersConfigPlugin::PlayersConfigPlugin() {
 
   // Create ROS node
   this->rosNode.reset(new ros::NodeHandle("gazebo_client4"));
-
-
 }
 
 /*-------------------*/
 
 void PlayersConfigPlugin::Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) {
   if (!_parent || !_sdf) {
-    gzerr << "erro" << std::endl;
+    gzerr << "No SDF element specified. Players Config Plugin won't load." << std::endl;
     return;
   }
 
