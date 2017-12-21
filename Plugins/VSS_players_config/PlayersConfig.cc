@@ -42,7 +42,6 @@ void PlayersConfigPlugin::Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) 
     return;
   }
 
-
   sdf::ElementPtr paramElement;
   std::string param, value;
 
