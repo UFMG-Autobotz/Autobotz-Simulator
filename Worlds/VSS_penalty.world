@@ -3,8 +3,8 @@
   <world name="default">
 
     <plugin name="config" filename="libPlayers_Config.so">
-      <param1 model="player1">VSS_player/yellow1</param1>
-      <param2 model="player2">VSS_player/blue2</param2>
+      <param1 parameter="player1">VSS_player/yellow1</param1>
+      <param2 parameter="player2">VSS_player/blue2</param2>
     </plugin>
 
     <!-- <plugin name="set position" filename="lib_set_model_pose_plugin.so" />

@@ -42,23 +42,25 @@ void PlayersConfigPlugin::Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) 
     return;
   }
 
-  int idx = 1;
-  sdf::ElementPtr paramElement;
-  std::string param, material;
 
+  sdf::ElementPtr paramElement;
+  std::string param, value;
+
+  // loop through tags <paramx> starting with <param1>
+  int idx = 1;
   std::ostringstream tag;
   tag << "param" << idx;
-
   while (_sdf->HasElement(tag.str())) {
     paramElement = _sdf->GetElementImpl(tag.str());
 
-    if (paramElement->HasAttribute("model")) {
-      param = "/" + paramElement->GetAttribute("model")->GetAsString();
-      material = _sdf->Get<std::string>(tag.str());
-      std::cout << material << std::endl;
-      this->rosNode->setParam(param, material);
+    // save ros parameter with name on the attribute parameter with value inside of the tag
+    if (paramElement->HasAttribute("parameter")) {
+      param = "/" + paramElement->GetAttribute("parameter")->GetAsString();
+      value = _sdf->Get<std::string>(tag.str());
+      this->rosNode->setParam(param, value);
+      std::cout << "Parameter " << param << " received value " << value << std::endl;
     } else {
-      gzerr << "Please select a model to change the texture" << std::endl;
+      gzerr << "Please select a parameter" << std::endl;
     }
 
     idx++;
