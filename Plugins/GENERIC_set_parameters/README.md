@@ -32,7 +32,7 @@ The plugin will look for params tags starting from `param1` and will stop search
 
 **Note:** The param number is used by the parser to differentiate parameters and is not related to the actual parameters created.
 
-The jointN tag has 1 required attribute: `param` wich is the name of the ROS parameter setted. The value goes inside of the tag.
+The jointN tag has 1 required attribute: `parameter` wich is the name of the ROS parameter setted. The value goes inside of the tag.
 
 ###### Example:
 ```xml
