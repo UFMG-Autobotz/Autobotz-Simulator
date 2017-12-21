@@ -25,9 +25,11 @@
 namespace gazebo
 {
   class GAZEBO_VISIBLE PlayersConfigPlugin : public WorldPlugin {
+    // methods
     public: PlayersConfigPlugin();
     public: virtual void Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf);
 
+    // attributes
     private: std::unique_ptr<ros::NodeHandle> rosNode; /// \brief A node use for ROS transport
   };
 }
