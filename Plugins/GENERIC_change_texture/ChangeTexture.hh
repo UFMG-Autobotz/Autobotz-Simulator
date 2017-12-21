@@ -30,12 +30,12 @@
 namespace gazebo
 {
   class GAZEBO_VISIBLE ChangeTexturePlugin : public VisualPlugin {
+    // methods
     public: ChangeTexturePlugin();
-
-    // Documentation inherited
     public: virtual void Load(rendering::VisualPtr _visual,
         sdf::ElementPtr _sdf);
 
+    // attributes
     private: rendering::VisualPtr visual;
     private: std::unique_ptr<ros::NodeHandle> rosNode;	/// \brief A node use for ROS transport
 
