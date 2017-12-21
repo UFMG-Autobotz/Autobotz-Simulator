@@ -1,5 +1,5 @@
-# PID Joint control plugin
-> The *PID Control* is a Gazebo *model* plugin used to receive ROS messages to control the velocity and/or position of a joint via Gazebo PID controller. The plugin can be used with revolute and prismatic joints.
+# Set Parameters plugin
+> The *Set Parameters* is a Gazebo *world* plugin used to set ROS parameters when a world is loaded. The parameters can then be used by other plugins that are not able to receive attributes from the .world file, like sensor plugins and visual plugis
 
 ## How to use
 ### Compile
