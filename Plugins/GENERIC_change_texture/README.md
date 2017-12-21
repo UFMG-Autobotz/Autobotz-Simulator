@@ -10,12 +10,15 @@ bash compile.sh
 ```
 
 ### Add plugin
-Use the `plugin` SDF tag to add the set parameters plugin to a world.
+Use the `plugin` SDF tag inside of a `visual` tag to add the change texture plugin to a world.
 This tag has two required attributes:
 * **name:** A unique name, scoped to its parent.
-* **filename:** lib_pid_control_plugin.so
+* **filename:** lib_change_texture_plugin.so
 
-In order to configure the plugin, other tags can be added inside of the `plugin` tag (more information on the [settings section](#settings)).
+###### Example:
+```xml
+<plugin name="texture" filename="lib_change_texture.so"> </plugin>
+```
 
 For more information about adding plugins, see the [Gazebo tutorials](http://gazebosim.org/tutorials?tut=plugins_model&cat=running_the_plugin#RunningthePlugin.)
 
@@ -23,7 +26,7 @@ For more information about adding plugins, see the [Gazebo tutorials](http://gaz
 Before running the world, set the import directory to the GAZEBO_PLUGIN_PATH so that Gazebo can find the plugin.
 
 ```
-export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_set_parameters/import:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_change_texture/import:${GAZEBO_PLUGIN_PATH}
 ```
 
 ## Settings
