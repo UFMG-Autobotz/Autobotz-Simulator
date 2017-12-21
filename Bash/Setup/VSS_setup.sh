@@ -21,6 +21,6 @@ export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_pid_control/import:${GAZEBO_PLU
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_debug_link/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_camera_ros/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_change_texture/import:${GAZEBO_PLUGIN_PATH}
-export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/VSS_players_config/import:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_set_parameters/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_set_model_pose/import:${GAZEBO_PLUGIN_PATH}
 export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_events/import:${GAZEBO_PLUGIN_PATH}

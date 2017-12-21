@@ -43,4 +43,4 @@ Plugins/GENERIC_events/import/lib_events_plugin.so
 
 Plugins/TEST_get_joints/import/libget_joints_plugin.so
 
-Plugins/VSS_players_config/import/libPlayers_Config.so
+Plugins/GENERIC_set_parameters/import/lib_set_parameters.so

@@ -11,8 +11,8 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
-add_library(Players_Config SHARED PlayersConfig.cc)
-target_link_libraries(Players_Config ${GAZEBO_libraries} ${roscpp_LIBRARIES})
+add_library(_set_parameters SHARED SetParameters.cc)
+target_link_libraries(_set_parameters ${GAZEBO_libraries} ${roscpp_LIBRARIES})
 
 set(dir ${CMAKE_CURRENT_SOURCE_DIR}/import/)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)

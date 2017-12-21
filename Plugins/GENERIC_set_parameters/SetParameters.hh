@@ -14,8 +14,8 @@
  * limitations under the License.
  *
 */
-#ifndef GAZEBO_VSSPLAYERSCONFIG_HH_
-#define GAZEBO_VSSPLAYERSCONFIG_HH_
+#ifndef GAZEBO_GENERICSETPARAMETERS_HH_
+#define GAZEBO_GENERICSETPARAMETERS_HH_
 
 #include "gazebo/gazebo.hh"
 
@@ -24,13 +24,14 @@
 
 namespace gazebo
 {
-  class GAZEBO_VISIBLE PlayersConfigPlugin : public WorldPlugin {
+  class GAZEBO_VISIBLE SetParametersPlugin : public WorldPlugin {
     // methods
-    public: PlayersConfigPlugin();
+    public: SetParametersPlugin();
     public: virtual void Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf);
 
     // attributes
     private: std::unique_ptr<ros::NodeHandle> rosNode; /// \brief A node use for ROS transport
   };
 }
+
 #endif

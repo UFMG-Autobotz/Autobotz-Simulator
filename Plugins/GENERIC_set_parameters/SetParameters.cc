@@ -15,14 +15,14 @@
  *
 */
 
-#include "PlayersConfig.hh"
+#include "SetParameters.hh"
 
 using namespace gazebo;
 
-GZ_REGISTER_WORLD_PLUGIN(PlayersConfigPlugin)
+GZ_REGISTER_WORLD_PLUGIN(SetParametersPlugin)
 
 
-PlayersConfigPlugin::PlayersConfigPlugin() {
+SetParametersPlugin::SetParametersPlugin() {
   // Initialize ROS
   if (!ros::isInitialized()) {
     int argc = 0;
@@ -36,7 +36,7 @@ PlayersConfigPlugin::PlayersConfigPlugin() {
 
 /*-------------------*/
 
-void PlayersConfigPlugin::Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) {
+void SetParametersPlugin::Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) {
   if (!_parent || !_sdf) {
     gzerr << "No SDF element specified. Players Config Plugin won't load." << std::endl;
     return;
