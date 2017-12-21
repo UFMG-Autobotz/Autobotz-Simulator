@@ -45,14 +45,15 @@ void ChangeTexturePlugin::Load(rendering::VisualPtr _visual, sdf::ElementPtr _sd
     return;
   }
 
+  // get model name
   std::string visual_name = _visual->GetName();
   std::string param = "/" + visual_name.substr(0, visual_name.find(':'));
 
+  // if ros parameter found with the name of the model, use it to change material of the visual
   std::string newMaterial;
   if (this->rosNode->getParam(param, newMaterial)) {
-    // std::string newMaterial = "VSS_Player/newtag";
     _visual->SetMaterial(newMaterial);
-    gzmsg << "Changed material of " << _visual->GetName() << " to " << newMaterial << std::endl;
+    gzmsg << "Changed material of " << visual_name << " to " << newMaterial << std::endl;
   } else {
     gzerr << "Please set the material" << std::endl;
   }
