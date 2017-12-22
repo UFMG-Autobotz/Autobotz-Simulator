@@ -22,7 +22,7 @@ DebugLinkPlugin::DebugLinkPlugin() {
 void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 	// error check
 	if (!_model || !_sdf) {
-		gzerr << "No visual or SDF element specified. Plugin won't load." << std::endl;
+		gzerr << "No visual or SDF element specified. Debug Link Plugin won't load." << std::endl;
 		return;
 	}
 
