@@ -107,6 +107,13 @@ namespace gazebo {
       // add current variable to variables vector
   		link.variables.push_back(current_variable);
 
+      /*-------------------*/
+      std::cout << link.name << std::endl;
+      std::cout << current_variable.name << std::endl;
+      std::cout << current_variable.scope << std::endl;
+      std::cout << current_variable.topic << std::endl;
+      /*-------------------*/
+
       // increment index to test next variable
   		idx++;
   		tag.str("");
