@@ -108,10 +108,10 @@ namespace gazebo {
   		link.variables.push_back(current_variable);
 
       /*-------------------*/
-      std::cout << link.name << std::endl;
-      std::cout << current_variable.name << std::endl;
-      std::cout << current_variable.scope << std::endl;
-      std::cout << current_variable.topic << std::endl;
+      std::cout << "link: " << link.name << std::endl;
+      std::cout << "variable: " << current_variable.name << std::endl;
+      std::cout << "scope: " << current_variable.scope << std::endl;
+      std::cout << "topic: " << current_variable.topic << std::endl;
       /*-------------------*/
 
       // increment index to test next variable
