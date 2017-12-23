@@ -18,3 +18,21 @@ Potential Energy | | x | | double | std_msgs::Float64
   <pose scope="worldCG"/>
 </link1>
 ```
+
+```xml
+<plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
+  <link1 name="player::chassi">
+    <pose scope="worldCG" topic="player1/pose">true</pose>
+  </link1>
+</plugin>
+```
+
+to
+
+```xml
+<plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
+  <link1 name="player::chassi">
+    <variable1 scope="worldCG" topic="player1/pose">pose</variable1>
+  </link1>
+</plugin>
+```
