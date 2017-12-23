@@ -5,6 +5,11 @@ GZ_REGISTER_MODEL_PLUGIN(DebugLinkPlugin)
 
 /*-------------------*/
 
+int add(int x, int y) {return x+y;}
+int sub(int x, int y) {return x-y;}
+
+/*-------------------*/
+
 DebugLinkPlugin::DebugLinkPlugin() {
 	// Initialize ROS
 	if (!ros::isInitialized()) {
@@ -32,6 +37,13 @@ void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
 	this->updateConnection = event::Events::ConnectWorldUpdateEnd(
 		boost::bind(&DebugLinkPlugin::OnUpdate, this));
+
+	std::map<std::string, std::function<int(int,int)>>  funcMap;
+	funcMap["add"] = add;
+  funcMap["sub"] = sub;
+
+	std::cout << funcMap["add"](2,3) << "\n";
+  std::cout << funcMap["sub"](5,2) << "\n";
 }
 
 /*-------------------*/
@@ -70,6 +82,37 @@ void DebugLinkPlugin::setTopics() {
 /*-------------------*/
 
 void DebugLinkPlugin::OnUpdate() {
+	int link_count, variable_count;
+	int idx = 0;
+	variable_param *current_variable;
+	ros::Publisher pub;
+
+	link_count = this->link_data->GetLinkCount();  // get number of links
+	for (int i = 0; i < link_count; i++) {
+
+		variable_count = this->link_data->GetVariableCount(i);
+		for (int j = 0; j < variable_count; j++) {
+			current_variable = this->link_data->GetVariable(i, j);
+			idx++;
+
+			switch(current_variable->group) {
+				case 1 :
+  				// this->rosPub_vector[idx].publish(oi);
+					break;
+				case 2 :
+  				// this->rosPub_vector[idx].publish(oi);
+					break;
+				case 3 :
+  				// this->rosPub_vector[idx].publish(oi);
+					break;
+			}
+
+
+		}
+
+	}
+
+
 	// int linkCount = this->link_data->GetLinkCount();  // get number of valid links
 	// link_param *currentLink;
 	// math::Pose linkPose;

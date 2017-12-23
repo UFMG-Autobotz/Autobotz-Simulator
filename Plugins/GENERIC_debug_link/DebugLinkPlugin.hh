@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <functional>
+#include <map>
 
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
@@ -19,6 +21,8 @@
 #include "DebugLinkDataParser.hh"
 
 namespace gazebo {
+
+
 	class DebugLinkPlugin : public ModelPlugin {
 
 		public: DebugLinkPlugin();
