@@ -151,13 +151,25 @@ namespace gazebo {
   /*-------------------*/
 
   int DebugLinkDataParser::GetLinkCount() {
-    return links.size();
+    return this->links.size();
   }
 
   /*-------------------*/
 
   link_param *DebugLinkDataParser::GetLink(int idx) {
     return &this->links[idx];
+  }
+
+  /*-------------------*/
+
+  int DebugLinkDataParser::GetVariableCount(int idx) {
+    return this->links[idx].variables.size();
+  }
+
+  /*-------------------*/
+
+  variable_param *DebugLinkDataParser::GetVariable(int link, int variable) {
+    return &(this->links[link].variables[variable]);
   }
 
 }

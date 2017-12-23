@@ -43,8 +43,9 @@ namespace gazebo {
     public: void ReadVariables();
     public: void parseVariables(link_param &link, sdf::ElementPtr &link_element);
     public: int GetLinkCount();
-    // void ShowJoints();
     public: link_param *GetLink(int idx);
+    public: int GetVariableCount(int idx);
+    public: variable_param *GetVariable(int link, int variable);
 
 
   	private: physics::ModelPtr model; // pointer to the parent model

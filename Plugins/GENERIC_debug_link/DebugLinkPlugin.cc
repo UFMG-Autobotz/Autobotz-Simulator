@@ -37,32 +37,26 @@ void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 /*-------------------*/
 
 void DebugLinkPlugin::setTopics() {
-	int linkCount = this->link_data->GetLinkCount();  // get number of valid links
-	int variable_count;
-	link_param *currentLink;
-	variable_param current_variable;
+	int link_count, variable_count;
+	variable_param *current_variable;
 	ros::Publisher pub;
 
-	// this->rosPub_vector.resize(linkCount);
-	for (int i = 0; i < linkCount; i++) {
-		currentLink = this->link_data->GetLink(i);
+	link_count = this->link_data->GetLinkCount();  // get number of links
+	for (int i = 0; i < link_count; i++) {
 
-		variable_count = currentLink->variables.size();
+		variable_count = this->link_data->GetVariableCount(i);
 		for (int j = 0; j < variable_count; j++) {
-			current_variable = currentLink->variables[j];
+			current_variable = this->link_data->GetVariable(i, j);
 
-			switch(current_variable.group) {
+			switch(current_variable->group) {
 	    	case 1 :
-					std::cout << '1' << std::endl;
-					pub = this->rosNode->advertise<geometry_msgs::Vector3>(current_variable.topic, 100);
+					pub = this->rosNode->advertise<geometry_msgs::Vector3>(current_variable->topic, 100);
 					break;
 	    	case 2 :
-					std::cout << '2' << std::endl;
-					pub = this->rosNode->advertise<geometry_msgs::Pose>(current_variable.topic, 100);
+					pub = this->rosNode->advertise<geometry_msgs::Pose>(current_variable->topic, 100);
 					break;
 				case 3 :
-					std::cout << '3' << std::endl;
-					pub = this->rosNode->advertise<std_msgs::Float64>(current_variable.topic, 100);
+					pub = this->rosNode->advertise<std_msgs::Float64>(current_variable->topic, 100);
 					break;
 			}
 
