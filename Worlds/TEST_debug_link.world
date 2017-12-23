@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="default">
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <model name="court">
+      <include>
+        <uri>model://VSS_court/</uri>
+        <pose>0 0 -0.0155 0 0 0</pose>
+        <static>true</static>
+      </include>
+    </model>
+
+    <model name="player1">
+      <include>
+        <uri>model://VSS_player/</uri>
+        <pose>-0.2 0 0 0 0 0</pose>
+      </include>
+
+      <plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
+        <link1 name="player::chassi">
+          <variable1 scope="worldCG" topic="player1/pose">pose</variable1>
+        </link1>
+      </plugin>
+    </model>
+
+
+
+  </world>
+</sdf>
