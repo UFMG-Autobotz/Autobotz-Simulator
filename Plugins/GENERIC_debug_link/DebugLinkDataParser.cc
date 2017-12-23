@@ -81,17 +81,15 @@ namespace gazebo {
     tag << "variable" << idx;
 
     while (link_element->HasElement(tag.str())) {
-  		variable_element = link_element->GetElementImpl(tag.str());
-  		current_variable.valid = true;  // by default the current variable is valid, it's set to false if something is wrong
-
       // read variable
-      current_variable.name = variable_element->Get<std::string>(tag.str());
+      current_variable.name = link_element->Get<std::string>(tag.str());
+      variable_element = link_element->GetElementImpl(tag.str());
 
       // read scope
-      current_variable.scope = "world"; // default scope is world (all variables have this scope)
+      current_variable.scope = "World"; // default scope is world (all variables have this scope)
       if (variable_element->HasAttribute("scope")) {
         std::string scope = variable_element->GetAttribute("scope")->GetAsString();
-        if (scope.compare("relative") == 0 || scope.compare("world") == 0 || scope.compare("worldCoG") == 0) {
+        if (scope.compare("Relative") == 0 || scope.compare("World") == 0 || scope.compare("WorldCoG") == 0) {
           current_variable.scope = scope;
         }
       }

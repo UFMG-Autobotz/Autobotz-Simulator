@@ -54,7 +54,7 @@
 
       <plugin name="player 2 debug" filename="lib_debug_link_plugin.so">
         <link1 name="player::chassi">
-          <variable1 scope="worldCG" topic="player2/pose">pose</variable1>
+          <variable1 scope="worldCG" topic="player2/pose">"pose"</variable1>
         </link1>
       </plugin>
     </model>
