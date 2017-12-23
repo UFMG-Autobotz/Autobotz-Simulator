@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
@@ -18,10 +19,9 @@ namespace gazebo {
   /*-------------------*/
 
   typedef struct _variable_param{
-    bool valid; // whether this variable is valid
-
     std::string name;  // variable being read
     std::string scope; // scope used to read the variable
+    int group;
 
     std::string topic; // name of the rostopic that will send the variable
   } variable_param;
@@ -29,8 +29,6 @@ namespace gazebo {
   /*-------------------*/
 
   typedef struct _link_param{
-    bool valid; // whether this link is valid
-
     std::string name; // scoped name of the link
     physics::LinkPtr link; // pointer to the link
 
