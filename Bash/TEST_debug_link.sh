@@ -2,4 +2,4 @@
 . Setup/VSS_setup.sh
 
 # iniciar gazebo com mundo parado
-gzserver Worlds/TEST_debug_link.world -u --verbose
+gzserver Worlds/TEST_debug_link.world --verbose

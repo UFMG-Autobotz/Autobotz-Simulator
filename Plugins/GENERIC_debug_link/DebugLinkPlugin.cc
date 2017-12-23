@@ -46,6 +46,16 @@ void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
   std::cout << funcMap["sub"](5,2) << "\n";
 }
 
+// std::map< int, std::pair< void(MyClassA::*)(int, std::string), MyClassA* > > myMap;
+
+void testMap(physics::LinkPtr link) {
+	std::map<std::string, std::pair< gazebo::math::Vector3(physics::Link::*)() const, boost::shared_ptr<gazebo::physics::Link>* > > Map1;
+	// std::map<std::string, std::function<geometry_msgs::Vector3()>>  Map1;
+	Map1["GetWorldLinearAccel"] = std::make_pair(&physics::Link::GetWorldLinearAccel, &link);
+	Map1["GetRelativeTorque"] = std::make_pair(&physics::Link::GetRelativeTorque, &link);
+}
+
+
 /*-------------------*/
 
 void DebugLinkPlugin::setTopics() {
@@ -94,6 +104,9 @@ void DebugLinkPlugin::OnUpdate() {
 		for (int j = 0; j < variable_count; j++) {
 			current_variable = this->link_data->GetVariable(i, j);
 			idx++;
+
+			std::string funct = "get" + current_variable->scope + current_variable->name;
+			// std::cout << funct << std::endl;
 
 			switch(current_variable->group) {
 				case 1 :
