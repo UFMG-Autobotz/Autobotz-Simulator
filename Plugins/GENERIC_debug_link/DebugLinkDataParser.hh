@@ -17,17 +17,24 @@ namespace gazebo {
 
   /*-------------------*/
 
+  typedef struct _variable_param{
+    bool valid; // whether this variable is valid
+
+    std::string name;  // variable being read
+    std::string scope; // scope used to read the variable
+
+    std::string topic; // name of the rostopic that will send the variable
+  } variable_param;
+
+  /*-------------------*/
+
   typedef struct _link_param{
-    bool valid; // whether this joint is valid (only revolute and prismatic joints are valid)
+    bool valid; // whether this link is valid
 
     std::string name; // scoped name of the link
     physics::LinkPtr link; // pointer to the link
 
-    // bool velocity;  // whether the velocity of the link will be controlled
-    bool pose;  // whether the position of the link will be controlled
-
-    // std::string veltopic; // name of the rostopic that will control the velocity
-    std::string postopic; // name of the rostopic that will control the position
+    std::vector<variable_param> variables;  // vector with variables being read
   } link_param;
 
   /*-------------------*/
@@ -36,6 +43,7 @@ namespace gazebo {
 
     public: DebugLinkDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     public: void ReadVariables();
+    public: void parseVariables(link_param &link, sdf::ElementPtr &link_element);
     public: int GetLinkCount();
     // void ShowJoints();
     public: link_param *GetLink(int idx);
@@ -43,7 +51,7 @@ namespace gazebo {
 
   	private: physics::ModelPtr model; // pointer to the parent model
   	private: sdf::ElementPtr sdf; // pointer to the sdf
-    private: std::vector<link_param> links;  // vector with each valid joint data
+    private: std::vector<link_param> links;  // vector with each link data
   };
 
 }
