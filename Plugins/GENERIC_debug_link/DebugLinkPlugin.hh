@@ -35,10 +35,9 @@ namespace gazebo {
 		private: std::unique_ptr<ros::NodeHandle> rosNode; /// \brief A node use for ROS transport
 		private: std::vector<ros::Publisher> rosPub_vector;  /// \brief A ROS publisher
 		private: event::ConnectionPtr updateConnection; // events
-		private: std::vector<std::map<std::string, std::function<math::Vector3()>>> mapsVector3;
-		// private: std::vector<std::map<std::string, std::pair< gazebo::math::Vector3(physics::Link::*)() const, boost::shared_ptr<gazebo::physics::Link>*>>> mapsVector3;
-		// private: std::map<std::string, std::function<gazebo::math::Vector3(physics::Link::*)()>> mapsVector3;
-
+		private: std::vector<std::map<std::string, std::function<math::Vector3()>>> mapsGroup1;
+		private: std::vector<std::map<std::string, std::function<math::Vector3()>>> mapsGroup2;
+		private: std::vector<std::map<std::string, std::function<math::Vector3()>>> mapsGroup3;
 	};
 }
 

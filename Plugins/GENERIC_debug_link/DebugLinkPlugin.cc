@@ -57,13 +57,21 @@ void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
 void DebugLinkPlugin::createMap(link_param *param, int idx) {
 	physics::LinkPtr link = param->link;
-	// std::map<std::string, std::function<math::Vector3()>> mapsVector3;
-	this->mapsVector3[idx]["GetWorldLinearAccel"] = boost::bind(&physics::Link::GetWorldLinearAccel, link);
-	this->mapsVector3[idx]["GetRelativeTorque"] = boost::bind(&physics::Link::GetRelativeTorque, link);
-	this->mapsVector3[idx]["GetWorldCoGLinearVel"] = boost::bind(&physics::Link::GetWorldCoGLinearVel, link);
 
-	math::Vector3 var = this->mapsVector3[idx]["GetWorldCoGLinearVel"]();
-	std::cout << var.x << std::endl;
+	this->mapsGroup1[idx]["GetRelativeTorque"] = boost::bind(&physics::Link::GetRelativeTorque, link);
+	this->mapsGroup1[idx]["GetWorldTorque"] = boost::bind(&physics::Link::GetWorldTorque, link);
+	this->mapsGroup1[idx]["GetRelativeAngularAccel"] = boost::bind(&physics::Link::GetRelativeAngularAccel, link);
+	this->mapsGroup1[idx]["GetWorldAngularAccel"] = boost::bind(&physics::Link::GetWorldAngularAccel, link);
+	this->mapsGroup1[idx]["GetRelativeAngularVel"] = boost::bind(&physics::Link::GetRelativeAngularVel, link);
+	this->mapsGroup1[idx]["GetWorldAngularVel"] = boost::bind(&physics::Link::GetWorldAngularVel, link);
+	this->mapsGroup1[idx]["GetRelativeForce"] = boost::bind(&physics::Link::GetRelativeForce, link);
+	this->mapsGroup1[idx]["GetWorldForce"] = boost::bind(&physics::Link::GetWorldForce, link);
+	this->mapsGroup1[idx]["GetRelativeLinearAccel"] = boost::bind(&physics::Link::GetRelativeLinearAccel, link);
+	this->mapsGroup1[idx]["GetWorldLinearAccel"] = boost::bind(&physics::Link::GetWorldLinearAccel, link);
+	this->mapsGroup1[idx]["GetRelativeLinearVel"] = boost::bind(&physics::Link::GetRelativeLinearVel, link);
+	this->mapsGroup1[idx]["GetWorldLinearVel"] = boost::bind(&physics::Link::GetWorldLinearVel, link);
+	this->mapsGroup1[idx]["GetWorldCoGLinearVel"] = boost::bind(&physics::Link::GetWorldCoGLinearVel, link);
+	this->mapsGroup1[idx]["GetWorldAngularMomentum"] = boost::bind(&physics::Link::GetWorldAngularMomentum, link);
 }
 
 
@@ -76,7 +84,7 @@ void DebugLinkPlugin::setTopics() {
 	ros::Publisher pub;
 
 	link_count = this->link_data->GetLinkCount();  // get number of links
-	this->mapsVector3.resize(link_count);
+	this->mapsGroup1.resize(link_count);
 
 	for (int i = 0; i < link_count; i++) {
 
@@ -126,26 +134,29 @@ void DebugLinkPlugin::OnUpdate() {
 			idx++;
 
 			std::string funct = "Get" + current_variable->scope + current_variable->name;
-			math::Vector3 var = this->mapsVector3[i][funct]();
+
 			// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
 
 
+			// math::Vector3 var;
 
-			// std::cout << funct << std::endl;
-
-			// std::pair< gazebo::math::Vector3(physics::Link::*)() const, boost::shared_ptr<gazebo::physics::Link>* variable = this->mapsVector3[funct];
-
-			// switch(current_variable->group) {
-			// 	case 1 :
-  		// 		this->rosPub_vector[idx].publish(oi);
-			// 		break;
-			// 	case 2 :
-  		// 		this->rosPub_vector[idx].publish(oi);
-			// 		break;
-			// 	case 3 :
-  		// 		this->rosPub_vector[idx].publish(oi);
-			// 		break;
-			// }
+			switch(current_variable->group) {
+				case 1 :
+				{
+					math::Vector3 var = this->mapsGroup1[i][funct]();
+					std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
+  				// this->rosPub_vector[idx].publish(oi);
+					break;
+				}
+				case 2 :
+					std::cout << "2\n";
+  				// this->rosPub_vector[idx].publish(oi);
+					break;
+				case 3 :
+					std::cout << "3\n";
+  				// this->rosPub_vector[idx].publish(oi);
+					break;
+			}
 
 
 		}
