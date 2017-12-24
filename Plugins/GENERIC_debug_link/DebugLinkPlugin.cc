@@ -48,11 +48,22 @@ void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
 // std::map< int, std::pair< void(MyClassA::*)(int, std::string), MyClassA* > > myMap;
 
-void testMap(physics::LinkPtr link) {
-	std::map<std::string, std::pair< gazebo::math::Vector3(physics::Link::*)() const, boost::shared_ptr<gazebo::physics::Link>* > > Map1;
-	// std::map<std::string, std::function<geometry_msgs::Vector3()>>  Map1;
-	Map1["GetWorldLinearAccel"] = std::make_pair(&physics::Link::GetWorldLinearAccel, &link);
-	Map1["GetRelativeTorque"] = std::make_pair(&physics::Link::GetRelativeTorque, &link);
+// void testMap(physics::LinkPtr link) {
+// 	std::map<std::string, std::pair< gazebo::math::Vector3(physics::Link::*)() const, boost::shared_ptr<gazebo::physics::Link>* > > Map1;
+// 	// std::map<std::string, std::function<geometry_msgs::Vector3()>>  Map1;
+// 	Map1["GetWorldLinearAccel"] = std::make_pair(&physics::Link::GetWorldLinearAccel, &link);
+// 	Map1["GetRelativeTorque"] = std::make_pair(&physics::Link::GetRelativeTorque, &link);
+// }
+
+void DebugLinkPlugin::createMap(link_param *param, int idx) {
+	physics::LinkPtr link = param->link;
+	// std::map<std::string, std::function<math::Vector3()>> mapsVector3;
+	this->mapsVector3[idx]["GetWorldLinearAccel"] = boost::bind(&physics::Link::GetWorldLinearAccel, link);
+	this->mapsVector3[idx]["GetRelativeTorque"] = boost::bind(&physics::Link::GetRelativeTorque, link);
+	this->mapsVector3[idx]["GetWorldCoGLinearVel"] = boost::bind(&physics::Link::GetWorldCoGLinearVel, link);
+
+	math::Vector3 var = this->mapsVector3[idx]["GetWorldCoGLinearVel"]();
+	std::cout << var.x << std::endl;
 }
 
 
@@ -60,11 +71,18 @@ void testMap(physics::LinkPtr link) {
 
 void DebugLinkPlugin::setTopics() {
 	int link_count, variable_count;
+	link_param *current_link;
 	variable_param *current_variable;
 	ros::Publisher pub;
 
 	link_count = this->link_data->GetLinkCount();  // get number of links
+	this->mapsVector3.resize(link_count);
+
 	for (int i = 0; i < link_count; i++) {
+
+		// create maps for this link
+		current_link = this->link_data->GetLink(i);
+		this->createMap(current_link, i);
 
 		variable_count = this->link_data->GetVariableCount(i);
 		for (int j = 0; j < variable_count; j++) {
@@ -98,6 +116,8 @@ void DebugLinkPlugin::OnUpdate() {
 	ros::Publisher pub;
 
 	link_count = this->link_data->GetLinkCount();  // get number of links
+
+
 	for (int i = 0; i < link_count; i++) {
 
 		variable_count = this->link_data->GetVariableCount(i);
@@ -105,20 +125,27 @@ void DebugLinkPlugin::OnUpdate() {
 			current_variable = this->link_data->GetVariable(i, j);
 			idx++;
 
-			std::string funct = "get" + current_variable->scope + current_variable->name;
+			std::string funct = "Get" + current_variable->scope + current_variable->name;
+			math::Vector3 var = this->mapsVector3[i][funct]();
+			// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
+
+
+
 			// std::cout << funct << std::endl;
 
-			switch(current_variable->group) {
-				case 1 :
-  				// this->rosPub_vector[idx].publish(oi);
-					break;
-				case 2 :
-  				// this->rosPub_vector[idx].publish(oi);
-					break;
-				case 3 :
-  				// this->rosPub_vector[idx].publish(oi);
-					break;
-			}
+			// std::pair< gazebo::math::Vector3(physics::Link::*)() const, boost::shared_ptr<gazebo::physics::Link>* variable = this->mapsVector3[funct];
+
+			// switch(current_variable->group) {
+			// 	case 1 :
+  		// 		this->rosPub_vector[idx].publish(oi);
+			// 		break;
+			// 	case 2 :
+  		// 		this->rosPub_vector[idx].publish(oi);
+			// 		break;
+			// 	case 3 :
+  		// 		this->rosPub_vector[idx].publish(oi);
+			// 		break;
+			// }
 
 
 		}

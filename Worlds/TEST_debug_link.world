@@ -22,14 +22,10 @@
 
       <plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
         <link1 name="player::chassi">
-          <variable1 scope="WorldCoG" topic="player1/pose">Pose</variable1>
+          <variable1 scope="WorldCoG">LinearVel</variable1>
           <variable2 scope="Relative">Torque</variable2>
-          <variable3 scope="World">energy</variable3>
-          <variable4 scope="World">Energy</variable4>
+          <variable3 scope="World">LinearAccel</variable3>
         </link1>
-        <link2 name="chassi">
-          <variable1 scope="WorldCoG" topic="player1/pose">Pose</variable1>
-        </link2>
       </plugin>
     </model>
 
