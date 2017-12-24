@@ -36,8 +36,8 @@ namespace gazebo {
 		private: std::vector<ros::Publisher> rosPub_vector;  /// \brief A ROS publisher
 		private: event::ConnectionPtr updateConnection; // events
 		private: std::vector<std::map<std::string, std::function<math::Vector3()>>> mapsGroup1;
-		private: std::vector<std::map<std::string, std::function<math::Vector3()>>> mapsGroup2;
-		private: std::vector<std::map<std::string, std::function<math::Vector3()>>> mapsGroup3;
+		private: std::vector<std::map<std::string, std::function<math::Pose()>>> mapsGroup2;
+		private: std::vector<std::map<std::string, std::function<float()>>> mapsGroup3;
 	};
 }
 

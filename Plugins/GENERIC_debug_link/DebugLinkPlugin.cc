@@ -152,18 +152,24 @@ void DebugLinkPlugin::OnUpdate() {
 				case 1 :
 				{
 					math::Vector3 var = this->mapsGroup1[i][funct]();
-					std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
+					// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
   				// this->rosPub_vector[idx].publish(oi);
 					break;
 				}
 				case 2 :
-					std::cout << "2\n";
-  				// this->rosPub_vector[idx].publish(oi);
+				{
+					math::Pose var = this->mapsGroup2[i][funct]();
+					// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
+					// this->rosPub_vector[idx].publish(oi);
 					break;
+				}
 				case 3 :
-					std::cout << "3\n";
-  				// this->rosPub_vector[idx].publish(oi);
+				{
+					float var = this->mapsGroup3[i][funct]();
+					// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
+					// this->rosPub_vector[idx].publish(oi);
 					break;
+				}
 			}
 
 
