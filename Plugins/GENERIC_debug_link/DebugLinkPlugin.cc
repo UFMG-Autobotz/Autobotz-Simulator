@@ -76,6 +76,10 @@ void DebugLinkPlugin::createMap(link_param *param, int idx) {
 	this->mapsGroup2[idx]["GetRelativePose"] = boost::bind(&physics::Link::GetRelativePose, link);
 	this->mapsGroup2[idx]["GetWorldPose"] = boost::bind(&physics::Link::GetWorldPose, link);
 	this->mapsGroup2[idx]["GetWorldCoGPose"] = boost::bind(&physics::Link::GetWorldCoGPose, link);
+
+	this->mapsGroup3[idx]["GetWorldEnergy"] = boost::bind(&physics::Link::GetWorldEnergy, link);
+	this->mapsGroup3[idx]["GetWorldEnergyKinetic"] = boost::bind(&physics::Link::GetWorldEnergyKinetic, link);
+	this->mapsGroup3[idx]["GetWorldEnergyPotential"] = boost::bind(&physics::Link::GetWorldEnergyPotential, link);
 }
 
 
