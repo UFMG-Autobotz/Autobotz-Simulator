@@ -37,23 +37,9 @@ void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
 	this->updateConnection = event::Events::ConnectWorldUpdateEnd(
 		boost::bind(&DebugLinkPlugin::OnUpdate, this));
-
-	std::map<std::string, std::function<int(int,int)>>  funcMap;
-	funcMap["add"] = add;
-  funcMap["sub"] = sub;
-
-	std::cout << funcMap["add"](2,3) << "\n";
-  std::cout << funcMap["sub"](5,2) << "\n";
 }
 
-// std::map< int, std::pair< void(MyClassA::*)(int, std::string), MyClassA* > > myMap;
-
-// void testMap(physics::LinkPtr link) {
-// 	std::map<std::string, std::pair< gazebo::math::Vector3(physics::Link::*)() const, boost::shared_ptr<gazebo::physics::Link>* > > Map1;
-// 	// std::map<std::string, std::function<geometry_msgs::Vector3()>>  Map1;
-// 	Map1["GetWorldLinearAccel"] = std::make_pair(&physics::Link::GetWorldLinearAccel, &link);
-// 	Map1["GetRelativeTorque"] = std::make_pair(&physics::Link::GetRelativeTorque, &link);
-// }
+/*-------------------*/
 
 void DebugLinkPlugin::createMap(link_param *param, int idx) {
 	physics::LinkPtr link = param->link;
@@ -93,6 +79,8 @@ void DebugLinkPlugin::setTopics() {
 
 	link_count = this->link_data->GetLinkCount();  // get number of links
 	this->mapsGroup1.resize(link_count);
+	this->mapsGroup2.resize(link_count);
+	this->mapsGroup3.resize(link_count);
 
 	for (int i = 0; i < link_count; i++) {
 
@@ -139,67 +127,58 @@ void DebugLinkPlugin::OnUpdate() {
 		variable_count = this->link_data->GetVariableCount(i);
 		for (int j = 0; j < variable_count; j++) {
 			current_variable = this->link_data->GetVariable(i, j);
-			idx++;
 
 			std::string funct = "Get" + current_variable->scope + current_variable->name;
-
-			// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
-
-
-			// math::Vector3 var;
 
 			switch(current_variable->group) {
 				case 1 :
 				{
-					math::Vector3 var = this->mapsGroup1[i][funct]();
-					// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
-  				// this->rosPub_vector[idx].publish(oi);
+					math::Vector3 var_gz = this->mapsGroup1[i][funct]();
+					geometry_msgs::Vector3 var_ROS;
+
+					var_ROS.x = var_gz.x;
+					var_ROS.y = var_gz.y;
+					var_ROS.z = var_gz.z;
+
+					// std::cout << var_ROS.x << std::endl;
+
+  				this->rosPub_vector[idx].publish(var_ROS);
 					break;
 				}
 				case 2 :
 				{
-					math::Pose var = this->mapsGroup2[i][funct]();
-					// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
-					// this->rosPub_vector[idx].publish(oi);
+					math::Pose var_gz = this->mapsGroup2[i][funct]();
+					geometry_msgs::Pose var_ROS;
+
+					var_ROS.position.x = var_gz.pos.x;
+					var_ROS.position.y = var_gz.pos.y;
+					var_ROS.position.z = var_gz.pos.z;
+
+					var_ROS.orientation.x = var_gz.rot.x;
+					var_ROS.orientation.y = var_gz.rot.y;
+					var_ROS.orientation.z = var_gz.rot.z;
+					var_ROS.orientation.w = var_gz.rot.w;
+
+					// std::cout << var_ROS.position.x << std::endl;
+
+					// this->rosPub_vector[idx].publish(var_ROS);
 					break;
 				}
 				case 3 :
 				{
-					float var = this->mapsGroup3[i][funct]();
-					// std::cout << var.x << ", " << var.y << ", " << var.z << std::endl;
-					// this->rosPub_vector[idx].publish(oi);
+					float var_gz = this->mapsGroup3[i][funct]();
+					std_msgs::Float64 var_ROS;
+
+					var_ROS.data = var_gz;
+
+					// this->rosPub_vector[idx].publish(var_ROS);
 					break;
 				}
 			}
 
-
+			idx++;
 		}
 
 	}
-
-
-	// int linkCount = this->link_data->GetLinkCount();  // get number of valid links
-	// link_param *currentLink;
-	// math::Pose linkPose;
-  //
-	// for (int i = 0; i < linkCount; i++) {
-	// 	currentLink = this->link_data->GetLink(i);
-	// 	if(currentLink->valid && currentLink->pose) {
-	// 	  linkPose = currentLink->link->GetWorldCoGPose();
-  //
-	// 		geometry_msgs::Pose currentLink_pose;
-  //
-	// 		currentLink_pose.position.x = linkPose.pos.x;
-	// 		currentLink_pose.position.y = linkPose.pos.y;
-	// 		currentLink_pose.position.z = linkPose.pos.z;
-  //
-	// 		currentLink_pose.orientation.x =linkPose.rot.x;
-	// 		currentLink_pose.orientation.y =linkPose.rot.y;
-	// 		currentLink_pose.orientation.z =linkPose.rot.z;
-	// 		currentLink_pose.orientation.w =linkPose.rot.w;
-  //
-	// 		this->rosPub_vector[i].publish(currentLink_pose);
-	// 	}
-	// }
 
 }
