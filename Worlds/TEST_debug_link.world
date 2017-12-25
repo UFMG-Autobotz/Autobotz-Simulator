@@ -20,16 +20,19 @@
         <pose>-0.2 0 0 0 0 0</pose>
       </include>
 
+      <plugin name="player 1 control" filename="lib_pid_control_plugin.so">
+        <velocity>true</velocity>
+        <pid>0.001 0 0</pid>
+      </plugin>
+
       <plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
         <link1 name="player::chassi">
-          <variable1 scope="WorldCoG">LinearVel</variable1>
-          <variable2 scope="Relative">Torque</variable2>
-          <variable3 scope="World">LinearAccel</variable3>
+          <variable1 topic="pose">Pose</variable1>
+          <variable2 topic="velocity">LinearVel</variable2>
+          <variable3 topic="energy">Energy</variable3>
         </link1>
       </plugin>
     </model>
-
-
 
   </world>
 </sdf>
