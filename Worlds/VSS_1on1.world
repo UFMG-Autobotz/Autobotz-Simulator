@@ -33,12 +33,6 @@
         <velocity>true</velocity>
         <pid>0.001 0 0</pid>
       </plugin>
-
-      <plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
-        <link1 name="player::chassi">
-          <variable1 scope="worldCG" topic="player1/pose">pose</variable1>
-        </link1>
-      </plugin>
     </model>
 
     <model name="player2">
@@ -51,24 +45,12 @@
         <velocity>true</velocity>
         <pid>0.001 0 0</pid>
       </plugin>
-
-      <plugin name="player 2 debug" filename="lib_debug_link_plugin.so">
-        <link1 name="player::chassi">
-          <variable1 scope="worldCG" topic="player2/pose">"pose"</variable1>
-        </link1>
-      </plugin>
     </model>
 
     <model name="ball">
       <include>
         <uri>model://VSS_ball/</uri>
       </include>
-
-      <plugin name="ball debug" filename="lib_debug_link_plugin.so">
-        <link1 name="VSS ball::ball">
-          <pose scope="worldCG" topic="ball/pose">true</pose>
-        </link1>
-      </plugin>
     </model>
 
     <model name="camera">
