@@ -140,8 +140,6 @@ void DebugLinkPlugin::OnUpdate() {
 					var_ROS.y = var_gz.y;
 					var_ROS.z = var_gz.z;
 
-					// std::cout << var_ROS.x << std::endl;
-
   				this->rosPub_vector[idx].publish(var_ROS);
 					break;
 				}
@@ -159,9 +157,7 @@ void DebugLinkPlugin::OnUpdate() {
 					var_ROS.orientation.z = var_gz.rot.z;
 					var_ROS.orientation.w = var_gz.rot.w;
 
-					// std::cout << var_ROS.position.x << std::endl;
-
-					// this->rosPub_vector[idx].publish(var_ROS);
+					this->rosPub_vector[idx].publish(var_ROS);
 					break;
 				}
 				case 3 :
@@ -171,7 +167,7 @@ void DebugLinkPlugin::OnUpdate() {
 
 					var_ROS.data = var_gz;
 
-					// this->rosPub_vector[idx].publish(var_ROS);
+					this->rosPub_vector[idx].publish(var_ROS);
 					break;
 				}
 			}
