@@ -1,3 +1,6 @@
+# Debug Link plugin
+> The *Debug Link* is a Gazebo *model* plugin used to send ROS messages with information about the links of a model. The plugin is not a replacement for sensors, it is intended to be used for debug purposes only.
+
 # Link
 
 Variable | Relative | World | World CoG | Type | Message Type
@@ -13,19 +16,7 @@ Angular Momentum | | x | | math::Vector3 | geometry_msgs::Vector3
 Kinetic Energy | | x | | double | std_msgs::Float64
 Potential Energy | | x | | double | std_msgs::Float64
 
-```xml
-<link1>
-  <pose scope="worldCG"/>
-</link1>
-```
 
-```xml
-<plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
-  <link1 name="player::chassi">
-    <pose scope="WorldCoG" topic="player1/pose">true</pose>
-  </link1>
-</plugin>
-```
 
 to
 
