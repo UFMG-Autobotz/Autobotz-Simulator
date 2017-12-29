@@ -34,7 +34,7 @@ export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_pid_control/import:${GAZEBO_PLU
 ## Settings
 
 ### Joints
-To control a joint use the `jointN tag`, where N is the number of the joint.
+To control a joint use the `jointN` tag, where N is the number of the joint.
 The plugin will look for joint tags starting from `joint1` and will stop searching when a joint is not found, so always start from 1 and don't skip a number.
 
 **Note:** The joint number is used by the parser to differentiate joints and is not related to the actual joints on the model (the name attribute is used to select a joint).
