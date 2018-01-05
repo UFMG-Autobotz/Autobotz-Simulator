@@ -1,0 +1,3 @@
+/media/barbara/DATA/Arquivos/UFMG/Autobotz/Simulacao/Autobotz-Simulator/Plugins/TEST_push_model/build/CMakeFiles/rebuild_cache.dir
+/media/barbara/DATA/Arquivos/UFMG/Autobotz/Simulacao/Autobotz-Simulator/Plugins/TEST_push_model/build/CMakeFiles/edit_cache.dir
+/media/barbara/DATA/Arquivos/UFMG/Autobotz/Simulacao/Autobotz-Simulator/Plugins/TEST_push_model/build/CMakeFiles/model_push.dir
