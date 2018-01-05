@@ -27,15 +27,13 @@ template_plugin/build
 03_Plugins/TEST_ros_connection/build
 03_Plugins/TEST_template_plugin/build
 03_Plugins/TEST_apply_force/build
-03_Plugins/TEST_get_joints/import/libget_joints_plugin.so
 
-03_Plugins/GENERIC_pid_control/import/lib_pid_control_data_parser.so
-03_Plugins/GENERIC_pid_control/import/lib_pid_control_plugin.so
-03_Plugins/GENERIC_camera_ros/import/lib_camera_ros_plugin.so
-03_Plugins/GENERIC_change_material/import/lib_change_material.so
-03_Plugins/GENERIC_debug_link/import/lib_debug_link_data_parser.so
-03_Plugins/GENERIC_debug_link/import/lib_debug_link_plugin.so
-03_Plugins/GENERIC_set_model_pose/import/lib_set_model_pose_data_parser.so
-03_Plugins/GENERIC_set_model_pose/import/lib_set_model_pose_plugin.so
-03_Plugins/GENERIC_events/import/lib_events_plugin.so
-03_Plugins/GENERIC_set_parameters/import/lib_set_parameters.so
+03_Plugins/GENERIC_camera_ros/import/
+03_Plugins/GENERIC_change_material/import/
+03_Plugins/GENERIC_debug_link/import/
+03_Plugins/GENERIC_events/import/
+03_Plugins/GENERIC_pid_control/import/
+03_Plugins/GENERIC_set_model_pose/import/
+03_Plugins/GENERIC_set_parameters/import/
+
+03_Plugins/TEST_get_joints/import/
