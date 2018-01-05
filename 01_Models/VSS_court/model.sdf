@@ -9,14 +9,6 @@
             <uri>file://court.dae</uri>
           </mesh>
         </geometry>
-
-        <!-- <material>
-          <script>
-            <uri>file://Scripts</uri>
-            <uri>file://Textures</uri>
-            <name>VSS_Player/Court</name>
-          </script>
-        </material> -->
       </visual>
 
       <collision name='collision'>

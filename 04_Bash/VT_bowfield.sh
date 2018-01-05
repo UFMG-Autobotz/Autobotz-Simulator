@@ -2,4 +2,4 @@
 . Setup/VT_setup.sh
 
 # iniciar gazebo com mundo parado
-gazebo Worlds/VT_bowlfield.world -u --verbose
+gazebo 02_Worlds/VT_bowlfield.world -u --verbose

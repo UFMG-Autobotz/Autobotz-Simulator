@@ -2,4 +2,4 @@
 . Setup/VSS_setup.sh
 
 # iniciar gazebo executando o mundo sem interface gráfica
-gzserver Worlds/VSS_vss.world
+gzserver 02_Worlds/VSS_vss.world

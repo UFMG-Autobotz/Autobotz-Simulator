@@ -2,4 +2,4 @@
 . Setup/VSS_setup.sh
 
 # iniciar gazebo com mundo parado
-gazebo Worlds/VSS_posicoes_corrigidas.world -u --verbose
+gazebo 02_Worlds/VSS_posicoes_corrigidas.world -u --verbose

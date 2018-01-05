@@ -26,7 +26,7 @@ For more information about adding plugins, see the [Gazebo tutorials](http://gaz
 Before running the world, set the import directory to the GAZEBO_PLUGIN_PATH so that Gazebo can find the plugin.
 
 ```
-export GAZEBO_PLUGIN_PATH=$(pwd)/Plugins/GENERIC_change_material/import:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_PLUGIN_PATH=$(pwd)/03_Plugins/GENERIC_change_material/import:${GAZEBO_PLUGIN_PATH}
 ```
 
 ## Set Parameters
