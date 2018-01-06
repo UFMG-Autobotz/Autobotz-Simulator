@@ -10,5 +10,8 @@ include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
-add_library(rosConnection SHARED ros_connection.cc)
-target_link_libraries(rosConnection ${GAZEBO_LIBRARIES} ${roscpp_LIBRARIES})
+add_library(_ros_connection SHARED ros_connection.cc)
+target_link_libraries(_ros_connection ${GAZEBO_LIBRARIES} ${roscpp_LIBRARIES})
+
+set(dir ${CMAKE_CURRENT_SOURCE_DIR}/lib/)
+set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)

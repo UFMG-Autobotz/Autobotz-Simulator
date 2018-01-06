@@ -7,5 +7,8 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
-add_library(get_joints_plugin SHARED get_joints_plugin.cpp)
-target_link_libraries(vt_sim_plugin ${GAZEBO_libraries} )
+add_library(_get_joints_plugin SHARED get_joints_plugin.cpp)
+target_link_libraries(_get_joints_plugin ${GAZEBO_libraries} )
+
+set(dir ${CMAKE_CURRENT_SOURCE_DIR}/lib/)
+set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
