@@ -19,10 +19,6 @@ plugins/GENERIC_events/build/
 plugins/GENERIC_pid_control/build/
 plugins/GENERIC_set_model_pose/build/
 plugins/GENERIC_set_parameters/build/
-plugins/TEST_apply_force/build/
-plugins/TEST_get_joints/build/
-plugins/TEST_push_model/build/
-plugins/TEST_ros_connection/build/
 plugins/TEST_template_plugin/build/
 
 plugins/GENERIC_camera_ros/lib/
@@ -32,10 +28,10 @@ plugins/GENERIC_events/lib/
 plugins/GENERIC_pid_control/lib/
 plugins/GENERIC_set_model_pose/lib/
 plugins/GENERIC_set_parameters/lib/
-plugins/TEST_apply_force/lib/
-plugins/TEST_get_joints/lib/
-plugins/TEST_push_model/lib/
-plugins/TEST_ros_connection/lib/
 plugins/TEST_template_plugin/lib/
 
 script/error.log
+
+models/VSS_ball/model.sdf
+models/VSS_player/model.sdf
+models/VT_vt_simplificado/sdf
