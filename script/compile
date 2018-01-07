@@ -43,7 +43,7 @@ fi
 for dir in ${list} ; do
   echo -e "${blue}Compiling ${dir} plugin...${no_color}"
   compile_plugin $dir
-  echo -e "${green}Done${no_color}"
+  echo -e "${green}${dir} plugin is ready${no_color}"
 done
 
 exit 0
