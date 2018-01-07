@@ -1,24 +1,39 @@
-# Bash
+# Scripts to rule them all
 
-> Scripts used to run the Gazebo simulations.
+These scripts are inspired by the [normalized script pattern that GitHub uses in its projects](https://githubengineering.com/scripts-to-rule-them-all/).
+Here's a description of what each script used in this project does.
 
+# script/run
+>  run Gazebo simulations
 
-The scripts in this folder include the Gazebo initialization as well as the commands that have to be run before initializing Gazebo.
+Use it to run the Autobotz-Simulator worlds
 
-## How to use
+#### Usage
+`script/run [project] [world] [options]`
 
-On terminal, inside this folder, type `bash` and the name of the desired script.
+#### Projects
+* **VSS:** Very Small Size Soccer, used with the AutoGoal project
+* **VT:** Land vehicle
+* **GENERIC:** Not related to any project
+* **TEST:** Used for testes, use it on the test/* branchs
+
+#### Options
+* **-q:** Run Gazebo on quiet mode (without the graphic interface)
+* **-u:** Start world paused
 
 ###### Example:
 ```
-bash GENERIC_gazebo.sh
+# Open world VSS_1on1.world on quiet mode
+script/run vss 1on1 -q
+
+# Open Gazebo without any world paused
+script/run generic none -u
 ```
 
-## bash/compile
+## script/compile
 > compile Gazebo plugins
 
 Use it after `git pull` or after changing a plugin to update the plugins binaries.
-
 
 #### Example
 ```
