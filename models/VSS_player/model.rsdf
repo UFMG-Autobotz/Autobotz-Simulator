@@ -129,7 +129,7 @@
 
         <material>
           <script>
-            <uri>file://Scripts</uri>
+            <uri>file://scripts</uri>
             <name>VSS_player/DarkGrey</name>
           </script>
         </material>
@@ -143,7 +143,7 @@
 
         <material>
           <script>
-            <uri>file://Scripts</uri>
+            <uri>file://scripts</uri>
             <name>VSS_player/DarkGrey</name>
           </script>
         </material>
@@ -157,8 +157,8 @@
 
         <material>
           <script>
-            <uri>file://Scripts</uri>
-            <uri>file://Textures/VSS_tags</uri>
+            <uri>file://scripts</uri>
+            <uri>file://textures/VSS_tags</uri>
           </script>
         </material>
 
@@ -209,7 +209,7 @@
 
         <material>
           <script>
-            <uri>file://Scripts</uri>
+            <uri>file://scripts</uri>
             <name>VSS_player/DarkGrey</name>
           </script>
         </material>
@@ -258,7 +258,7 @@
 
         <material>
           <script>
-            <uri>file://Scripts</uri>
+            <uri>file://scripts</uri>
             <name>VSS_player/DarkGrey</name>
           </script>
         </material>
@@ -301,7 +301,7 @@
 
         <material>
           <script>
-            <uri>file://Scripts</uri>
+            <uri>file://scripts</uri>
             <name>VSS_player/DarkGrey</name>
           </script>
         </material>
