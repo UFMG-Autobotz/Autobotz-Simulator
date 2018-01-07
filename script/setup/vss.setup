@@ -1,4 +1,4 @@
-cd ..
+#!/bin/bash
 
 # salvar .sdf a partir do .rsdf parametrizavel
 erb models/VSS_player/model.rsdf > models/VSS_player/model.sdf

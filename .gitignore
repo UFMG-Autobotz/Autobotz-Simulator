@@ -37,3 +37,5 @@ plugins/TEST_get_joints/lib/
 plugins/TEST_push_model/lib/
 plugins/TEST_ros_connection/lib/
 plugins/TEST_template_plugin/lib/
+
+script/error.log

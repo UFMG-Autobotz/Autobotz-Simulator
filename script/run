@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# ============ #
+
+# prepare to print colorful text
+export red='\e[0;31m'
+export nc='\033[0m'
+
+# save the root of the git repository (used to save errors on the log)
+export git_root=$(pwd)
+
+# ============ #
+
+# function to print error messages
+# messages are displayed on the terminal on red
+# and saved on error.log with timestamp
+function err() {
+  echo -e "${red}$@${nc}" # on red on stdout
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >> "${git_root}/script/error.log"  # with timestamp on stderr
+}
+
+# ============ #
+
+# function to quit if a value is not in an allowance list
+# $1=allowed_values $2=allowance_list $3=error_message
+function check_value {
+  local -n allowed_values=$1
+  valid=$(printf "%s\n" "${allowed_values[@]}" | grep -x "${2}" | wc -l)
+
+  if [[ "$valid" == "0" ]] ; then
+    err "${3}"
+    exit 1
+  fi
+}
+
+# ============ #
+
+# read project
+project=${1^^}
+
+# validate project
+valid_projects=(GENERIC VT VSS TEST)
+check_value valid_projects $project "Invalid project: ${project}!"
+
+# ------------ #
+
+# read world
+if [[ "${2,,}" == "none" ]] ; then
+  world=""
+else
+  world="worlds/${project}_${2,,}.world"
+fi
+
+# validate world
+valid_worlds=$(find ./worlds/*.world)
+if [[ "$world" != "" ]] ; then
+  check_value valid_worlds "./${world}" "Invalid world: ${2}!"
+fi
+
+# ------------ #
+
+#parse options
+gazebo="gazebo"
+OPTIND=3
+while getopts qu option; do
+  case "${option}" in
+    q) gazebo="gzserver";;
+    u) pause="-u";;
+  esac
+done
+
+# ------------ #
+
+# run setup
+setup="${project,,}.setup"
+. "script/setup/${setup}"
+
+# ------------ #
+
+# run gazebo
+eval $gazebo $world --verbose $pause
