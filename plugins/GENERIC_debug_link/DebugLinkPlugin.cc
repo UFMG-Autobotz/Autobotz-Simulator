@@ -15,11 +15,11 @@ DebugLinkPlugin::DebugLinkPlugin() {
 	if (!ros::isInitialized()) {
 		int argc = 0;
 		char **argv = NULL;
-		ros::init(argc, argv, "gazebo_client5", ros::init_options::NoSigintHandler);
+		ros::init(argc, argv, "gazebo", ros::init_options::NoSigintHandler);
 	}
 
 	// Create ROS node
-	this->rosNode.reset(new ros::NodeHandle("gazebo_client5"));
+	this->rosNode.reset(new ros::NodeHandle("gazebo"));
 }
 
 /*-------------------*/
