@@ -12,10 +12,12 @@
       </sky>
     </scene>
 
-    <!-- A global light source -->
-    <include>
-      <uri>model://sun</uri>
-    </include>
+
+    <light name="sun" type="directional">
+      <pose>0 0 15 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+    </light>
 
     <include>
       <uri>model://VT_field_flat</uri>
@@ -23,7 +25,8 @@
 
     <include>
       <uri>model://construction_cone</uri>
-      <pose>5 0 9.915 0 0 0</pose>
+      <pose>5 0 10 0 0 0</pose>
+      <static>false</static>
     </include>
 
     <model name="VT">
