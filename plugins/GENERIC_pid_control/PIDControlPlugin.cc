@@ -9,7 +9,7 @@ PIDControlPlugin::PIDControlPlugin() {
 	if (!ros::isInitialized()) {
 		int argc = 0;
 		char **argv = NULL;
-		ros::init(argc, argv, "gazebo", ros::init_options::NoSigintHandler);
+		ros::init(argc, argv, "gazebo", ros::init_options::AnonymousName);
 	}
 
 	// Create ROS node
