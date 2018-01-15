@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # salvar .sdf a partir do .rsdf parametrizavel
-erb models/VT_vt_simplificado/model.rsdf > models/VT_vt_simplificado/model.sdf
+erb models/VT_vt_simplificado/model.sdf.erb > models/VT_vt_simplificado/model.sdf
 
 # adicionar caminho para as texturas
 source /usr/share/gazebo/setup.sh

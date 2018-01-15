@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # salvar .sdf a partir do .rsdf parametrizavel
-erb models/VSS_player/model.rsdf > models/VSS_player/model.sdf
-erb models/VSS_ball/model.rsdf > models/VSS_ball/model.sdf
+erb models/VSS_player/model.sdf.erb > models/VSS_player/model.sdf
+erb models/VSS_ball/model.sdf.erb > models/VSS_ball/model.sdf
 
 # necessario antes de modificar o GAZEBO_RESOURCE_PATH
 source /usr/share/gazebo/setup.sh
