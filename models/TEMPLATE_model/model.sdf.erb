@@ -1,0 +1,208 @@
+<%
+  lib = '../../libs/models/' # path to simple shape ruby objects
+
+  # ========= #
+
+  # SPHERE
+  require_relative lib + 'sphere'
+  s = Sphere.new
+
+  # Geometry
+  s.diameter = 0.1 # you can set diameter or radius, default is d = 0.1 m
+
+  # Inertia
+  s.density = 1000 # you can set density or mass, default is density = 1000 kg/m³
+
+  # Surface
+  s.mu = 1 # you can set mu and mu2, default mu = 0, mu2 is equal to mu by default
+
+  # ========= #
+
+  #CILINDER
+  require_relative lib + 'cilinder'
+  c = Cilinder.new
+
+  # Geometry
+  c.radius = 0.05 # you can set diameter or radius, default is d = 0.1 cm
+  c.length = 0.1 # default length is 0.1 m
+
+  # Inertia
+  c.density = 1000 # you can set density or mass, default is density = 1000 kg/m³
+
+  # Surface
+  c.mu = 1 # you can set mu and mu2, default mu = 0, mu2 is equal to mu by default
+
+  # ========= #
+
+  # BOX
+  require_relative lib + 'box'
+  b = Box.new
+
+  # Geometry
+  # default is a 0.1 x 0.1 x 0.1 m cube
+  b.x = 0.1
+  b.y = 0.1
+  b.z = 0.1
+
+  # Inertia
+  b.density = 1000 # you can set density or mass, default is density = 1000 kg/m³
+
+  # Surface
+  b.mu = 1 # you can set mu and mu2, default mu = 0, mu2 is equal to mu by default
+%>
+
+<?xml version='1.0'?>
+
+<sdf version ='1.6'> <!--SDF Specifications: http://sdformat.org/spec -->
+
+  <model name ='{{name}}'>
+
+    <!-- Sphere example -->
+    <link name ='sphere'>
+      <pose>0 0 <%= s.radius %> 0 0 0</pose>
+
+      <inertial>
+        <mass> <%= s.mass %></mass>
+        <inertia>
+          <ixx><%= s.ixx %></ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy><%= s.iyy %></iyy>
+          <iyz>0</iyz>
+          <izz><%= s.izz %></izz>
+        </inertia>
+      </inertial>
+
+      <collision name ='sphere_collision'>
+        <geometry>
+          <sphere><radius><%= s.radius %></radius></sphere>
+        </geometry>
+
+        <surface>
+          <friction>
+            <ode>
+              <mu><%= s.mu %></mu>
+              <mu2><%= s.mu2 %></mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <visual name ='sphere_visual'>
+        <geometry>
+          <sphere><radius><%= s.radius %></radius></sphere>
+        </geometry>
+
+        <material>
+          <!-- We are setting the colors directly on the sdf here -->
+          <ambient> 1 0 0 1</ambient>
+          <diffuse> 1 0 0 1</diffuse>
+          <specular> 0.5 0.5 0.5 128</specular>
+        </material>
+      </visual>
+    </link>
+
+
+    <!-- Cilinder example -->
+    <link name ='cilinder'>
+      <pose>0.5 0 <%= c.radius %> <%= 0.5*Math::PI %> 0 0</pose>
+      <inertial>
+        <mass> <%= c.mass %></mass>
+        <inertia>
+          <ixx><%= c.ixx %></ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy><%= c.iyy %></iyy>
+          <iyz>0</iyz>
+          <izz><%= c.izz %></izz>
+        </inertia>
+      </inertial>
+
+      <collision name ='cilinder_collision'>
+        <geometry>
+          <cylinder>
+            <radius><%= c.radius %></radius>
+            <length><%= c.length %></length>
+          </cylinder>
+        </geometry>
+
+        <surface>
+          <friction>
+            <ode>
+              <mu><%= c.mu %></mu>
+              <mu2><%= c.mu2 %></mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <visual name ='cilinder_visual'>
+        <geometry>
+          <cylinder>
+            <radius><%= c.radius %></radius>
+            <length><%= c.length %></length>
+          </cylinder>
+        </geometry>
+
+        <material>
+          <!-- We are choosing a Gazebo material with a solid color here -->
+          <script>
+            <uri>file://media/materials/scripts/</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <!-- Box example -->
+    <link name="box">
+      <pose>0 .5 <%= b.z/2 %> 0 0 0</pose>
+
+      <inertial>
+        <mass><%= b.mass %></mass>
+        <inertia>
+          <ixx><%= b.ixx %></ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy><%= b.iyy %></iyy>
+          <iyz>0</iyz>
+          <izz><%= b.izz %></izz>
+        </inertia>
+      </inertial>
+
+      <collision name="box_collision">
+        <geometry>
+          <box>
+            <size><%= b.x %> <%= b.y %> <%= b.z %></size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu><%= b.mu %></mu>
+              <mu2><%= b.mu2 %></mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <visual name="box_visual">
+        <geometry>
+          <box>
+            <size><%= b.x %> <%= b.y %> <%= b.z %></size>
+          </box>
+        </geometry>
+        <material>
+          <!-- We are choosing a Gazebo material with a texture here -->
+          <script>
+            <uri>file://media/materials/scripts/</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+
+    </link>
+
+  </model>
+
+</sdf>
