@@ -46,3 +46,8 @@ bash/compile GENERIC_camera_ros GENERIC_change_material GENERIC_debug_link
 # compile all plugins
 bash/compile all # or simply bash/compile
 ```
+
+## script/create
+> create new elements (Worls, Models or Plugins)
+
+TODO
