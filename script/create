@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# ============ #
+
+# prepare to print colorful text
+export red='\e[0;31m'
+export green='\e[0;32m'
+export nc='\033[0m'
+
+# save the root of the git repository (used to save errors on the log)
+export git_root=$(pwd)
+
+# ============ #
+
+# function to print error messages
+# messages are displayed on the terminal on red
+# and saved on error.log with timestamp
+function err() {
+  echo -e "${red}$@${nc}" # on red on stdout
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >> "${git_root}/script/error.log"  # with timestamp on stderr
+}
+
+# ============ #
+
+# function to quit if a value is not in an allowance list
+# $1=allowed_values $2=allowance_list $3=error_message
+function check_value {
+  local -n allowed_values=$1
+  valid=$(printf "%s\n" "${allowed_values[@]}" | grep -x "${2}" | wc -l)
+
+  if [[ "$valid" == "0" ]] ; then
+    err "${3}"
+    exit 1
+  fi
+}
+
+# ============ #
+
+# function to create a world
+# $1=project $2=name (snake_case)
+function createWorld {
+  world_name="${1}_${2}"
+  new_file="./worlds/${world_name}.world"
+  template="./worlds/TEMPLATE_world.world"
+
+  # check if world already exists
+  if [[ -s "${new_file}" ]] ; then
+    err "${world_name} world already exists!"
+    exit 1
+  fi
+
+  # create .world file
+  sed "s/{{name}}/${2}/g" <$template >$new_file
+
+  echo -e "${green}Created world ${world_name}!${nc}"
+}
+
+# ============ #
+
+# function to create a model
+# $1=project $2=name (snake_case)
+function createModel {
+  model_name="${1}_${2}"
+  new_dir="./models/${model_name}/"
+  template="./models/TEMPLATE_model/"
+
+  # check if model already exists
+  if [[ -d "${new_dir}" ]] && [[ ! -L "${new_dir}" ]] ; then
+    err "${model_name} model already exists!"
+    exit 1
+  fi
+
+  # create model directory
+  mkdir $new_dir
+
+  # create model.sdf.erb
+  sed "s/{{name}}/${2}/g" <"${template}model.sdf.erb" >"${new_dir}model.sdf.erb"
+
+  # create model.config
+  display_name=$(echo ${2} | sed -r  -e 's:^[a-z]:\U&:' -e 's:_([a-z]|[A-Z]): \U\1:g')
+  config_name="${1} - ${display_name}"
+  config_description="A ${display_name} model for the ${1} project"
+  sed -e "s/{{name}}/${config_name}/g" -e "s/{{description}}/${config_description}/" <"${template}model.config" >"${new_dir}model.config"
+
+  # TODO apend model.sdf to .gitignore / add to script that converts .sdf.erb to .sdf
+
+  echo -e "${green}Created model ${model_name}!${nc}"
+}
+
+# ============ #
+
+# function to create a model
+# $1=project $2=name (snake_case)
+function createPlugin {
+  echo "Plugin ${1} ${2}"
+}
+
+# ============ #
+
+#parse options
+project="GENERIC" # default project is GENERIC
+name_flag=False
+OPTIND=2
+while getopts p:n: option; do
+  case "${option}" in
+    p) project="${OPTARG^^}";;
+    n) name="${OPTARG}";;
+  esac
+done
+
+# validate project
+valid_projects=(GENERIC VT VSS TEST)
+check_value valid_projects $project "Invalid project: ${project}!\nProjects available: ${valid_projects[*]}"
+
+# validate name
+if [[ ! $name ]] ; then
+  err "You must set a ${1,,} name!"
+  exit
+fi
+
+# format name
+name=$(echo ${name} | sed -r  -e 's:([A-Z]):_\l\1:g' -e 's:^_::') # convert name in camelCase or PascalCase to snake_case
+
+# read type of file created
+type=${1,,}
+case "${type}" in
+  world) createWorld $project $name;;
+  model) createModel $project $name;;
+  plugin) createPlugin $project $name;;
+esac
