@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<sdf version="1.6"> <!--SDF Specifications: http://sdformat.org/spec -->
+  <world name="{{name}}">
+
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Template for a model -->
+    <!-- <model name="model_name">
+      <include>
+        <uri>model://model_name</uri>
+        <pose>0 0 0 0 0 0</pose>
+      </include>
+      <plugin name="plugin_name" filename="lib_plugin_name.so"></plugin>
+    </model> -->
+
+  </world>
+</sdf>
