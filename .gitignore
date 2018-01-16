@@ -19,7 +19,7 @@ plugins/GENERIC_events/build
 plugins/GENERIC_pid_control/build
 plugins/GENERIC_set_model_pose/build
 plugins/GENERIC_set_parameters/build
-plugins/TEST_template_plugin/build
+plugins/*/build
 
 lib/plugins
 
@@ -28,3 +28,4 @@ script/error.log
 models/VSS_ball/model.sdf
 models/VSS_player/model.sdf
 models/VT_vt_simplificado/model.sdf
+models/TEMPLATE_model/model.sdf
