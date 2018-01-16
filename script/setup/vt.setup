@@ -11,6 +11,4 @@ export GAZEBO_RESOURCE_PATH=$(pwd)/materials/textures:$GAZEBO_RESOURCE_PATH
 export GAZEBO_MODEL_PATH=$(pwd)/models:$GAZEBO_MODEL_PATH
 
 # adicionar caminho para os plugins
-plugins="GAZEBO_PLUGIN_PATH=$(pwd)/plugins"
-export ${plugins}/GENERIC_pid_control/lib:${GAZEBO_PLUGIN_PATH}
-export ${plugins}/GENERIC_camera_ros/lib:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
