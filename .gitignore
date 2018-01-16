@@ -12,23 +12,16 @@ modules/Keyboard_Command/MainWindow.pyc
 modules/Keyboard_Command/SubWindow.pyc
 modules/Keyboard_Command/SubWindowGamepad.pyc
 
-plugins/GENERIC_camera_ros/build/
-plugins/GENERIC_change_material/build/
-plugins/GENERIC_debug_link/build/
-plugins/GENERIC_events/build/
-plugins/GENERIC_pid_control/build/
-plugins/GENERIC_set_model_pose/build/
-plugins/GENERIC_set_parameters/build/
-plugins/TEST_template_plugin/build/
+plugins/GENERIC_camera_ros/build
+plugins/GENERIC_change_material/build
+plugins/GENERIC_debug_link/build
+plugins/GENERIC_events/build
+plugins/GENERIC_pid_control/build
+plugins/GENERIC_set_model_pose/build
+plugins/GENERIC_set_parameters/build
+plugins/TEST_template_plugin/build
 
-plugins/GENERIC_camera_ros/lib/
-plugins/GENERIC_change_material/lib/
-plugins/GENERIC_debug_link/lib/
-plugins/GENERIC_events/lib/
-plugins/GENERIC_pid_control/lib/
-plugins/GENERIC_set_model_pose/lib/
-plugins/GENERIC_set_parameters/lib/
-plugins/TEST_template_plugin/lib/
+lib/plugins
 
 script/error.log
 
