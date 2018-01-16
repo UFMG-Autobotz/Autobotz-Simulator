@@ -8,7 +8,7 @@
       <collision name="collision">
         <geometry>
           <heightmap>
-            <uri>file://GENERIC_heightmap_bowl.png</uri>
+            <uri>file://textures/GENERIC_heightmap_bowl.png</uri>
             <size>129 129 10</size>
             <pos>0 0 0</pos>
           </heightmap>
@@ -27,18 +27,18 @@
           <heightmap>
             <use_terrain_paging>false</use_terrain_paging>
             <texture>
-              <diffuse>file://GENERIC_dirt_diffusespecular.png</diffuse>
-              <normal>file://GENERIC_flat_normal.png</normal>
+              <diffuse>file://textures/GENERIC_dirt_diffusespecular.png</diffuse>
+              <normal>file://textures/GENERIC_flat_normal.png</normal>
               <size>1</size>
             </texture>
             <texture>
-              <diffuse>file://GENERIC_grass_diffusespecular.png</diffuse>
-              <normal>file://GENERIC_flat_normal.png</normal>
+              <diffuse>file://textures/GENERIC_grass_diffusespecular.png</diffuse>
+              <normal>file://textures/GENERIC_flat_normal.png</normal>
               <size>1</size>
             </texture>
             <texture>
-              <diffuse>file://GENERIC_fungus_diffusespecular.png</diffuse>
-              <normal>file://GENERIC_flat_normal.png</normal>
+              <diffuse>file://textures/GENERIC_fungus_diffusespecular.png</diffuse>
+              <normal>file://textures/GENERIC_flat_normal.png</normal>
               <size>1</size>
             </texture>
             <blend>
@@ -49,7 +49,7 @@
               <min_height>4</min_height>
               <fade_dist>5</fade_dist>
             </blend>
-            <uri>file://GENERIC_heightmap_bowl.png</uri>
+            <uri>file://textures/GENERIC_heightmap_bowl.png</uri>
             <size>129 129 10</size>
             <pos>0 0 0</pos>
           </heightmap>
