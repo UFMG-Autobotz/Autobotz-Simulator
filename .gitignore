@@ -12,13 +12,6 @@ modules/Keyboard_Command/MainWindow.pyc
 modules/Keyboard_Command/SubWindow.pyc
 modules/Keyboard_Command/SubWindowGamepad.pyc
 
-plugins/GENERIC_camera_ros/build
-plugins/GENERIC_change_material/build
-plugins/GENERIC_debug_link/build
-plugins/GENERIC_events/build
-plugins/GENERIC_pid_control/build
-plugins/GENERIC_set_model_pose/build
-plugins/GENERIC_set_parameters/build
 plugins/*/build
 
 lib/plugins
