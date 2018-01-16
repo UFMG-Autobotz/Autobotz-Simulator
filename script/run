@@ -72,8 +72,7 @@ done
 # ------------ #
 
 # run setup
-setup="${project,,}.setup"
-. "script/setup/${setup}"
+. "lib/script/run.setup"
 
 # ------------ #
 
