@@ -57,51 +57,53 @@
 
   <model name ='template'>
 
-    <!-- Sphere example -->
-    <link name ='sphere'>
-      <pose>0 0 <%= s.radius %> 0 0 0</pose>
+    <!-- Box example -->
+    <link name="box">
+      <pose>0 .5 <%= b.z/2 %> 0 0 0</pose>
 
       <inertial>
-        <mass> <%= s.mass %></mass>
+        <mass><%= b.mass %></mass>
         <inertia>
-          <ixx><%= s.ixx %></ixx>
+          <ixx><%= b.ixx %></ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy><%= s.iyy %></iyy>
+          <iyy><%= b.iyy %></iyy>
           <iyz>0</iyz>
-          <izz><%= s.izz %></izz>
+          <izz><%= b.izz %></izz>
         </inertia>
       </inertial>
 
-      <collision name ='sphere_collision'>
+      <collision name="box_collision">
         <geometry>
-          <sphere><radius><%= s.radius %></radius></sphere>
+          <box>
+            <size><%= b.x %> <%= b.y %> <%= b.z %></size>
+          </box>
         </geometry>
-
         <surface>
           <friction>
             <ode>
-              <mu><%= s.mu %></mu>
-              <mu2><%= s.mu2 %></mu2>
+              <mu><%= b.mu %></mu>
+              <mu2><%= b.mu2 %></mu2>
             </ode>
           </friction>
         </surface>
       </collision>
 
-      <visual name ='sphere_visual'>
+      <visual name="box_visual">
         <geometry>
-          <sphere><radius><%= s.radius %></radius></sphere>
+          <box>
+            <size><%= b.x %> <%= b.y %> <%= b.z %></size>
+          </box>
         </geometry>
-
         <material>
-          <!-- We are setting the colors directly on the sdf here -->
-          <ambient> 1 0 0 1</ambient>
-          <diffuse> 1 0 0 1</diffuse>
-          <specular> 0.5 0.5 0.5 128</specular>
+          <!-- We are choosing a Gazebo material with a texture here -->
+          <script>
+            <uri>file://media/materials/scripts/</uri>
+            <name>Gazebo/Wood</name>
+          </script>
         </material>
       </visual>
     </link>
-
 
     <!-- Cilinder example -->
     <link name ='cilinder'>
@@ -154,54 +156,65 @@
       </visual>
     </link>
 
-    <!-- Box example -->
-    <link name="box">
-      <pose>0 .5 <%= b.z/2 %> 0 0 0</pose>
+    <!-- Sphere example -->
+    <link name ='sphere'>
+      <pose>0 0 <%= s.radius %> 0 0 0</pose>
 
       <inertial>
-        <mass><%= b.mass %></mass>
+        <mass> <%= s.mass %></mass>
         <inertia>
-          <ixx><%= b.ixx %></ixx>
+          <ixx><%= s.ixx %></ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy><%= b.iyy %></iyy>
+          <iyy><%= s.iyy %></iyy>
           <iyz>0</iyz>
-          <izz><%= b.izz %></izz>
+          <izz><%= s.izz %></izz>
         </inertia>
       </inertial>
 
-      <collision name="box_collision">
+      <collision name ='sphere_collision'>
         <geometry>
-          <box>
-            <size><%= b.x %> <%= b.y %> <%= b.z %></size>
-          </box>
+          <sphere><radius><%= s.radius %></radius></sphere>
         </geometry>
+
         <surface>
           <friction>
             <ode>
-              <mu><%= b.mu %></mu>
-              <mu2><%= b.mu2 %></mu2>
+              <mu><%= s.mu %></mu>
+              <mu2><%= s.mu2 %></mu2>
             </ode>
           </friction>
         </surface>
       </collision>
 
-      <visual name="box_visual">
+      <visual name ='sphere_visual'>
         <geometry>
-          <box>
-            <size><%= b.x %> <%= b.y %> <%= b.z %></size>
-          </box>
+          <sphere><radius><%= s.radius %></radius></sphere>
         </geometry>
+
         <material>
-          <!-- We are choosing a Gazebo material with a texture here -->
-          <script>
-            <uri>file://media/materials/scripts/</uri>
-            <name>Gazebo/Wood</name>
-          </script>
+          <!-- We are setting the colors directly on the sdf here -->
+          <ambient> 1 0 0 1</ambient>
+          <diffuse> 1 0 0 1</diffuse>
+          <specular> 0.5 0.5 0.5 128</specular>
         </material>
       </visual>
-
     </link>
+
+  <!-- Revolute joint example -->
+  <joint name="chassi_right_wheel" type="revolute">
+    <parent>box</parent>
+    <child>cilinder</child>
+    <axis>
+      <xyz>0 0 1</xyz>
+    </axis>
+  </joint>
+
+  <!-- Ball joint example -->
+  <joint name="chassi_ball_wheel" type="ball">
+    <parent>box</parent>
+    <child>sphere</child>
+  </joint>
 
   </model>
 
