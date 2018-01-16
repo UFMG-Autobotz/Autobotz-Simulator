@@ -18,6 +18,8 @@
 #include <thread>
 #include <iostream>
 
+// Gazebo API: https://osrf-distributions.s3.amazonaws.com/gazebo/api/7.1.0/index.html
+
 namespace gazebo {
 	// model plugin example
 	// other types: https://osrf-distributions.s3.amazonaws.com/gazebo/api/7.1.0/group__gazebo__common.html#ga54e0db21fd49ff6e0178b6ebe120a6d2
