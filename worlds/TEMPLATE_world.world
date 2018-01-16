@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.6"> <!--SDF Specifications: http://sdformat.org/spec -->
-  <world name="{{name}}">
+  <world name="template">
 
     <!-- A global light source -->
     <include>
