@@ -3,10 +3,10 @@
 
 ## How to use
 ### Compile
-On the `GENERIC_set_parameters` directory run on terminal:
+On the parent directory of the repository run on terminal:
 
 ```
-bash compile.sh
+script/compile GENERIC_set_parameters
 ```
 
 ### Add plugin
@@ -20,10 +20,10 @@ In order to configure the plugin, other tags can be added inside of the `plugin`
 For more information about adding plugins, see the [Gazebo tutorials](http://gazebosim.org/tutorials?tut=plugins_model&cat=running_the_plugin#RunningthePlugin.)
 
 ### Run World
-Before running the world, set the lib directory to the GAZEBO_PLUGIN_PATH so that Gazebo can find the plugin.
+Before running the world, add the lib directory to the GAZEBO_PLUGIN_PATH so that Gazebo can find the plugin.
 
 ```
-export GAZEBO_PLUGIN_PATH=$(pwd)/plugins/GENERIC_set_parameters/lib:${GAZEBO_PLUGIN_PATH}
+export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
 ```
 
 ## Settings
