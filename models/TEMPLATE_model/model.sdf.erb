@@ -59,7 +59,7 @@
 
     <!-- Box example -->
     <link name="box">
-      <pose>0 .5 <%= b.z/2 %> 0 0 0</pose>
+      <pose>0 0 <%= b.z/2 %> 0 0 0</pose>
 
       <inertial>
         <mass><%= b.mass %></mass>
@@ -107,7 +107,7 @@
 
     <!-- Cilinder example -->
     <link name ='cilinder'>
-      <pose>0.5 0 <%= c.radius %> <%= 0.5*Math::PI %> 0 0</pose>
+      <pose>0 <%= 0.5*b.y + 0.5*c.length %> <%= c.radius %> <%= 0.5*Math::PI %> 0 0</pose>
       <inertial>
         <mass> <%= c.mass %></mass>
         <inertia>
@@ -158,7 +158,7 @@
 
     <!-- Sphere example -->
     <link name ='sphere'>
-      <pose>0 0 <%= s.radius %> 0 0 0</pose>
+      <pose><%= s.radius + 0.5*b.x %> 0 <%= s.radius %> 0 0 0</pose>
 
       <inertial>
         <mass> <%= s.mass %></mass>
