@@ -35,3 +35,7 @@ export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
 ```
 
 <!-- ## Settings -->
+
+<!-- ### ROS Message
+The plugin publishes ROS messages of type `{{type}}` to send {{information}}.
+The plugin subscribes ROS messages of type `{{type}}` to receive {{information}}. -->
