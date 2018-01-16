@@ -37,7 +37,7 @@ function check_value {
 # ============ #
 
 # function to create a world
-# $1=project $2=name (snake_case)
+# $1=project (uppercase) $2=name (snake_case)
 function createWorld {
   world_name="${1}_${2}"
   new_file="./worlds/${world_name}.world"
@@ -50,7 +50,8 @@ function createWorld {
   fi
 
   # create .world file
-  sed "s/{{name}}/${2}/g" <$template >$new_file
+  ## replace template to snake_case_name
+  sed "s/template/${2}/g" <$template >$new_file
 
   echo -e "${green}Created world ${world_name}!${nc}"
 }
@@ -58,7 +59,7 @@ function createWorld {
 # ============ #
 
 # function to create a model
-# $1=project $2=name (snake_case)
+# $1=project (uppercase) $2=name (snake_case)
 function createModel {
   model_name="${1}_${2}"
   new_dir="./models/${model_name}/"
@@ -74,13 +75,18 @@ function createModel {
   mkdir $new_dir
 
   # create model.sdf.erb
-  sed "s/{{name}}/${2}/g" <"${template}model.sdf.erb" >"${new_dir}model.sdf.erb"
+  ## replace template to snake_case_name
+  sed "s/template/${2}/g" <"${template}model.sdf.erb" >"${new_dir}model.sdf.erb"
 
   # create model.config
-  display_name=$(echo ${2} | sed -r  -e 's:^[a-z]:\U&:' -e 's:_([a-z]|[A-Z]): \U\1:g')
-  config_name="${1} - ${display_name}"
-  config_description="A ${display_name} model for the ${1} project"
-  sed -e "s/{{name}}/${config_name}/g" -e "s/{{description}}/${config_description}/" <"${template}model.config" >"${new_dir}model.config"
+  ## replace Template to "UPPERCASEPROJECT - Title Case Name"
+  ## Replace {{description}} to "A Title Case Name model for the UPPERCASEPROJECT project."
+  title_case_name=$(echo ${2} | sed -r  -e 's:^[a-z]:\U&:' -e 's:_([a-z]|[A-Z]): \U\1:g')
+  config_name="${1} - ${title_case_name}"
+  config_description="A ${title_case_name} model for the ${1} project."
+  sed -e "s/Template/${config_name}/g" \
+    -e "s/{{description}}/${config_description}/" \
+    <"${template}model.config" >"${new_dir}model.config"
 
   # TODO apend model.sdf to .gitignore / add to script that converts .sdf.erb to .sdf
 
@@ -89,10 +95,55 @@ function createModel {
 
 # ============ #
 
-# function to create a model
-# $1=project $2=name (snake_case)
+# function to create a plugin
+# $1=project (uppercase) $2=name (snake_case)
 function createPlugin {
-  echo "Plugin ${1} ${2}"
+  plugin_name="${1}_${2}"
+  new_dir="./plugins/${plugin_name}/"
+  template="./plugins/TEMPLATE_plugin/"
+
+  # check if plugin already exists
+  if [[ -d "${new_dir}" ]] && [[ ! -L "${new_dir}" ]] ; then
+    err "${plugin_name} plugin already exists!"
+    exit 1
+  fi
+
+  # create plugin directory
+  mkdir $new_dir
+
+  # create CMakeLists.txt
+  ## replace template_plugin with snake_case_name
+  ## replace Template with PascalCaseName
+  pascal_case_name=$(echo ${2} | sed -r 's:(_|^)([a-z]|[A-Z]):\U\2:g')
+  sed -r -e "s/template_plugin/${2}/g" \
+    -e "s/Template/${pascal_case_name}/g" \
+    <"${template}CMakeLists.txt" >"${new_dir}CMakeLists.txt"
+
+  # create README.md
+  ## replace Template with Title Case Name
+  ## replace TEMPLATE_plugin with UPPERCASEPROJECT_snake_case_name
+  ## replace template_plugin with snake_case_name
+  title_case_name=$(echo ${2} | sed -r  -e 's:^[a-z]:\U&:' -e 's:_([a-z]|[A-Z]): \U\1:g')
+  sed -r -e "s/Template/${title_case_name}/g" \
+    -e "s/TEMPLATE_plugin/${plugin_name}/g" \
+    -e "s/template_plugin/${2}/g" \
+    <"${template}README.md" >"${new_dir}README.md"
+
+  # create NamePlugin.cc
+  ## replace Template with PascalCaseName
+  ## replace Example with Title Case Name
+  sed -r -e "s/Template/${pascal_case_name}/g" \
+    -e "s/Example/${title_case_name}/g" \
+    <"${template}TemplatePlugin.cc" >"${new_dir}${pascal_case_name}Plugin.cc"
+
+  # create NamePlugin.hh
+  ## replace TEMPLATE with UPPERCASE_WITH_UNDERSCORES_NAME
+  ## replace Template with PascalCaseName
+  sed -r -e "s/TEMPLATE/${2^^}/g" \
+    -e "s/Template/${pascal_case_name}/g" \
+    <"${template}TemplatePlugin.hh" >"${new_dir}${pascal_case_name}Plugin.hh"
+
+  echo -e "${green}Created plugin ${plugin_name}!${nc}"
 }
 
 # ============ #
@@ -119,7 +170,8 @@ if [[ ! $name ]] ; then
 fi
 
 # format name
-name=$(echo ${name} | sed -r  -e 's:([A-Z]):_\l\1:g' -e 's:^_::') # convert name in camelCase or PascalCase to snake_case
+## convert name in camelCase or PascalCase to snake_case
+name=$(echo ${name} | sed -r  -e 's:_(.):_\l\1:g' -e 's:([A-Z]):_\l\1:g' -e 's:^_::')
 
 # read type of file created
 type=${1,,}
