@@ -62,8 +62,8 @@ function createWorld {
 # $1=project (uppercase) $2=name (snake_case)
 function createModel {
   model_name="${1}_${2}"
-  new_dir="./models/${model_name}/"
-  template="./models/TEMPLATE_model/"
+  new_dir="models/${model_name}/"
+  template="models/TEMPLATE_model/"
 
   # check if model already exists
   if [[ -d "${new_dir}" ]] && [[ ! -L "${new_dir}" ]] ; then
@@ -88,7 +88,8 @@ function createModel {
     -e "s/{{description}}/${config_description}/" \
     <"${template}model.config" >"${new_dir}model.config"
 
-  # TODO apend model.sdf to .gitignore / add to script that converts .sdf.erb to .sdf
+  # apend model.sdf to .gitignore
+  echo "${new_dir}/model.sdf" >> ".gitignore"
 
   echo -e "${green}Created model ${model_name}!${nc}"
 }
