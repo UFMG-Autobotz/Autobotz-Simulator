@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# save.sdf from .sdf.erb
+files=$(ls ./models/*/*.erb)
+for file in ${files} ; do
+  erb ${file} > ${file::-4}
+done
+
+# source gazebo setup before changing GAZEBO_RESOURCE_PATH
+source /usr/share/gazebo/setup.sh
+
+# add path to materials
+export GAZEBO_RESOURCE_PATH=$(pwd)/materials:$GAZEBO_RESOURCE_PATH
+
+# add path to meshs
+export GAZEBO_RESOURCE_PATH=$(pwd)/meshs:$GAZEBO_RESOURCE_PATH
+
+# add path to models
+export GAZEBO_MODEL_PATH=$(pwd)/models:$GAZEBO_MODEL_PATH
+
+# add path to plugins
+export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
