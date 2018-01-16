@@ -15,19 +15,7 @@ This tag has two required attributes:
 * **name:** A unique name, scoped to its parent.
 * **filename:** lib_template_plugin.so
 
-In order to configure the plugin, other tags can be added inside of the `plugin` tag (more information on the [settings section](#settings)).
-
-For more information about adding plugins, see the [Gazebo tutorials](http://gazebosim.org/tutorials?tut=plugins_model&cat=running_the_plugin#RunningthePlugin.)
-
-### Run World
-Before running the world, set the lib directory to the GAZEBO_PLUGIN_PATH so that Gazebo can find the plugin.
-
-```
-export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
-```
-
-## Settings
-
+<!-- In order to configure the plugin, other tags can be added inside of the `plugin` tag (more information on the [settings section](#settings)). -->
 
 ###### Example:
 ```xml
@@ -36,3 +24,14 @@ export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
   <!-- plugin settings -->
 </plugin>
 ```
+
+For more information about adding plugins, see the [Gazebo tutorials](http://gazebosim.org/tutorials?tut=plugins_model&cat=running_the_plugin#RunningthePlugin.)
+
+### Run World
+Before running the world, add the lib directory to the GAZEBO_PLUGIN_PATH so that Gazebo can find the plugin.
+
+```
+export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
+```
+
+<!-- ## Settings -->
