@@ -30,7 +30,7 @@ void TemplatePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 	this->rosQueueThread = std::thread(std::bind(&TemplatePlugin::QueueThread, this));
 
 	// Event that happens at the end of each world update
-	// For other events: https://osrf-distributions.s3.amazonaws.com/gazebo/api/dev/group__gazebo__event.html
+	// Other events: https://osrf-distributions.s3.amazonaws.com/gazebo/api/7.1.0/group__gazebo__event.html
 	this->updateConnection = event::Events::ConnectWorldUpdateEnd(
 		boost::bind(&TemplatePlugin::OnUpdate, this));
 
