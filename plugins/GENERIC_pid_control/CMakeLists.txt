@@ -20,5 +20,5 @@ target_link_libraries(_pid_control_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES
 add_dependencies(_pid_control_plugin _pid_control_data_parser)
 
 # Choose where the plugin will be built
-set(dir ${CMAKE_CURRENT_SOURCE_DIR}/lib/)
+set(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/plugins)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)

@@ -15,5 +15,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 add_library(_modelname_plugin SHARED ModelName_plugin.cpp)
 target_link_libraries(_modelname_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES})
 
-set(dir ${CMAKE_CURRENT_SOURCE_DIR}/lib/)
+# Choose where the plugin will be built
+set(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/plugins)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)

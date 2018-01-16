@@ -22,5 +22,5 @@ target_link_libraries(_debug_link_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES}
 add_dependencies(_debug_link_plugin _debug_link_data_parser)
 
 # Choose where the plugin will be built
-set(dir ${CMAKE_CURRENT_SOURCE_DIR}/lib/)
+set(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/plugins)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
