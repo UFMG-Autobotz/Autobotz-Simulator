@@ -13,7 +13,6 @@ function compile_plugin {
 
   # create necessary directories
   mkdir build -p
-  mkdir lib -p
 
   # compile
   cd build
