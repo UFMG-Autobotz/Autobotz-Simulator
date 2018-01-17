@@ -14,24 +14,31 @@
  * limitations under the License.
  *
 */
-#ifndef GAZEBO_GENERICSETPARAMETERS_HH_
-#define GAZEBO_GENERICSETPARAMETERS_HH_
+#ifndef GAZEBO_CHANGE_MATERIAL_PLUGIN_HH_
+#define GAZEBO_CHANGE_MATERIAL_PLUGIN_HH_
 
-#include "gazebo/gazebo.hh"
+#include <gazebo/common/Plugin.hh>
+#include <gazebo/rendering/Visual.hh>
 
 #include "ros/ros.h"
+#include "ros/callback_queue.h"
 #include <ros/console.h>
+#include "ros/subscribe_options.h"
+#include "std_msgs/String.h"
+#include <thread>
 
 namespace gazebo
 {
-  class GAZEBO_VISIBLE SetParametersPlugin : public WorldPlugin {
+  class GAZEBO_VISIBLE ChangeMaterialPlugin : public VisualPlugin {
     // methods
-    public: SetParametersPlugin();
-    public: virtual void Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf);
+    public: ChangeMaterialPlugin();
+    public: virtual void Load(rendering::VisualPtr _visual,
+        sdf::ElementPtr _sdf);
 
     // attributes
-    private: std::unique_ptr<ros::NodeHandle> rosNode; /// \brief A node use for ROS transport
+    private: rendering::VisualPtr visual;
+    private: std::unique_ptr<ros::NodeHandle> rosNode;	/// \brief A node use for ROS transport
+
   };
 }
-
 #endif

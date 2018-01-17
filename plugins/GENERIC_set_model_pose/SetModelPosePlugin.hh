@@ -1,5 +1,5 @@
-#ifndef _SET_MODEL_POSE_PLUGIN_HH_
-#define _SET_MODEL_POSE_PLUGIN_HH_
+#ifndef GAZEBO_SET_MODEL_POSE_PLUGIN_HH_
+#define GAZEBO_SET_MODEL_POSE_PLUGIN_HH_
 
 #include "ros/ros.h"
 #include "ros/callback_queue.h"

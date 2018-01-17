@@ -113,10 +113,10 @@ function createPlugin {
   mkdir $new_dir
 
   # create CMakeLists.txt
-  ## replace template_plugin with snake_case_name
+  ## replace template with snake_case_name
   ## replace Template with PascalCaseName
   pascal_case_name=$(echo ${2} | sed -r 's:(_|^)([a-z]|[A-Z]):\U\2:g')
-  sed -r -e "s/template_plugin/${2}/g" \
+  sed -r -e "s/template/${2}/g" \
     -e "s/Template/${pascal_case_name}/g" \
     <"${template}CMakeLists.txt" >"${new_dir}CMakeLists.txt"
 

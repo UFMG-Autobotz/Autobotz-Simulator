@@ -1,5 +1,5 @@
-#ifndef _DEBUG_LINK_PLUGIN_HH_
-#define _DEBUG_LINK_PLUGIN_HH_
+#ifndef GAZEBO_DEBUG_LINK_PLUGIN_HH_
+#define GAZEBO_DEBUG_LINK_PLUGIN_HH_
 
 #include <iostream>
 #include <vector>

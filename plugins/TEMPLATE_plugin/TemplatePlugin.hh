@@ -1,5 +1,5 @@
-#ifndef _TEMPLATE_PLUGIN_HH_
-#define _TEMPLATE_PLUGIN_HH_
+#ifndef GAZEBO_TEMPLATE_PLUGIN_HH_
+#define GAZEBO_TEMPLATE_PLUGIN_HH_
 
 #include "ros/ros.h"
 #include "ros/callback_queue.h"

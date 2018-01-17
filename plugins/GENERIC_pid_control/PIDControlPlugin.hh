@@ -1,5 +1,5 @@
-#ifndef _PID_CONTROL_PLUGIN_HH_
-#define _PID_CONTROL_PLUGIN_HH_
+#ifndef GAZEBO_PID_CONTROL_PLUGIN_HH_
+#define GAZEBO_PID_CONTROL_PLUGIN_HH_
 
 #include "ros/ros.h"
 #include "ros/callback_queue.h"

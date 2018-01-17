@@ -11,8 +11,8 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
-add_library(_set_parameters SHARED SetParameters.cc)
-target_link_libraries(_set_parameters ${GAZEBO_libraries} ${roscpp_LIBRARIES})
+add_library(_set_parameters_plugin SHARED SetParametersPlugin.cc)
+target_link_libraries(_set_parameters_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES})
 
 # Choose where the plugin will be built
 set(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/plugins)

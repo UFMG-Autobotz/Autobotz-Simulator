@@ -13,8 +13,8 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Build our plugin
-add_library(_change_material SHARED ChangeMaterial.cc)
-target_link_libraries(_change_material ${GAZEBO_libraries} ${roscpp_LIBRARIES})
+add_library(_change_material_plugin SHARED ChangeMaterialPlugin.cc)
+target_link_libraries(_change_material_plugin ${GAZEBO_libraries} ${roscpp_LIBRARIES})
 
 # Choose where the plugin will be built
 set(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/plugins)

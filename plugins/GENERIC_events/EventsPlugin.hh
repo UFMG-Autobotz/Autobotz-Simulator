@@ -1,5 +1,5 @@
-#ifndef _EVENTS_PLUGIN_HH_
-#define _EVENTS_PLUGIN_HH_
+#ifndef GAZEBO_EVENTS_PLUGIN_HH_
+#define GAZEBO_EVENTS_PLUGIN_HH_
 
 #include <gazebo/gazebo.hh>
 
