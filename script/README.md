@@ -73,4 +73,4 @@ script/create plugin -n stop_simulation
 
 > **Note:**
 
-> The name option doesn't accepts spaces, it recognizes snake_case, camelCase and PascalCase.
+> The name option doesn't accepts spaces, it recognizes different conventions to separate words: snake_case, camelCase, PascalCase, kebab-case.
