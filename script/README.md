@@ -67,6 +67,10 @@ Use it to create new elements instead of creating them from scratch to have a co
 # Create new world called VSS_game.world
 script/create world -p vss -n game
 
-# Create new plugin caolled GENERIC_stop_simulation.world
+# Create new plugin called GENERIC_stop_simulation.world
 script/create plugin -n stop_simulation
 ```
+
+> **Note:**
+
+> The name option doesn't accepts spaces, it recognizes different conventions to separate words: snake_case, camelCase, PascalCase, kebab-case.
