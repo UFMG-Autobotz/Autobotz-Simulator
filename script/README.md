@@ -50,4 +50,23 @@ bash/compile all # or simply bash/compile
 ## script/create
 > create new elements (Worls, Models or Plugins)
 
-TODO
+Use it to create new elements instead of creating them from scratch to have a copy of the templates with relevant parts already renamed according to the repository conventions.
+
+#### Usage
+`script/create [type of element] [options]`
+
+#### Element
+`world`, `model` or `plugin`.
+
+#### Options
+* **-p:** Project (VSS, VT, GENERIC or TEST), default is GENERIC
+* **-n:** Name, *obligatory*
+
+###### Example:
+```
+# Create new world called VSS_game.world
+script/create world -p vss -n game
+
+# Create new plugin caolled GENERIC_stop_simulation.world
+script/create plugin -n stop_simulation
+```
