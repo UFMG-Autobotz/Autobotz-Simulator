@@ -1,49 +1,46 @@
-<?xml version='1.0'?>
-
 <%
+  lib = '../../lib/models/' # path to simple shape ruby objects
+  require_relative lib + 'sphere'
+  ball = Sphere.new
+
   # Geometry
-  diameter = 42.7e-3
-  radius = diameter / 2
+  ball.diameter = 42.7e-3
 
   # Inertia
-  mass = 46e-3
-  ixx  = (mass/5.0) * 2*radius**2
-  iyy  = (mass/5.0) * 2*radius**2
-  izz  = (mass/5.0) * 2*radius**2
+  ball.mass = 46e-3
 
   # Surface
-  mu = 1
+  ball.mu = 1
 %>
+
+<?xml version='1.0'?>
 
 <sdf version ='1.6'>
 
   <model name ='VSS ball'>
 
     <link name ='ball'>
-      <pose>0 0 <%= radius %> 0 0 0</pose>
+      <pose>0 0 <%= ball.radius %> 0 0 0</pose>
 
       <inertial>
-        <mass> <%= mass %></mass>
+        <mass> <%= ball.mass %></mass>
         <inertia>
-          <ixx><%= ixx %></ixx>
-          <ixy>0.000000</ixy>
-          <ixz>0.000000</ixz>
-          <iyy><%= iyy %></iyy>
-          <iyz>0.000000</iyz>
-          <izz><%= izz %></izz>
+          <ixx><%= ball.ixx %></ixx>
+          <iyy><%= ball.iyy %></iyy>
+          <izz><%= ball.izz %></izz>
         </inertia>
       </inertial>
 
       <collision name ='ball_collision'>
         <geometry>
-          <sphere><radius><%= radius %></radius></sphere>
+          <sphere><radius><%= ball.radius %></radius></sphere>
         </geometry>
 
         <surface>
           <friction>
             <ode>
-              <mu><%= mu %></mu>
-              <mu2><%= mu %></mu2>
+              <mu><%= ball.mu %></mu>
+              <mu2><%= ball.mu2 %></mu2>
             </ode>
           </friction>
         </surface>
@@ -51,7 +48,7 @@
 
       <visual name ='ball_visual'>
         <geometry>
-          <sphere><radius><%= radius %></radius></sphere>
+          <sphere><radius><%= ball.radius %></radius></sphere>
         </geometry>
         <material>
           <ambient> 1 0.5088 0.0468 1</ambient>
