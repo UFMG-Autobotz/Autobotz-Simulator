@@ -154,7 +154,7 @@ type=${1,,}
 
 # ------------ #
 
-# check for errors while reading world
+# check for errors while reading type
 if [[ ! $type ]] || [[ "$type" == "-p" ]] || [[  "$type" == "-n" ]]  ; then
   err "Please choose the type of the file to be created."
   exit 1

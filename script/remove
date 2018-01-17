@@ -1,0 +1,145 @@
+#!/bin/bash
+
+# ============ #
+
+# prepare to print colorful text
+export red='\e[0;31m'
+export green='\e[0;32m'
+export ul='\e[4m'
+export nc='\e[0m'
+
+
+# save the root of the git repository (used to save errors on the log)
+export git_root=$(pwd)
+
+# ============ #
+
+# function to print error messages
+# messages are displayed on the terminal on red
+# and saved on error.log with timestamp
+function err() {
+  echo -e "${red}$@${nc}" # on red on stdout
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >> "${git_root}/script/error.log"  # with timestamp on stderr
+}
+
+# ============ #
+
+# function to quit if a value is not in an allowance list
+# $1=allowed_values $2=allowance_list $3=error_message
+function check_value {
+  local -n allowed_values=$1
+  valid=$(printf "%s\n" "${allowed_values[@]}" | grep -x "${2}" | wc -l)
+
+  if [[ "$valid" == "0" ]] ; then
+    err "${3}"
+    exit 1
+  fi
+}
+
+# ============ #
+
+# function to remove a world
+# $1=project (uppercase) $2=name (snake_case)
+function removeWorld {
+  world_name="${1}_${2}"
+  file="./worlds/${world_name}.world"
+
+  # check if world exists
+  if [[ ! -s "${file}" ]] ; then
+    err "${world_name} world doesn't exists!"
+    exit 1
+  fi
+
+  echo -n -e "Are you sure you want to remove ${file} (yes/ ${ul}no${nc})? "
+  read confirmation
+
+  if [[ "${confirmation,,}" == "yes" ]] || [[ "${confirmation,,}" == "y" ]] ; then
+    rm $file
+    echo -e "${green}Removed world ${world_name}!${nc}"
+  else
+    echo "Removal cancelled."
+  fi
+}
+
+# ============ #
+
+# function to remove a model
+# $1=project (uppercase) $2=name (snake_case)
+function removeModel {
+  :
+}
+
+# ============ #
+
+# function to remove a plugin
+# $1=project (uppercase) $2=name (snake_case)
+function createPlugin {
+  :
+}
+
+# ============ #
+
+# read type of file to be removed
+type=${1,,}
+
+# ------------ #
+
+# check for errors while reading type
+if [[ ! $type ]] || [[ "$type" == "-p" ]] || [[  "$type" == "-n" ]]  ; then
+  err "Please choose the type of the file to be removed."
+  exit 1
+fi
+
+# ------------ #
+
+# check for help
+if [[ "$type" == "--help" ]]  || [[ "$type" == "-h" ]]; then
+  echo -e "script/remove - remove elements of the Autbotz Simulator"
+  echo -e "SINTAXE: script/remove type [options]"
+  echo -e "Types: world, model and plugin"
+  echo -e "Options:"
+  echo -e "\t -p: project - VSS, VT, GENERIC or TEST, default is GENERIC"
+  echo -e "\t -n: name - string without spaces, required"
+
+  exit 0
+fi
+
+# ------------ #
+
+#parse options
+project="GENERIC" # default project is GENERIC
+name_flag=False
+OPTIND=2
+while getopts p:n: option; do
+  case "${option}" in
+    p) project="${OPTARG^^}";;
+    n) name="${OPTARG}";;
+  esac
+done
+
+# ------------ #
+
+# validate project
+valid_projects=(GENERIC VT VSS TEST)
+check_value valid_projects $project "Invalid project: ${project}!\nProjects available: ${valid_projects[*]}"
+
+# validate name
+if [[ ! $name ]] ; then
+  err "You must give the ${1,,} name!"
+  exit
+fi
+
+# ------------ #
+
+# format name
+## convert name in camelCase, PascalCase or kebab-case to snake_case
+name=$(echo ${name} | sed -r  -e 's:-:_:g' -e 's:_(.):_\l\1:g' -e 's:([A-Z]):_\l\1:g' -e 's:^_::')
+
+# ------------ #
+
+# remove element
+case "${type}" in
+  world) removeWorld $project $name;;
+  model) removeModel $project $name;;
+  plugin) removePlugin $project $name;;
+esac
