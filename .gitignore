@@ -5,6 +5,8 @@ lib/plugins
 script/error.log
 
 models/VSS_ball/model.sdf
+models/VSS_camera/model.sdf
 models/VSS_player/model.sdf
+models/VT_camera/model.sdf
 models/VT_vt_simplificado/model.sdf
 models/TEMPLATE_model/model.sdf
