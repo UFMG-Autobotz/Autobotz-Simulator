@@ -89,7 +89,7 @@ function createModel {
     <"${template}model.config" >"${new_dir}model.config"
 
   # apend model.sdf to .gitignore
-  echo "${new_dir}/model.sdf" >> ".gitignore"
+  echo "${new_dir}model.sdf" >> ".gitignore"
 
   echo -e "${green}Created model ${model_name}!${nc}"
 }
