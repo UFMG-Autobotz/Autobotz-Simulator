@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# TODO refactor - make functions to confirm deletion and check if world or model ar using
+# TODO rafactor - make functions to change between cases
+
 # ============ #
 
 # prepare to print colorful text
@@ -113,7 +116,45 @@ function removeModel {
 # function to remove a plugin
 # $1=project (uppercase) $2=name (snake_case)
 function removePlugin {
-  :
+  plugin_name="${1}_${2}"
+  dir="plugins/${plugin_name}/"
+  lib="lib_${2}_plugin.so"
+
+  # check if plugin exists
+  if [[ ! -d "${dir}" ]] ; then
+    err "${plugin_name} plugin doesn't exists!"
+    exit 1
+  fi
+
+  # check if a world use this plugin
+  worlds_using=$(grep $lib worlds/* -l | sed -r 's:worlds/(\w+).world:\1:g')
+  worlds_using_count=$(grep $lib worlds/* -l | wc -l)
+
+  if (( worlds_using_count > 0 )) ; then
+    err "Can't remove plugin, the following words are using it: \n${worlds_using}"
+    exit 1
+  fi
+
+  # check if a model use this plugin
+  models_using=$(grep $lib models/*/model.sdf* -l | sed -r 's:models/(\w+)/model(.sdf|.sdf.erb):\1:g')
+  models_using=$(echo $models_using | sed -r 's:(.+) \1:\1:g')
+  models_using_count=$(grep $lib models/*/model.sdf models/*/model.sdf.erb -l | wc -l)
+
+  if (( models_using_count > 0 )) ; then
+    err "Can't remove plugin, the following models are using it: \n${models_using}"
+    exit 1
+  fi
+
+  # delete plugin
+  echo -n -e "Are you sure you want to remove ${dir} (yes/ ${ul}no${nc})? "
+  read confirmation
+
+  if [[ "${confirmation,,}" == "yes" ]] || [[ "${confirmation,,}" == "y" ]] ; then
+    rm $dir -r
+    echo -e "${green}Removed plugin ${model_name}!${nc}"
+  else
+    echo "Removal cancelled."
+  fi
 }
 
 # ============ #
@@ -133,8 +174,8 @@ fi
 
 # check for help
 if [[ "$type" == "--help" ]]  || [[ "$type" == "-h" ]]; then
-  echo -e "script/remove - remove elements of the Autbotz Simulator"
-  echo -e "SINTAXE: script/remove type [options]"
+  echo -e "script/remove - remove elements of the Autbotz Simulator\n"
+  echo -e "SINTAXE: script/remove type [options]\n"
   echo -e "Types: world, model and plugin"
   echo -e "Options:"
   echo -e "\t -p: project - VSS, VT, GENERIC or TEST, default is GENERIC"
