@@ -4,7 +4,7 @@ These scripts are inspired by the [normalized script pattern that GitHub uses in
 Here's a description of what each script used in this project does.
 
 # script/run
->  run Gazebo simulations
+>  Run Gazebo simulations
 
 Use it to run the Autobotz-Simulator worlds
 
@@ -31,7 +31,7 @@ script/run generic none -u
 ```
 
 ## script/compile
-> compile Gazebo plugins
+> Compile Gazebo plugins
 
 Use it after `git pull` or after changing a plugin to update the plugins binaries.
 
@@ -48,7 +48,7 @@ bash/compile all # or simply bash/compile
 ```
 
 ## script/create
-> create new elements (Worls, Models or Plugins)
+> Create new elements (Worls, Models or Plugins)
 
 Use it to create new elements instead of creating them from scratch to have a copy of the templates with relevant parts already renamed according to the repository conventions.
 
@@ -67,10 +67,38 @@ Use it to create new elements instead of creating them from scratch to have a co
 # Create new world called VSS_game.world
 script/create world -p vss -n game
 
-# Create new plugin called GENERIC_stop_simulation.world
+# Create new plugin called GENERIC_stop_simulation
 script/create plugin -n stop_simulation
 ```
 
 > **Note:**
 
 > The name option doesn't accepts spaces, it recognizes different conventions to separate words: snake_case, camelCase, PascalCase, kebab-case.
+
+## script/remove
+> Remove elements (Worls, Models or Plugins)
+
+Use it to remove elements instead of deleting them to check if the element is used elsewhere and assure all necessary files are deleted.
+
+#### Usage
+`script/delete [type of element] [options]`
+
+#### Element
+`world`, `model` or `plugin`.
+
+#### Options
+* **-p:** Project (VSS, VT, GENERIC or TEST), default is GENERIC
+* **-n:** Name, *obligatory*
+
+###### Example:
+```
+# Remove world called VSS_game.world
+script/remove world -p vss -n game
+
+# Remove plugin called GENERIC_stop_simulation
+script/remove plugin -n stop_simulation
+```
+
+> **Note:**
+
+> As with the create script, the name option doesn't accepts spaces, it recognizes different conventions to separate words: snake_case, camelCase, PascalCase, kebab-case.
