@@ -50,6 +50,7 @@ function removeWorld {
     exit 1
   fi
 
+  # delete world
   echo -n -e "Are you sure you want to remove ${file} (yes/ ${ul}no${nc})? "
   read confirmation
 
@@ -66,14 +67,52 @@ function removeWorld {
 # function to remove a model
 # $1=project (uppercase) $2=name (snake_case)
 function removeModel {
-  :
+  model_name="${1}_${2}"
+  dir="models/${model_name}/"
+
+  # check if model exists
+  if [[ ! -d "${dir}" ]] ; then
+    err "${model_name} model doesn't exists!"
+    exit 1
+  fi
+
+  # check if a world use this model
+  worlds_using=$(grep $model_name worlds/* -l | sed -r 's:worlds/(\w+).world:\1:g')
+  worlds_using_count=$(grep $model_name worlds/* -l | wc -l)
+
+  if (( worlds_using_count > 0 )) ; then
+    err "Can't remove model, the following words are using it: \n${worlds_using}"
+    exit 1
+  fi
+
+  # check if a model use this model
+  models_using=$(grep $model_name models/*/model.sdf* -l | sed -r 's:models/(\w+)/model(.sdf|.sdf.erb):\1:g')
+  models_using=$(echo $models_using | sed -r 's:(.+) \1:\1:g')
+  models_using_count=$(grep $model_name models/*/model.sdf models/*/model.sdf.erb -l | wc -l)
+
+  if (( models_using_count > 0 )) ; then
+    err "Can't remove model, the following models are using it: \n${models_using}"
+    exit 1
+  fi
+
+  # delete model
+  echo -n -e "Are you sure you want to remove ${dir} (yes/ ${ul}no${nc})? "
+  read confirmation
+
+  if [[ "${confirmation,,}" == "yes" ]] || [[ "${confirmation,,}" == "y" ]] ; then
+    rm $dir -r
+    sed -i -r s:models/$model_name/model.sdf:: .gitignore
+    echo -e "${green}Removed model ${model_name}!${nc}"
+  else
+    echo "Removal cancelled."
+  fi
 }
 
 # ============ #
 
 # function to remove a plugin
 # $1=project (uppercase) $2=name (snake_case)
-function createPlugin {
+function removePlugin {
   :
 }
 
