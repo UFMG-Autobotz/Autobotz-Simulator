@@ -2,7 +2,7 @@
 <sdf version="1.6">
   <world name="default">
 
-    <plugin name="config" filename="libPlayers_Config.so">
+    <plugin name="config" filename="lib_set_parameters_plugin.so">
       <param1 model="player1">VSS_player/yellow1</param1>
       <param2 model="player2">VSS_player/blue2</param2>
     </plugin>
