@@ -15,7 +15,7 @@
  *
 */
 
-#include "SetParameters.hh"
+#include "SetParametersPlugin.hh"
 
 using namespace gazebo;
 

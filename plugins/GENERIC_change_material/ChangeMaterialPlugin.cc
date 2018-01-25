@@ -15,7 +15,7 @@
  *
 */
 
-#include "ChangeMaterial.hh"
+#include "ChangeMaterialPlugin.hh"
 
 using namespace gazebo;
 
