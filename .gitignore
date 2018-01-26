@@ -1,17 +1,3 @@
-modules/GUI/DockTitleBar.pyc
-modules/GUI/general_utils.pyc
-modules/GUI/Graphs.pyc
-modules/GUI/Image.pyc
-modules/GUI/Main_Window.pyc
-modules/GUI/qt_utils.pyc
-modules/GUI/RTPlotter.pyc
-modules/GUI/Slider.pyc
-modules/GUI/Vision.pyc
-
-modules/Keyboard_Command/MainWindow.pyc
-modules/Keyboard_Command/SubWindow.pyc
-modules/Keyboard_Command/SubWindowGamepad.pyc
-
 plugins/*/build
 
 lib/plugins
