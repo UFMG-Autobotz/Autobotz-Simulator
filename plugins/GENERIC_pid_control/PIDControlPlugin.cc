@@ -62,7 +62,7 @@ void PIDControlPlugin::SetPIDControler(physics::ModelPtr _model) {
 				this->jController->SetVelocityTarget(currentJoint->name, 0);
 
 				// create subscriber
-				ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>(currentJoint->veltopic, 100,
+				ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float64>(currentJoint->veltopic, 100,
 						boost::bind(&PIDControlPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
 				this->rosSub_vector.push_back(this->rosNode->subscribe(so));
 
@@ -75,7 +75,7 @@ void PIDControlPlugin::SetPIDControler(physics::ModelPtr _model) {
 				this->jController->SetPositionTarget(currentJoint->name, 0);
 
 				// create subscriber
-				ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float32>(currentJoint->postopic, 100,
+				ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::Float64>(currentJoint->postopic, 100,
 						boost::bind(&PIDControlPlugin::OnRosMsg, this, _1, i), ros::VoidPtr(), &this->rosQueue);
 				this->rosSub_vector.push_back(this->rosNode->subscribe(so));
 
@@ -108,7 +108,7 @@ void PIDControlPlugin::SetPosition(const double &_pos, int joint_ID){
 // / \brief Handle an incoming message from ROS
 // / \param[in] _msg A float value that is used to set the velocity
 // / of the VT_sim.
-void PIDControlPlugin::OnRosMsg(const std_msgs::Float32ConstPtr &_msg, const int joint_ID){
+void PIDControlPlugin::OnRosMsg(const std_msgs::Float64ConstPtr &_msg, const int joint_ID){
 	this->SetVelocity(_msg->data, joint_ID);
 }
 

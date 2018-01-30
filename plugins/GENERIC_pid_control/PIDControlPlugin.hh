@@ -5,7 +5,7 @@
 #include "ros/callback_queue.h"
 #include <ros/console.h>
 #include "ros/subscribe_options.h"
-#include "std_msgs/Float32.h"
+#include "std_msgs/Float64.h"
 
 #include <thread>
 
@@ -19,7 +19,7 @@ namespace gazebo {
 		public: void SetPIDControler(physics::ModelPtr _model);
 		public: void SetVelocity(const double &_vel, int joint_ID);
 		public: void SetPosition(const double &_pos, int joint_ID);
-		private: void OnRosMsg(const std_msgs::Float32ConstPtr &_msg, const int joint_ID);
+		private: void OnRosMsg(const std_msgs::Float64ConstPtr &_msg, const int joint_ID);
 		private: void QueueThread();
 		private: void OnUpdate();
 
