@@ -1,32 +1,38 @@
 require_relative 'link'
 
 class Box < Link
-  attr_accessor :x, :y, :z
+  attr_accessor :length, :width, :height
 
   def initialize()
     super
-    @x = @y = @z = 0.1 #default is a 10x10x10 cm cube
+    @length = @width = @height = 0.1 #default is a 10x10x10 cm cube
   end
 
   # geometry
   private
   def volume
-    @x * @y *@z
+    @length * @width * @height
+  end
+
+  # pose
+  public
+  def z
+    @z || height/2
   end
 
   # inertia
   public
   def ixx
-    mass/12.0 * (y**2 + z**2)
+    mass/12.0 * (width**2 + height**2)
   end
 
   public
   def iyy
-    mass/12.0 * (z**2 + x**2)
+    mass/12.0 * (height**2 + length**2)
   end
 
   public
   def izz
-    mass/12.0 * (x**2 + y**2)
+    mass/12.0 * (length**2 + width**2)
   end
 end

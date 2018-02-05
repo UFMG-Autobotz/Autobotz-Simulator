@@ -3,18 +3,24 @@
 
   # ========= #
 
-  # SPHERE
-  require_relative lib + 'sphere'
-  s = Sphere.new
+  # BOX
+  require_relative lib + 'box'
+  b = Box.new
 
   # Geometry
-  s.diameter = 0.1 # you can set diameter or radius, default is d = 0.1 m
+  # default is a 0.1 x 0.1 x 0.1 m cube
+  b.length = 0.1
+  b.width = 0.1
+  b.height = 0.1
+
+  # Pose
+  # default x, y, roll, pitch and yaw is 0, defautl z is height/2
 
   # Inertia
-  s.density = 1000 # you can set density or mass, default is density = 1000 kg/m³
+  b.density = 1000 # you can set density or mass, default is density = 1000 kg/m³
 
   # Surface
-  s.mu = 1 # you can set mu and mu2, default mu = 0, mu2 is equal to mu by default
+  b.mu = 1 # you can set mu and mu2, default mu = 0, mu2 is equal to mu by default
 
   # ========= #
 
@@ -26,6 +32,11 @@
   c.radius = 0.05 # you can set diameter or radius, default is d = 0.1 cm
   c.length = 0.1 # default length is 0.1 m
 
+  # Pose
+  c.y = 0.5*b.width + 0.5*c.length # default x, y is 0
+  c.z = c.radius # default z is height/2
+  c.roll = 0.5*Math::PI #default roll, pitch, yaw is 0
+
   # Inertia
   c.density = 1000 # you can set density or mass, default is density = 1000 kg/m³
 
@@ -34,21 +45,23 @@
 
   # ========= #
 
-  # BOX
-  require_relative lib + 'box'
-  b = Box.new
+  # SPHERE
+  require_relative lib + 'sphere'
+  s = Sphere.new
 
   # Geometry
-  # default is a 0.1 x 0.1 x 0.1 m cube
-  b.x = 0.1
-  b.y = 0.1
-  b.z = 0.1
+  s.diameter = 0.1 # you can set diameter or radius, default is d = 0.1 m
+
+  # Pose
+  # default x, y, roll, pitch and yaw is 0, defautl z is radius
+  s.x = s.radius + 0.5*b.length
+
 
   # Inertia
-  b.density = 1000 # you can set density or mass, default is density = 1000 kg/m³
+  s.density = 1000 # you can set density or mass, default is density = 1000 kg/m³
 
   # Surface
-  b.mu = 1 # you can set mu and mu2, default mu = 0, mu2 is equal to mu by default
+  s.mu = 1 # you can set mu and mu2, default mu = 0, mu2 is equal to mu by default
 %>
 
 <?xml version='1.0'?>
@@ -59,16 +72,13 @@
 
     <!-- Box example -->
     <link name="box">
-      <pose>0 0 <%= b.z/2 %> 0 0 0</pose>
+      <pose>0 0 <%= b.z %> 0 0 0</pose>
 
       <inertial>
         <mass><%= b.mass %></mass>
         <inertia>
           <ixx><%= b.ixx %></ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
           <iyy><%= b.iyy %></iyy>
-          <iyz>0</iyz>
           <izz><%= b.izz %></izz>
         </inertia>
       </inertial>
@@ -76,7 +86,7 @@
       <collision name="box_collision">
         <geometry>
           <box>
-            <size><%= b.x %> <%= b.y %> <%= b.z %></size>
+            <size><%= b.length %> <%= b.width %> <%= b.height %></size>
           </box>
         </geometry>
         <surface>
@@ -92,7 +102,7 @@
       <visual name="box_visual">
         <geometry>
           <box>
-            <size><%= b.x %> <%= b.y %> <%= b.z %></size>
+            <size><%= b.length %> <%= b.width %> <%= b.height %></size>
           </box>
         </geometry>
         <material>
@@ -107,15 +117,12 @@
 
     <!-- Cilinder example -->
     <link name ='cilinder'>
-      <pose>0 <%= 0.5*b.y + 0.5*c.length %> <%= c.radius %> <%= 0.5*Math::PI %> 0 0</pose>
+      <pose>0 <%= c.y %> <%= c.z %> <%= c.roll %> 0 0</pose>
       <inertial>
         <mass> <%= c.mass %></mass>
         <inertia>
           <ixx><%= c.ixx %></ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
           <iyy><%= c.iyy %></iyy>
-          <iyz>0</iyz>
           <izz><%= c.izz %></izz>
         </inertia>
       </inertial>
@@ -158,16 +165,13 @@
 
     <!-- Sphere example -->
     <link name ='sphere'>
-      <pose><%= s.radius + 0.5*b.x %> 0 <%= s.radius %> 0 0 0</pose>
+      <pose><%= s.x %> 0 <%= s.z %> 0 0 0</pose>
 
       <inertial>
         <mass> <%= s.mass %></mass>
         <inertia>
           <ixx><%= s.ixx %></ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
           <iyy><%= s.iyy %></iyy>
-          <iyz>0</iyz>
           <izz><%= s.izz %></izz>
         </inertia>
       </inertial>

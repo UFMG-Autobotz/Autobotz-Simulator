@@ -7,6 +7,7 @@ class Cilinder < Link
   def initialize()
     super
     @length = 0.1 #default length is 10 cm
+    @z = @length/2 #default z changed to half of the length
   end
 
   # geometry
@@ -26,6 +27,12 @@ class Cilinder < Link
   private
   def volume
     Math::PI * radius**2 * length
+  end
+
+  # pose
+  public
+  def z
+    @z || length/2
   end
 
   # inertia

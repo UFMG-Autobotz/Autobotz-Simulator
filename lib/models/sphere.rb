@@ -22,6 +22,12 @@ class Sphere < Link
     4 * Math::PI * radius**3 / 3
   end
 
+  # pose
+  public
+  def z
+    @z || radius
+  end
+
   # inertia
   public
   def ixx

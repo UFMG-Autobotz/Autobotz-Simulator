@@ -1,8 +1,41 @@
 class Link
   attr_writer :mass, :density, :mu, :mu2
+  attr_writer :x, :y, :z
+  attr_writer :roll, :pitch, :yaw
 
   def initialize()
     @density = 1000 #default density is 1000 kg/m³
+  end
+
+  # pose
+  public
+  def x
+    @x || 0
+  end
+
+  public
+  def y
+    @y || 0
+  end
+
+  public
+  def z
+    @z || 0
+  end
+
+  public
+  def roll
+    @roll || 0
+  end
+
+  public
+  def picht
+    @picht || 0
+  end
+
+  public
+  def yaw
+    @yaw || 0
   end
 
   # inertia
