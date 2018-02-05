@@ -1,13 +1,16 @@
-class Kicker
-  def initialize(distance, radius, resolution)
-    @radius = radius
-    @center = Math.sqrt(radius**2 - distance**2)
-    @theta = Math.atan2(distance, @center)
-    @dtheta = 2* @theta/resolution
-  end
+lib = '../../lib/models/' # path to simple shape ruby objects
+require_relative lib + 'box'
 
-  def center
-    @center
+class Kicker < Box
+  attr_accessor :height
+  attr_reader :radius, :center, :resolution
+  attr_writer :dy, :radius, :resolution
+
+  def calc_geometry(chassi_length)
+    @distance = 0.5*chassi_length- @dy
+    @center = Math.sqrt(@radius**2 - @distance**2)
+    @theta = Math.atan2(@distance, @center)
+    @dtheta = 2* @theta/resolution
   end
 
   def x(i)

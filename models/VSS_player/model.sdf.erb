@@ -1,75 +1,69 @@
 <?xml version='1.0'?>
 
 <%
+  lib = '../../lib/models/' # path to simple shape ruby objects
   # SI units (length in meters)
-  require_relative 'kicker'
 
   # CHASSI
+  require_relative 'chassi'
+  chassi = Chassi.new
+
   # Geometry
-  chassi_x = 0.08
-  chassi_y = 0.08
-  chassi_z = 0.08
-  chassi_dz1 = 0.01
-  chassi_dz2 = 0.05
+  chassi.length = 0.08
+  chassi.width = 0.08
+  chassi.h1 = 0.01
+  chassi.h2 = 0.05
+  chassi.h3 = 0.08
 
   # Kicker
-  chassi_kicker_dy = 0.015
-  chassi_kicker_radius = 0.05
-  chassi_kicker_resolution = 15
-
-  chassi_kicker_distance = 0.5*chassi_y - chassi_kicker_dy
-  chassi_kicker = Kicker.new(chassi_kicker_distance, chassi_kicker_radius, chassi_kicker_resolution)
-
-  # Heights
-  chassi_kicker_height = chassi_dz2 - chassi_dz1
-  chassi_body_height = chassi_z - chassi_dz2
-  chassi_height = chassi_z - chassi_dz1
+  chassi.kicker.dy = 0.015
+  chassi.kicker.radius = 0.05
+  chassi.kicker.resolution = 15
 
   # Tag thickness (as a percentage of the chassi height)
-  chassi_th = 0.0001
+  chassi.th = 0.0001
+
+  # Calculate geometry
+  chassi.calc_geometry
 
   # Inertia
-  chassi_density = 700
-  chassi_mass = chassi_density * chassi_x * chassi_y * chassi_height
-  chassi_ixx  = (chassi_mass/12.0) * (chassi_y**2 + chassi_height**2)
-  chassi_iyy  = (chassi_mass/12.0) * (chassi_height**2 + chassi_x**2)
-  chassi_izz  = (chassi_mass/12.0) * (chassi_x**2 + chassi_y**2)
+  chassi.density = 700
 
   #WHEELS
-  # Geometry
-  wheel_radius = 0.016
-  wheel_length = 0.01
+  require_relative lib + 'cilinder'
+  wheel = Cilinder.new
 
-  # Position
-  wheel_dx = -0.0155
-  wheel_dy = 0.033
+  # Geometry
+  wheel.radius = 0.016
+  wheel.length = 0.01
+
+  # Pose
+  wheel.roll = 0.5*Math::PI
+  wheel.z = wheel.radius
+  wheel.x = -0.0155
+  wheel.y = 0.033
 
   # Inertia
-  wheel_density = 1000
-  wheel_mass = wheel_density * Math::PI * wheel_radius**2 * wheel_length
-  wheel_ixx  = (wheel_mass/12.0) * (3*wheel_radius**2 + wheel_length**2)
-  wheel_iyy  = (wheel_mass/12.0) * (3*wheel_radius**2 + wheel_length**2)
-  wheel_izz  = (wheel_mass/2.0) * wheel_radius**2
+  wheel.density = 1000
 
   # Surface
-  wheel_mu = 50
+  wheel.mu = 50
 
   #BALL WHEEL
+  require_relative lib + 'sphere'
+  ball = Sphere.new
+
   # Geometry
-  ball_radius = chassi_dz1
+  ball.radius = chassi.h1
 
   # Position
-  ball_dx = 0.02
+  ball.x = 0.02
 
   # Inertia
-  ball_density = 1000
-  ball_mass = ball_density * Math::PI * ball_radius**3 * 4/3.0
-  ball_ixx  = (ball_mass/5.0) * 2*ball_radius**2
-  ball_iyy  = (ball_mass/5.0) * 2*ball_radius**2
-  ball_izz  = (ball_mass/5.0) * 2*ball_radius**2
+  ball.density = 1000
 
   # Surface
-  ball_mu = 1
+  ball.mu = 1
 %>
 
 <sdf version ='1.6'>
@@ -79,51 +73,48 @@
     <pose>0 0 0 0 0 0</pose>
 
     <link name ='chassi'>
-      <pose>0 0 <%= chassi_dz1 %> 0 0 0</pose>
+      <pose>0 0 <%= chassi.h1 %> 0 0 0</pose>
       <inertial>
-        <pose>0 0 <%= 0.5*chassi_height  %> 0 0 0</pose>
-        <mass> <%= chassi_mass %></mass>
+        <pose>0 0 <%= chassi.z  %> 0 0 0</pose>
+        <mass> <%= chassi.mass %></mass>
         <inertia>
-          <ixx><%= chassi_ixx %></ixx>
-          <ixy>0.000000</ixy>
-          <ixz>0.000000</ixz>
-          <iyy><%= chassi_iyy %></iyy>
-          <iyz>0.000000</iyz>
-          <izz><%= chassi_izz %></izz>
+          <ixx><%= chassi.ixx %></ixx>
+          <iyy><%= chassi.iyy %></iyy>
+          <izz><%= chassi.izz %></izz>
         </inertia>
       </inertial>
 
       <collision name ='chassi_kicker_collision'>
         <geometry>
           <polyline>
-            <height><%= chassi_kicker_height %></height>
-            <point><%= 0.5*chassi_x %> <%= 0.5*chassi_y %></point>
-            <point><%= -0.5*chassi_x %> <%= 0.5*chassi_y %></point>
-            <point><%= -0.5*chassi_x %> <%= -0.5*chassi_y %></point>
-            <point><%= 0.5*chassi_x %> <%= -0.5*chassi_y %></point>
-            <% for i in 0..chassi_kicker_resolution do %>
-            <point><%= 0.5*chassi_x + chassi_kicker.x(i)%> <%= chassi_kicker.y(i) %></point><% end %>
+            <height><%= chassi.kicker.height %></height>
+            <point><%= 0.5*chassi.length %> <%= 0.5*chassi.width %></point>
+            <point><%= -0.5*chassi.length %> <%= 0.5*chassi.width %></point>
+            <point><%= -0.5*chassi.length %> <%= -0.5*chassi.width %></point>
+            <point><%= 0.5*chassi.length %> <%= -0.5*chassi.width %></point>
+            <% for i in 0..chassi.kicker.resolution do %>
+            <point><%= 0.5*chassi.length + chassi.kicker.x(i) %> <%= chassi.kicker.y(i) %></point><% end %>
           </polyline>
         </geometry>
       </collision>
 
       <collision name ='chassi_body_collision'>
-        <pose>0 0 <%= chassi_kicker_height + 0.5*chassi_body_height %> 0 0 0</pose>
+        <pose>0 0 <%= chassi.body.z %> 0 0 0</pose>
         <geometry>
-          <box><size><%= chassi_x %> <%= chassi_y %> <%= chassi_body_height %></size></box>
+          <box><size><%= chassi.body.length %> <%= chassi.body.width %> <%= chassi.body.height %></size></box>
         </geometry>
       </collision>
 
       <visual name ='chassi_kicker_visual'>
         <geometry>
           <polyline>
-            <height><%= chassi_kicker_height %></height>
-            <point><%= 0.5*chassi_x %> <%= 0.5*chassi_y %></point>
-            <point><%= -0.5*chassi_x %> <%= 0.5*chassi_y %></point>
-            <point><%= -0.5*chassi_x %> <%= -0.5*chassi_y %></point>
-            <point><%= 0.5*chassi_x %> <%= -0.5*chassi_y %></point>
-            <% for i in 0..chassi_kicker_resolution do %>
-            <point><%= 0.5*chassi_x + chassi_kicker.x(i)%> <%= chassi_kicker.y(i) %></point><% end %>
+            <height><%= chassi.kicker.height %></height>
+            <point><%= 0.5*chassi.length %> <%= 0.5*chassi.width %></point>
+            <point><%= -0.5*chassi.length %> <%= 0.5*chassi.width %></point>
+            <point><%= -0.5*chassi.length %> <%= -0.5*chassi.width %></point>
+            <point><%= 0.5*chassi.length %> <%= -0.5*chassi.width %></point>
+            <% for i in 0..chassi.kicker.resolution do %>
+            <point><%= 0.5*chassi.length + chassi.kicker.x(i)%> <%= chassi.kicker.y(i) %></point><% end %>
           </polyline>
         </geometry>
 
@@ -136,9 +127,9 @@
       </visual>
 
       <visual name ='chassi_body_visual'>
-        <pose>0 0 <%= chassi_kicker_height + 0.5*chassi_body_height*(1 - chassi_th)  %> 0 0 0</pose>
+        <pose>0 0 <%= chassi.body.z  %> 0 0 0</pose>
         <geometry>
-          <box><size><%= chassi_x %> <%= chassi_y %> <%= (1-chassi_th)*chassi_body_height %></size></box>
+          <box><size><%= chassi.body.length %> <%= chassi.body.width %> <%= chassi.body.height %></size></box>
         </geometry>
 
         <material>
@@ -150,9 +141,9 @@
       </visual>
 
       <visual name ='chassi_tag_visual'>
-        <pose>0 0 <%= chassi_height*(1 - 0.5*chassi_th) %> 0 0 0</pose>
+        <pose>0 0 <%= chassi.tag.z %> 0 0 0</pose>
         <geometry>
-          <box><size><%= chassi_x %> <%= chassi_y %> <%= chassi_th*chassi_height %></size></box>
+          <box><size><%= chassi.tag.length %> <%= chassi.tag.width %> <%= chassi.tag.height %></size></box>
         </geometry>
 
         <material>
@@ -168,32 +159,29 @@
     </link>
 
     <link name ='left_wheel'>
-      <pose><%= wheel_dx %> <%= wheel_dy %> <%= wheel_radius %> <%= 0.5*Math::PI %> 0 0</pose>
+      <pose><%= wheel.x %> <%= wheel.y %> <%= wheel.z %> <%= wheel.roll %> 0 0</pose>
       <inertial>
-        <mass> <%= wheel_mass %></mass>
+        <mass> <%= wheel.mass %></mass>
         <inertia>
-          <ixx><%= wheel_ixx %></ixx>
-          <ixy>0.000000</ixy>
-          <ixz>0.000000</ixz>
-          <iyy><%= wheel_iyy %></iyy>
-          <iyz>0.000000</iyz>
-          <izz><%= wheel_izz %></izz>
+          <ixx><%= wheel.ixx %></ixx>
+          <iyy><%= wheel.iyy %></iyy>
+          <izz><%= wheel.izz %></izz>
         </inertia>
       </inertial>
 
       <collision name ='left_wheel_collision'>
         <geometry>
           <cylinder>
-            <radius><%= wheel_radius %></radius>
-            <length><%= wheel_length %></length>
+            <radius><%= wheel.radius %></radius>
+            <length><%= wheel.length %></length>
           </cylinder>
         </geometry>
 
         <surface>
           <friction>
             <ode>
-              <mu><%= wheel_mu %></mu>
-              <mu2><%= wheel_mu %></mu2>
+              <mu><%= wheel.mu %></mu>
+              <mu2><%= wheel.mu2 %></mu2>
             </ode>
           </friction>
         </surface>
@@ -202,8 +190,8 @@
       <visual name ='left_wheel_visual'>
         <geometry>
           <cylinder>
-            <radius><%= wheel_radius %></radius>
-            <length><%= wheel_length %></length>
+            <radius><%= wheel.radius %></radius>
+            <length><%= wheel.length %></length>
           </cylinder>
         </geometry>
 
@@ -217,32 +205,29 @@
     </link>
 
     <link name ='right_wheel'>
-      <pose><%= wheel_dx %> <%= -wheel_dy %> <%= wheel_radius %> <%= 0.5*Math::PI %> 0 0</pose>
+      <pose><%= wheel.x %> <%= -wheel.y %> <%= wheel.z %> <%= wheel.roll %> 0 0</pose>
       <inertial>
-        <mass> <%= wheel_mass %></mass>
+        <mass> <%= wheel.mass %></mass>
         <inertia>
-          <ixx><%= wheel_ixx %></ixx>
-          <ixy>0.000000</ixy>
-          <ixz>0.000000</ixz>
-          <iyy><%= wheel_iyy %></iyy>
-          <iyz>0.000000</iyz>
-          <izz><%= wheel_izz %></izz>
+          <ixx><%= wheel.ixx %></ixx>
+          <iyy><%= wheel.iyy %></iyy>
+          <izz><%= wheel.izz %></izz>
         </inertia>
       </inertial>
 
       <collision name ='right_wheel_collision'>
         <geometry>
           <cylinder>
-            <radius><%= wheel_radius %></radius>
-            <length><%= wheel_length %></length>
+            <radius><%= wheel.radius %></radius>
+            <length><%= wheel.length %></length>
           </cylinder>
         </geometry>
 
         <surface>
           <friction>
             <ode>
-              <mu><%= wheel_mu %></mu>
-              <mu2><%= wheel_mu %></mu2>
+              <mu><%= wheel.mu %></mu>
+              <mu2><%= wheel.mu2 %></mu2>
             </ode>
           </friction>
         </surface>
@@ -251,8 +236,8 @@
       <visual name ='right_wheel_visual'>
         <geometry>
           <cylinder>
-            <radius><%= wheel_radius %></radius>
-            <length><%= wheel_length %></length>
+            <radius><%= wheel.radius %></radius>
+            <length><%= wheel.length %></length>
           </cylinder>
         </geometry>
 
@@ -266,29 +251,26 @@
     </link>
 
     <link name ='ball_wheel'>
-      <pose><%= ball_dx %> 0 <%= ball_radius %> 0 0 0</pose>
+      <pose><%= ball.x %> 0 <%= ball.radius %> 0 0 0</pose>
       <inertial>
-        <mass> <%= ball_mass %></mass>
+        <mass> <%= ball.mass %></mass>
         <inertia>
-          <ixx><%= ball_ixx %></ixx>
-          <ixy>0.000000</ixy>
-          <ixz>0.000000</ixz>
-          <iyy><%= ball_iyy %></iyy>
-          <iyz>0.000000</iyz>
-          <izz><%= ball_izz %></izz>
+          <ixx><%= ball.ixx %></ixx>
+          <iyy><%= ball.iyy %></iyy>
+          <izz><%= ball.izz %></izz>
         </inertia>
       </inertial>
 
       <collision name ='ball_wheel_collision'>
         <geometry>
-          <sphere><radius><%= ball_radius %></radius></sphere>
+          <sphere><radius><%= ball.radius %></radius></sphere>
         </geometry>
 
         <surface>
           <friction>
             <ode>
-              <mu><%= ball_mu %></mu>
-              <mu2><%= ball_mu %></mu2>
+              <mu><%= ball.mu %></mu>
+              <mu2><%= ball.mu2 %></mu2>
             </ode>
           </friction>
         </surface>
@@ -296,7 +278,7 @@
 
       <visual name ='ball_wheel_visual'>
         <geometry>
-          <sphere><radius><%= ball_radius %></radius></sphere>
+          <sphere><radius><%= ball.radius %></radius></sphere>
         </geometry>
 
         <material>
