@@ -1,5 +1,5 @@
 # Create new plugins
-The best way to create a plugin is to use the `create`  script, it will create an example plugin that already follow the name conventions.
+The best way to create a plugin is to use the `create`  script, it will create an example plugin that already follow the conventions.
 Sometimes, though, it is easier to copy an existent plugin (one that comes with Gazebo, for example) and modify it. So it's important to know the name conventions.
 
 ## Name conventions for plugins
@@ -15,3 +15,14 @@ In case of doubt see the existent plugins.
 > **Note:**
 
 > Update the `create` plugin and the existent plugins any time the name conventions change.
+
+
+## Binary files adress
+
+The compiled binaries are saved on the `lib/plugins` directory. To do so, the `CMakeLists.txt` must contain the following lines:
+
+```CMake
+# Choose where the plugin will be built
+set(dir ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/plugins)
+set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
+```
