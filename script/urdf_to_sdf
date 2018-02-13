@@ -1,0 +1,26 @@
+#!/bin/bash
+
+GZ_FROM="${1?"Especifique o caminho do modelo URDF"}"
+GZ_NAME="$(basename ${GZ_FROM})"
+GZ_TO="${2-${PWD}}/${GZ_NAME}"
+
+mkdir "${GZ_TO}"
+
+gz sdf -p "${GZ_FROM}/urdf/${GZ_NAME}.urdf" > "${GZ_TO}/model.sdf"
+
+cp -r "${GZ_FROM}/meshes" "${GZ_TO}/meshes"
+
+echo "<?xml version=\"1.0\" ?>
+<model>
+    <name>${GZ_NAME}</name>
+    <version>1.0</version>
+    <sdf version="1.6">model.sdf</sdf>
+    <author>
+        <name></name>
+        <email></email>
+    </author>
+    <description></description>
+</model>" > "${GZ_TO}/model.config"
+
+echo "<?xml version=\"1.0\" ?>
+$(cat "${GZ_TO}/model.sdf")" > "${GZ_TO}/model.sdf"
