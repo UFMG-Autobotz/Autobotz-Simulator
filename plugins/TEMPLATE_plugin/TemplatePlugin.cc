@@ -22,7 +22,7 @@ TemplatePlugin::TemplatePlugin() {
 void TemplatePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 	// error check
 	if (!_model || !_sdf) {
-		gzerr << "No visual or SDF element specified. Example plugin won't load." << std::endl;
+		gzerr << "No model or SDF element specified. Example plugin won't load." << std::endl;
 		return;
 	}
 

@@ -38,7 +38,7 @@ SetParametersPlugin::SetParametersPlugin() {
 
 void SetParametersPlugin::Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) {
   if (!_parent || !_sdf) {
-    gzerr << "No SDF element specified. Players Config Plugin won't load." << std::endl;
+    gzerr << "No world or SDF element specified. Set Parameters Plugin won't load." << std::endl;
     return;
   }
 

@@ -21,7 +21,7 @@ SetModelPosePlugin::SetModelPosePlugin() {
 void SetModelPosePlugin::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf) {
 	// error check
 	if (!_world || !_sdf) {
-    gzerr << "erro" << std::endl;
+    gzerr << "No world or SDF element specified. Set Model Pose Plugin won't load." << std::endl;
     return;
   }
 

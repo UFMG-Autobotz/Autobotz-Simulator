@@ -21,7 +21,7 @@ EventsPlugins::EventsPlugins() {
 void EventsPlugins::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf) {
 	// error check
 	if (!_world || !_sdf) {
-		gzerr << "erro" << std::endl;
+		gzerr << "No world or SDF element specified. Events Plugin won't load." << std::endl;
 		return;
 	}
 

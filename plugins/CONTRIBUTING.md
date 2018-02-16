@@ -17,6 +17,14 @@ In case of doubt see the existent plugins.
 > Update the `create` plugin and the existent plugins any time the name conventions change.
 
 
+## Error message conventions for plugins
+
+```
+if (!_{{type}} || !_sdf) {
+  gzerr << "No {{type}} or SDF element specified. {{name}} Plugin won't load." << std::endl;
+}
+```
+
 ## Binary files adress
 
 The compiled binaries are saved on the `lib/plugins` directory. To do so, the `CMakeLists.txt` must contain the following lines:

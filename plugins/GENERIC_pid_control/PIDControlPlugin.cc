@@ -9,7 +9,7 @@ PIDControlPlugin::PIDControlPlugin() {
 	if (!ros::isInitialized()) {
 		int argc = 0;
 		char **argv = NULL;
-		ros::init(argc, argv, "gazebo", ros::init_options::AnonymousName);
+		ros::init(argc, argv, "gazebo",s ros::init_options::AnonymousName);
 	}
 
 	// Create ROS node
@@ -21,7 +21,7 @@ PIDControlPlugin::PIDControlPlugin() {
 void PIDControlPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 	// error check
 	if (!_model || !_sdf) {
-		gzerr << "No visual or SDF element specified. Plugin won't load." << std::endl;
+		gzerr << "No model or SDF element specified. PID Control Plugin won't load." << std::endl;
 		return;
 	}
 

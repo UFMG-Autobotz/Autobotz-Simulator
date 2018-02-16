@@ -46,14 +46,14 @@ CameraRosPlugin::~CameraRosPlugin()
 /////////////////////////////////////////////////
 void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
 {
-  if (!_sensor)
-    gzerr << "Invalid sensor pointer.\n";
+  if (!_sensor || !_sdf) {
+    gzerr << "No sensor or SDF element specified. Camera ROS Plugin won't load." << std::endl;
+  }
 
-  this->parentSensor =
-    std::dynamic_pointer_cast<sensors::CameraSensor>(_sensor);
+    this->parentSensor =
+      std::dynamic_pointer_cast<sensors::CameraSensor>(_sensor);
 
-  if (!this->parentSensor)
-  {
+  if (!this->parentSensor) {
     gzerr << "CameraPlugin requires a CameraSensor.\n";
     if (std::dynamic_pointer_cast<sensors::DepthCameraSensor>(_sensor))
       gzmsg << "It is a depth camera sensor\n";
@@ -61,8 +61,7 @@ void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
 
   this->camera = this->parentSensor->Camera();
 
-  if (!this->parentSensor)
-  {
+  if (!this->parentSensor) {
     gzerr << "CameraPlugin not attached to a camera sensor\n";
     return;
   }
