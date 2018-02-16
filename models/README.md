@@ -16,15 +16,16 @@
 
 ### Robots
 - [x] first VT
-- [ ] second VT
+- [x] second VT
+- [ ] third VT
 
 ### Ground
 - [x] bow field
 - [x] flat field
-- [ ] field with step
+- [ ] field with steps
 
 ### Other
-- [ ] camera
+- [x] camera
 
 ## Autoboat
 
