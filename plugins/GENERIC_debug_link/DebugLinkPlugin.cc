@@ -33,7 +33,8 @@ void DebugLinkPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
 	this->link_data.reset(new DebugLinkDataParser(_model, _sdf));
 	this->link_data->ReadVariables();
-	this->setTopics();
+	this->link_data->ShowLinks(_model);
+	this->setTopics(_model);
 
 	this->updateConnection = event::Events::ConnectWorldUpdateEnd(
 		boost::bind(&DebugLinkPlugin::OnUpdate, this));
@@ -71,7 +72,7 @@ void DebugLinkPlugin::createMap(link_param *param, int idx) {
 
 /*-------------------*/
 
-void DebugLinkPlugin::setTopics() {
+void DebugLinkPlugin::setTopics(physics::ModelPtr model) {
 	int link_count, variable_count;
 	link_param *current_link;
 	variable_param *current_variable;
@@ -81,6 +82,10 @@ void DebugLinkPlugin::setTopics() {
 	this->mapsGroup1.resize(link_count);
 	this->mapsGroup2.resize(link_count);
 	this->mapsGroup3.resize(link_count);
+
+	std::cout << std::endl << "------------------------" << std::endl;
+	ROS_INFO_STREAM("On \033[1m" << model->GetName() << "\033[0m, Debug Link Plugin publishing to ROS topics:");
+	std::cout << "------------------------" << std::endl;
 
 	for (int i = 0; i < link_count; i++) {
 
@@ -104,10 +109,13 @@ void DebugLinkPlugin::setTopics() {
 					break;
 			}
 
+			ROS_INFO_STREAM(current_variable->topic);
 			this->rosPub_vector.push_back(pub);
 		}
 
 	}
+
+	std::cout << "------------------------" << std::endl << std::endl;
 
 }
 

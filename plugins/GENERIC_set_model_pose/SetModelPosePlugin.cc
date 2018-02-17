@@ -45,7 +45,7 @@ void SetModelPosePlugin::Config() {
 	model_param *currentModel;
 
 	std::cout << std::endl << "------------------------" << std::endl;
-	ROS_INFO_STREAM("Set Model Pose subscribing to ROS topics:");
+	ROS_INFO_STREAM("Set Model Pose Plugin subscribing to ROS topics:");
 	std::cout << "------------------------" << std::endl;
 
 	for (int i = 0; i < modelCount; i++) {

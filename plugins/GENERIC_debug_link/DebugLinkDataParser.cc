@@ -127,11 +127,11 @@ namespace gazebo {
         validate_str(current_variable.topic);
 
         /*-------------------*/
-        std::cout << "link: " << link.name << std::endl;
-        std::cout << "variable: " << current_variable.name << std::endl;
-        std::cout << "scope: " << current_variable.scope << std::endl;
-        std::cout << "group: " << current_variable.group << std::endl;
-        std::cout << "topic: " << current_variable.topic << std::endl << std::endl;
+        // std::cout << "link: " << link.name << std::endl;
+        // std::cout << "variable: " << current_variable.name << std::endl;
+        // std::cout << "scope: " << current_variable.scope << std::endl;
+        // std::cout << "group: " << current_variable.group << std::endl;
+        // std::cout << "topic: " << current_variable.topic << std::endl << std::endl;
         /*-------------------*/
 
         // add current variable to variables vector
@@ -171,5 +171,24 @@ namespace gazebo {
   variable_param *DebugLinkDataParser::GetVariable(int link, int variable) {
     return &(this->links[link].variables[variable]);
   }
+
+  /*-------------------*/
+
+  void DebugLinkDataParser::ShowLinks(physics::ModelPtr model) {
+    std::cout << std::endl << "------------------------" << std::endl;
+    gzmsg << "On " << model->GetName() << ", Debug Link Plugin get: " << std::endl;
+    std::cout << "------------------------" << std::endl;
+
+    for (int i = 0; i < this->GetLinkCount(); i++) {
+      link_param link = this->links[i];
+      for (int j = 0; j < link.variables.size(); j++) {
+        gzmsg << link.name << " - get " << link.variables[j].scope  << " "  << link.variables[j].name  << std::endl;
+      }
+
+    }
+    std::cout << "------------------------" << std::endl << std::endl;
+  }
+
+  /*-------------------*/
 
 }

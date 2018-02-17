@@ -42,6 +42,7 @@ namespace gazebo {
     public: DebugLinkDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     public: void ReadVariables();
     public: void parseVariables(link_param &link, sdf::ElementPtr &link_element);
+    public: void ShowLinks(physics::ModelPtr model);
     public: int GetLinkCount();
     public: link_param *GetLink(int idx);
     public: int GetVariableCount(int idx);

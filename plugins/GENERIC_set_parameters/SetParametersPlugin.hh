@@ -18,6 +18,7 @@
 #define GAZEBO_SET_PARAMETERS_HH_
 
 #include "gazebo/gazebo.hh"
+#include <gazebo/physics/physics.hh>
 
 #include "ros/ros.h"
 #include <ros/console.h>

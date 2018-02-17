@@ -45,6 +45,10 @@ void SetParametersPlugin::Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) 
   sdf::ElementPtr paramElement;
   std::string param, value;
 
+  std::cout << std::endl << "------------------------" << std::endl;
+  ROS_INFO_STREAM("On \033[1m" << _parent->GetName() << "\033[0m, Set Parameters Plugin set:");
+  std::cout << "------------------------" << std::endl;
+
   // loop through tags <paramx> starting with <param1>
   int idx = 1;
   std::ostringstream tag;
@@ -57,14 +61,16 @@ void SetParametersPlugin::Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) 
       param = "/" + paramElement->GetAttribute("parameter")->GetAsString();
       value = _sdf->Get<std::string>(tag.str());
       this->rosNode->setParam(param, value);
-      std::cout << "Parameter " << param << " received value " << value << std::endl;
+      ROS_INFO_STREAM("Parameter " << param << " = " << value);
     } else {
-      gzerr << "Please select a parameter" << std::endl;
+      ROS_ERROR_STREAM("Invalid parameter");
     }
 
     idx++;
     tag.str("");
     tag << "param" << idx;
   }
+
+  std::cout << "------------------------" << std::endl;
 
 }

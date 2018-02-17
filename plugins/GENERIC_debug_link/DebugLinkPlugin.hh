@@ -27,7 +27,7 @@ namespace gazebo {
 
 		public: DebugLinkPlugin();
 		public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
-		public: void setTopics();
+		public: void setTopics(physics::ModelPtr model);
 		public: void OnUpdate();
 		public: void createMap(link_param *param, int idx);
 

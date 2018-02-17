@@ -190,10 +190,10 @@ namespace gazebo {
 
   /*-------------------*/
 
-  void PIDControlDataParser::ShowJoints() {
+  void PIDControlDataParser::ShowJoints(physics::ModelPtr model) {
     int n_joints = this->joints.size();
     std::cout << std::endl << "------------------------" << std::endl;
-    gzmsg << "PID Control found "<< n_joints << " joints:" << std::endl;
+    gzmsg << "On " << model->GetName() << ", PID Control Plugin found "<< n_joints << " joints:" << std::endl;
     std::cout << "------------------------" << std::endl;
 
     for (int i = 0; i < n_joints; i++) {

@@ -25,6 +25,14 @@ if (!_{{type}} || !_sdf) {
 }
 ```
 
+```
+std::cout << std::endl << "------------------------" << std::endl;
+ROS_INFO_STREAM("Camera Plugin publishing to ROS topic:");
+std::cout << "------------------------" << std::endl;
+ROS_INFO_STREAM(topic_name);
+std::cout << "------------------------" << std::endl << std::endl;
+```
+
 ## Binary files adress
 
 The compiled binaries are saved on the `lib/plugins` directory. To do so, the `CMakeLists.txt` must contain the following lines:

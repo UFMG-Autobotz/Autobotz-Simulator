@@ -40,9 +40,21 @@ void TemplatePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 			boost::bind(&TemplatePlugin::OnRosMsg, this, _1, idx), ros::VoidPtr(), &this->rosQueue);
 	this->rosSub.push_back(this->rosNode->subscribe(so));
 
+	std::cout << std::endl << "------------------------" << std::endl;
+	ROS_INFO_STREAM("On \033[1m" << _model->GetName() << "\033[0m, Example Plugin subscribing to ROS topics:");
+	std::cout << "------------------------" << std::endl;
+	ROS_INFO_STREAM("/subscriber_topic");
+  std::cout << "------------------------" << std::endl << std::endl;
+
 	// create publisher(s)
 	ros::Publisher pub = this->rosNode->advertise<std_msgs::Float32>("/publisher_topic", 100);
 	this->rosPub.push_back(pub);
+
+	std::cout << std::endl << "------------------------" << std::endl;
+	ROS_INFO_STREAM("On \033[1m" << _model->GetName() << "\033[0m, Example Plugin publishing to ROS topics:");
+	std::cout << "------------------------" << std::endl;
+	ROS_INFO_STREAM("/publisher_topic");
+  std::cout << "------------------------" << std::endl << std::endl;
 }
 
 /*-------------------*/

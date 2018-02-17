@@ -38,7 +38,7 @@ namespace gazebo {
 
     public: PIDControlDataParser(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     public: void ReadVariables();
-    public: void ShowJoints();
+    public: void ShowJoints(physics::ModelPtr model);
     public: joint_param *GetJoint(int idx);
     public: int GetJointCount();
 

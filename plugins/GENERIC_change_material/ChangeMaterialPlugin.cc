@@ -49,13 +49,18 @@ void ChangeMaterialPlugin::Load(rendering::VisualPtr _visual, sdf::ElementPtr _s
   std::string visual_name = _visual->GetName();
   std::string param = "/" + visual_name.substr(0, visual_name.find(':'));
 
+  std::cout << std::endl << "------------------------" << std::endl;
+  gzmsg << "On " << _visual->GetName() << ", Change Material Plugin:" << std::endl;
+  std::cout << "------------------------" << std::endl;
+
   // if ros parameter found with the name of the model, use it to change material of the visual
   std::string newMaterial;
   if (this->rosNode->getParam(param, newMaterial)) {
     _visual->SetMaterial(newMaterial);
     gzmsg << "Changed material of " << visual_name << " to " << newMaterial << std::endl;
   } else {
-    gzerr << "Please set the material" << std::endl;
+    gzerr << "Invalid material" << std::endl;
   }
+  std::cout << "------------------------" << std::endl;
 
 }

@@ -12,7 +12,7 @@
 // http://wiki.ros.org/common_msgs
 
 #include <gazebo/gazebo.hh>
-// #include <gazebo/physics/physics.hh>
+#include <gazebo/physics/physics.hh>
 // #include <gazebo/math/gzmath.hh>
 
 #include <thread>

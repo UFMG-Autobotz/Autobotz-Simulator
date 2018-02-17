@@ -9,7 +9,7 @@ PIDControlPlugin::PIDControlPlugin() {
 	if (!ros::isInitialized()) {
 		int argc = 0;
 		char **argv = NULL;
-		ros::init(argc, argv, "gazebo",s ros::init_options::AnonymousName);
+		ros::init(argc, argv, "gazebo", ros::init_options::AnonymousName);
 	}
 
 	// Create ROS node
@@ -27,7 +27,7 @@ void PIDControlPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
 	this->joint_data.reset(new PIDControlDataParser(_model, _sdf));
 	this->joint_data->ReadVariables();
-	this->joint_data->ShowJoints();
+	this->joint_data->ShowJoints(_model);
 
 	this->SetPIDControler(_model);
 
@@ -47,7 +47,7 @@ void PIDControlPlugin::SetPIDControler(physics::ModelPtr _model) {
 	joint_param *currentJoint;
 
 	std::cout << std::endl << "------------------------" << std::endl;
-	ROS_INFO_STREAM("PID Control subscribing to ROS topics:");
+	ROS_INFO_STREAM("On \033[1m" << _model->GetName() << "\033[0m, PID Control Plugin subscribing to ROS topics:");
 	std::cout << "------------------------" << std::endl;
 
 	for (int i = 0; i < jointCount; i++) {

@@ -44,7 +44,7 @@ CameraRosPlugin::~CameraRosPlugin()
 }
 
 /////////////////////////////////////////////////
-void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
+void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr _sdf)
 {
   if (!_sensor || !_sdf) {
     gzerr << "No sensor or SDF element specified. Camera ROS Plugin won't load." << std::endl;
@@ -82,7 +82,7 @@ void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
   this->rosPub = this->rosNode->advertise<sensor_msgs::Image>(topic_name.erase(0, 1), 1000);
 
   std::cout << std::endl << "------------------------" << std::endl;
-  ROS_INFO_STREAM("Camera Plugin publishing to ROS topic:");
+  ROS_INFO_STREAM("On \033[1m" << _sensor->GetScopedName() << "\033[0m, Camera ROS Plugin publishing to ROS topic:");
   std::cout << "------------------------" << std::endl;
   ROS_INFO_STREAM(topic_name);
   std::cout << "------------------------" << std::endl << std::endl;
