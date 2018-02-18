@@ -50,8 +50,8 @@ function createWorld {
   fi
 
   # create .world file
-  ## replace template to snake_case_name
-  sed "s/template/${2}/g" <$template >$new_file
+  ## replace template to UPPERCASEPROJECT_snake_case_name
+  sed "s/template/${world_name}/g" <$template >$new_file
 
   echo -e "${green}Created world ${world_name}!${nc}"
 }

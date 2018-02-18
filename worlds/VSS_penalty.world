@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
-  <world name="default">
+  <world name="VSS_penalty">
 
     <plugin name="config" filename="lib_set_parameters_plugin.so">
       <param1 parameter="player1">VSS_player/yellow1</param1>
