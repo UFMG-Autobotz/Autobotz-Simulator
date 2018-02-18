@@ -1,4 +1,5 @@
 plugins/*/build
+plugins/build
 
 lib/plugins
 
