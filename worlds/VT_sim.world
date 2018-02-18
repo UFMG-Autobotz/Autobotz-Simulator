@@ -11,13 +11,13 @@
     </include>
 
     <!-- A testing model that includes the VT_sim sensor model -->
-    <model name="VT_sim">
+    <model name="VT">
       <include>
         <uri>model://VT_vt_inicial/</uri>
       </include>
 
       <!-- Attach the plugin to this model -->
-      <plugin name="VT_sim_control" filename="lib_pid_control_plugin.so">
+      <plugin name="VT_control" filename="lib_pid_control_plugin.so">
         <velocity>true</velocity>
         <pid>5 0 0</pid>
       </plugin>
