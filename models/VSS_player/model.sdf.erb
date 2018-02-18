@@ -84,7 +84,7 @@
         </inertia>
       </inertial>
 
-      <collision name ='chassi_kicker_collision'>
+      <collision name ='kicker_collision'>
         <geometry>
           <polyline>
             <height><%= chassi.kicker.height %></height>
@@ -98,14 +98,14 @@
         </geometry>
       </collision>
 
-      <collision name ='chassi_body_collision'>
+      <collision name ='body_collision'>
         <pose>0 0 <%= chassi.body.z %> 0 0 0</pose>
         <geometry>
           <box><size><%= chassi.body.length %> <%= chassi.body.width %> <%= chassi.body.height %></size></box>
         </geometry>
       </collision>
 
-      <visual name ='chassi_kicker_visual'>
+      <visual name ='kicker_visual'>
         <geometry>
           <polyline>
             <height><%= chassi.kicker.height %></height>
@@ -126,7 +126,7 @@
         </material>
       </visual>
 
-      <visual name ='chassi_body_visual'>
+      <visual name ='body_visual'>
         <pose>0 0 <%= chassi.body.z  %> 0 0 0</pose>
         <geometry>
           <box><size><%= chassi.body.length %> <%= chassi.body.width %> <%= chassi.body.height %></size></box>
@@ -140,7 +140,7 @@
         </material>
       </visual>
 
-      <visual name ='chassi_tag_visual'>
+      <visual name ='tag_visual'>
         <pose>0 0 <%= chassi.tag.z %> 0 0 0</pose>
         <geometry>
           <box><size><%= chassi.tag.length %> <%= chassi.tag.width %> <%= chassi.tag.height %></size></box>
@@ -153,7 +153,7 @@
           </script>
         </material>
 
-        <plugin name="texture" filename="lib_change_material_plugin.so"> </plugin>
+        <plugin name="tag_texture" filename="lib_change_material_plugin.so"> </plugin>
       </visual>
 
     </link>
@@ -169,7 +169,7 @@
         </inertia>
       </inertial>
 
-      <collision name ='left_wheel_collision'>
+      <collision name ='collision'>
         <geometry>
           <cylinder>
             <radius><%= wheel.radius %></radius>
@@ -187,7 +187,7 @@
         </surface>
       </collision>
 
-      <visual name ='left_wheel_visual'>
+      <visual name ='visual'>
         <geometry>
           <cylinder>
             <radius><%= wheel.radius %></radius>
@@ -215,7 +215,7 @@
         </inertia>
       </inertial>
 
-      <collision name ='right_wheel_collision'>
+      <collision name ='collision'>
         <geometry>
           <cylinder>
             <radius><%= wheel.radius %></radius>
@@ -233,7 +233,7 @@
         </surface>
       </collision>
 
-      <visual name ='right_wheel_visual'>
+      <visual name ='visual'>
         <geometry>
           <cylinder>
             <radius><%= wheel.radius %></radius>
@@ -261,7 +261,7 @@
         </inertia>
       </inertial>
 
-      <collision name ='ball_wheel_collision'>
+      <collision name ='collision'>
         <geometry>
           <sphere><radius><%= ball.radius %></radius></sphere>
         </geometry>
@@ -276,7 +276,7 @@
         </surface>
       </collision>
 
-      <visual name ='ball_wheel_visual'>
+      <visual name ='visual'>
         <geometry>
           <sphere><radius><%= ball.radius %></radius></sphere>
         </geometry>

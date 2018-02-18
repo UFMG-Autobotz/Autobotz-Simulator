@@ -83,7 +83,7 @@
         </inertia>
       </inertial>
 
-      <collision name="box_collision">
+      <collision name="collision">
         <geometry>
           <box>
             <size><%= b.length %> <%= b.width %> <%= b.height %></size>
@@ -99,7 +99,7 @@
         </surface>
       </collision>
 
-      <visual name="box_visual">
+      <visual name="visual">
         <geometry>
           <box>
             <size><%= b.length %> <%= b.width %> <%= b.height %></size>
@@ -127,7 +127,7 @@
         </inertia>
       </inertial>
 
-      <collision name ='cilinder_collision'>
+      <collision name ='collision'>
         <geometry>
           <cylinder>
             <radius><%= c.radius %></radius>
@@ -145,7 +145,7 @@
         </surface>
       </collision>
 
-      <visual name ='cilinder_visual'>
+      <visual name ='visual'>
         <geometry>
           <cylinder>
             <radius><%= c.radius %></radius>
@@ -176,7 +176,7 @@
         </inertia>
       </inertial>
 
-      <collision name ='sphere_collision'>
+      <collision name ='collision'>
         <geometry>
           <sphere><radius><%= s.radius %></radius></sphere>
         </geometry>
@@ -191,7 +191,7 @@
         </surface>
       </collision>
 
-      <visual name ='sphere_visual'>
+      <visual name ='visual'>
         <geometry>
           <sphere><radius><%= s.radius %></radius></sphere>
         </geometry>
@@ -206,7 +206,7 @@
     </link>
 
   <!-- Revolute joint example -->
-  <joint name="chassi_right_wheel" type="revolute">
+  <joint name="box_cilinder" type="revolute">
     <parent>box</parent>
     <child>cilinder</child>
     <axis>
@@ -215,7 +215,7 @@
   </joint>
 
   <!-- Ball joint example -->
-  <joint name="chassi_ball_wheel" type="ball">
+  <joint name="box_sphere" type="ball">
     <parent>box</parent>
     <child>sphere</child>
   </joint>
