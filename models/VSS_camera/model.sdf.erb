@@ -19,7 +19,7 @@
 
     <pose>0 0 <%= camera.z/2 %> 0 0 0</pose>
 
-    <link name="camera">
+    <link name="box">
 
       <inertial>
         <mass><%= camera.mass %></mass>
@@ -51,7 +51,7 @@
         </material>
       </visual>
 
-      <sensor name="camera" type="camera">
+      <sensor name="sensor" type="camera">
         <camera>
           <horizontal_fov>1.047</horizontal_fov>
           <image>
