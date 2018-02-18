@@ -80,20 +80,19 @@ function removeModel {
   fi
 
   # check if a world use this model
-  worlds_using=$(grep $model_name worlds/* -l | sed -r 's:worlds/(\w+).world:\1:g')
-  worlds_using_count=$(grep $model_name worlds/* -l | wc -l)
+  worlds_using=$(grep $model_name worlds/* -l | sed -r 's:worlds/(\w+).world:\1:g') # find list of worlds using it
 
-  if (( worlds_using_count > 0 )) ; then
+  if [[ "${worlds_using}" != "" ]] ; then
     err "Can't remove model, the following words are using it: \n${worlds_using}"
     exit 1
   fi
 
   # check if a model use this model
-  models_using=$(grep $model_name models/*/model.sdf* -l | sed -r 's:models/(\w+)/model(.sdf|.sdf.erb):\1:g')
-  models_using=$(echo $models_using | sed -r 's:(.+) \1:\1:g')
-  models_using_count=$(grep $model_name models/*/model.sdf models/*/model.sdf.erb -l | wc -l)
+  models_using=$(grep $model_name models/*/model.sdf* -l | sed -r 's:models/(\w+)/model(.sdf|.sdf.erb):\1:g') # find list of models using it
+  models_using=$(printf '%s\n' "${models_using[@]}" | grep -v $model_name) # remove model itself
+  models_using=$(echo $models_using | sed -r 's:(.+) \1:\1:g') # remove duplicates
 
-  if (( models_using_count > 0 )) ; then
+  if [[ "${models_using}" != "" ]] ; then
     err "Can't remove model, the following models are using it: \n${models_using}"
     exit 1
   fi
@@ -128,19 +127,18 @@ function removePlugin {
 
   # check if a world use this plugin
   worlds_using=$(grep $lib worlds/* -l | sed -r 's:worlds/(\w+).world:\1:g')
-  worlds_using_count=$(grep $lib worlds/* -l | wc -l)
 
-  if (( worlds_using_count > 0 )) ; then
+  if [[ "${worlds_using}" != "" ]] ; then
     err "Can't remove plugin, the following words are using it: \n${worlds_using}"
     exit 1
   fi
 
   # check if a model use this plugin
-  models_using=$(grep $lib models/*/model.sdf* -l | sed -r 's:models/(\w+)/model(.sdf|.sdf.erb):\1:g')
-  models_using=$(echo $models_using | sed -r 's:(.+) \1:\1:g')
-  models_using_count=$(grep $lib models/*/model.sdf models/*/model.sdf.erb -l | wc -l)
+  models_using=$(grep $lib models/*/model.sdf* -l | sed -r 's:models/(\w+)/model(.sdf|.sdf.erb):\1:g') #find models using plugin
+  models_using=$(echo $models_using | sed -r 's:(.+) \1:\1:g') # remove duplictes
+  # models_using_count=$(grep $lib models/*/model.sdf models/*/model.sdf.erb -l | wc -l)
 
-  if (( models_using_count > 0 )) ; then
+  if [[ "${models_using}" != "" ]] ; then
     err "Can't remove plugin, the following models are using it: \n${models_using}"
     exit 1
   fi

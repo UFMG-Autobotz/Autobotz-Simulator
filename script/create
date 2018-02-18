@@ -75,8 +75,8 @@ function createModel {
   mkdir $new_dir
 
   # create model.sdf.erb
-  ## replace template to snake_case_name
-  sed "s/template/${2}/g" <"${template}model.sdf.erb" >"${new_dir}model.sdf.erb"
+  ## replace template to UPPERCASEPROJECT_snake_case_name
+  sed "s/template/${model_name}/g" <"${template}model.sdf.erb" >"${new_dir}model.sdf.erb"
 
   # create model.config
   ## replace Template to "UPPERCASEPROJECT - Title Case Name"

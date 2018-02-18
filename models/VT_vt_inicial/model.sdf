@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <sdf version='1.6'>
-  <model name='VT'>
+  <model name='VT_vt_inicial'>
     <link name='chassi_link'>
       <pose frame=''>-0.01207 -0.1115 0.188412 1.5708 -0 -3.14159</pose>
       <inertial>

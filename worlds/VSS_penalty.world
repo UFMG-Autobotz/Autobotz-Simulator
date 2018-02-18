@@ -35,7 +35,7 @@
       </plugin>
 
       <plugin name="player 1 debug" filename="lib_debug_link_plugin.so">
-        <link1 name="player::chassi">
+        <link1 name="VSS_player::chassi">
           <variable1 scope="worldCG" topic="player1/pose">Pose</variable1>
         </link1>
       </plugin>
@@ -53,7 +53,7 @@
       </plugin>
 
       <plugin name="player 2 debug" filename="lib_debug_link_plugin.so">
-        <link1 name="player::chassi">
+        <link1 name="VSS_player::chassi">
           <variable1 scope="worldCG" topic="player2/pose">Pose</variable1>
         </link1>
       </plugin>
@@ -65,7 +65,7 @@
       </include>
 
       <plugin name="ball debug" filename="lib_debug_link_plugin.so">
-        <link1 name="VSS ball::ball">
+        <link1 name="VSS_ball::ball">
           <variable1 scope="worldCG" topic="ball/pose">Pose</variable1>
         </link1>
       </plugin>
