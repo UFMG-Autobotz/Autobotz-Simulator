@@ -17,7 +17,17 @@ In case of doubt see the existent plugins.
 > Update the `create` plugin and the existent plugins any time the name conventions change.
 
 
-## Error message conventions for plugins
+## Message conventions for plugins
+
+The conventions used to print information or erros on the console are described bellow. In case of doubt see the existent plugins.
+
+### Function used for messages
+
+* If the message is related to Gazebo elements, use `gzmsg` and `gzerr` ([reference](https://osrf-distributions.s3.amazonaws.com/gazebo/api/dev/group__gazebo__common.html)).
+* If the message if related to ROS, use `ROS_INFO_STREAM` and `ROS_ERROR_STREAM` ([reference](http://wiki.ros.org/roscpp/Overview/Logging)).
+
+### Load error
+On the beginning of the `Load` function, check if its parameters were correctly received:
 
 ```
 if (!_{{type}} || !_sdf) {
@@ -25,13 +35,20 @@ if (!_{{type}} || !_sdf) {
 }
 ```
 
+### ROS Messages info
+When a plugin publishes or subscribes to a ROS topic, print the topics with the following pattern:
+
 ```
 std::cout << std::endl << "------------------------" << std::endl;
-ROS_INFO_STREAM("Camera Plugin publishing to ROS topic:");
+ROS_INFO_STREAM("On {{Element using plugin in bold}}, {{Name}} Plugin publishing/subscribing to ROS topic(s):");
 std::cout << "------------------------" << std::endl;
-ROS_INFO_STREAM(topic_name);
+ROS_INFO_STREAM({{topic_name}});
 std::cout << "------------------------" << std::endl << std::endl;
 ```
+
+### Other messages
+
+Inform which plugin is sending the message beginning it with the tag [{{Name}} Plugin]
 
 ## Binary files adress
 
