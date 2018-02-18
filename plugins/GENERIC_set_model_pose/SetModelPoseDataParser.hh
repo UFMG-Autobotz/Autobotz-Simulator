@@ -28,7 +28,6 @@ namespace gazebo {
 
     public: SetModelPoseDataParser(physics::WorldPtr _world, sdf::ElementPtr _sdf);
     public: void ReadVariables();
-    // public: void ShowJoints();
     public: model_param *GetModel(int idx);
     public: int GetModelCount();
 

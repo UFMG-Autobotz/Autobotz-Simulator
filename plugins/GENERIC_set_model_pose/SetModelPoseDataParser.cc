@@ -45,14 +45,14 @@ namespace gazebo {
   			validateModel << currentModel.model;
 
   			if (validateModel.str() == "0") {
-  				gzerr << modelName << " isn't a valid model name, " << tag.str() << " will be ignored!" << std::endl;
+  				gzerr << "[Set Model Pose Plugin] " << modelName << " isn't a valid model name, " << tag.str() << " will be ignored!" << std::endl;
   				currentModel.valid = false;
   			} else {
   				currentModel.name = currentModel.model->GetScopedName(); // save scoped name
   			}
 
   		} else {
-  			gzerr << tag.str() << " doesn't have a name and will be ignored!" << std::endl;
+  			gzerr << "[Set Model Pose Plugin] " << tag.str() << " doesn't have a name and will be ignored!" << std::endl;
   			currentModel.valid = false;
   		}
 
@@ -94,31 +94,6 @@ namespace gazebo {
 
   	}
   }
-
-  /*-------------------*/
-
-  // void SetModelPoseDataParser::ShowJoints() {
-  //   int n_joints = this->joints.size();
-  //   std::cout << std::endl << "------------------------" << std::endl;
-  //   gzmsg << "PID Control found "<< n_joints << " joints:" << std::endl;
-  //   std::cout << "------------------------" << std::endl;
-  //
-  //   for (int i = 0; i < n_joints; i++) {
-  //
-  //     std::string control = " (not controlled)";
-  //     if (this->joints[i].valid) {
-  //       if (this->joints[i].velocity && this->joints[i].position) {
-  //         control = " (controlling velocity and position)";
-  //       } else if (this->joints[i].velocity) {
-  //         control = " (controlling velocity)";
-  //       } else if (this->joints[i].position) {
-  //         control = " (controlling position)";
-  //       }
-  //     }
-  //     gzmsg << this->joints[i].name << control << std::endl;
-  //   }
-  //   std::cout << "------------------------" << std::endl << std::endl;
-  // }
 
   /*-------------------*/
 

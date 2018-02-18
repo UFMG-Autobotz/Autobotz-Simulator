@@ -23,8 +23,7 @@ GZ_REGISTER_SENSOR_PLUGIN(CameraRosPlugin)
 
 /////////////////////////////////////////////////
 CameraRosPlugin::CameraRosPlugin()
-: SensorPlugin(), width(0), height(0), depth(0)
-{
+: SensorPlugin(), width(0), height(0), depth(0) {
   // Initialize ROS
   if (!ros::isInitialized()) {
     int argc = 0;
@@ -37,34 +36,27 @@ CameraRosPlugin::CameraRosPlugin()
 }
 
 /////////////////////////////////////////////////
-CameraRosPlugin::~CameraRosPlugin()
-{
+CameraRosPlugin::~CameraRosPlugin() {
   this->parentSensor.reset();
   this->camera.reset();
 }
 
 /////////////////////////////////////////////////
-void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr _sdf)
-{
+void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr _sdf) {
   if (!_sensor || !_sdf) {
     gzerr << "No sensor or SDF element specified. Camera ROS Plugin won't load." << std::endl;
   }
 
-    this->parentSensor =
-      std::dynamic_pointer_cast<sensors::CameraSensor>(_sensor);
+  this->parentSensor =
+    std::dynamic_pointer_cast<sensors::CameraSensor>(_sensor);
 
   if (!this->parentSensor) {
-    gzerr << "CameraPlugin requires a CameraSensor.\n";
+    gzerr << "[" << _sensor->GetScopedName() << "] Camera ROS Plugin not attached to a camera sensor.\n";
     if (std::dynamic_pointer_cast<sensors::DepthCameraSensor>(_sensor))
-      gzmsg << "It is a depth camera sensor\n";
+      gzerr << "[" << _sensor->GetScopedName() << "] Camera ROS Plugin requires a Camera Sensor, Depth Camera Sensor given\n";
   }
 
   this->camera = this->parentSensor->Camera();
-
-  if (!this->parentSensor) {
-    gzerr << "CameraPlugin not attached to a camera sensor\n";
-    return;
-  }
 
   this->width = this->camera->ImageWidth();
   this->height = this->camera->ImageHeight();
@@ -72,9 +64,9 @@ void CameraRosPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr _sdf)
   this->format = this->camera->ImageFormat();
 
   this->newFrameConnection = this->camera->ConnectNewImageFrame(
-      std::bind(&CameraRosPlugin::OnNewFrame, this,
-        std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
-        std::placeholders::_4, std::placeholders::_5));
+    std::bind(&CameraRosPlugin::OnNewFrame, this,
+      std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+      std::placeholders::_4, std::placeholders::_5));
 
   this->parentSensor->SetActive(true);
 
@@ -93,8 +85,7 @@ void CameraRosPlugin::OnNewFrame(const unsigned char * _image,
                               unsigned int _width,
                               unsigned int _height,
                               unsigned int _depth,
-                              const std::string &_format)
-{
+                              const std::string &_format) {
     sensor_msgs::Image frame;
     frame.height = _height;
     frame.width = _width;

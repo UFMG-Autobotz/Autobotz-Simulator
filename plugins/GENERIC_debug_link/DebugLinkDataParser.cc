@@ -67,14 +67,14 @@ namespace gazebo {
   			validate_link << current_link.link;
 
   			if (validate_link.str() == "0") {
-  				gzerr << link_name << " isn't a valid link name, " << tag.str() << " will be ignored!" << std::endl;
+  				gzerr << "[Debug Link Plugin] " << link_name << " isn't a valid link name, " << tag.str() << " will be ignored!" << std::endl;
   				valid = false;
   			} else {
   				current_link.name = current_link.link->GetScopedName(); // save scoped name
   			}
 
   		} else {
-  			gzerr << tag.str() << " doesn't have a name and will be ignored!" << std::endl;
+  			gzerr << "[Debug Link Plugin]" << tag.str() << " doesn't have a name and will be ignored!" << std::endl;
   			valid = false;
   		}
 

@@ -73,13 +73,13 @@ namespace gazebo {
   			validateJoint << currentJoint.joint;
 
   			if (validateJoint.str() == "0") {
-  				gzerr << jointName << " isn't a valid joint name, " << tag.str() << " will be ignored!" << std::endl;
+  				gzerr << "[PID Control Plugin] " << jointName << " isn't a valid joint name, " << tag.str() << " will be ignored!" << std::endl;
   				currentJoint.valid = false;
   			} else {
   				int jointType = currentJoint.joint->GetType();  // get joint's type to validate it
 
   				if (jointType != REVOLUTE && jointType != PRISMATIC) {
-  					gzerr << jointName << " has an invalid type, " << tag.str() << " will be ignored!" << std::endl;
+  					gzerr << "[PID Control Plugin] " << jointName << " has an invalid type, " << tag.str() << " will be ignored!" << std::endl;
   					currentJoint.valid = false;
   				} else {
   					currentJoint.name = currentJoint.joint->GetScopedName(); // save scoped name (will be used by PID controller)
@@ -87,7 +87,7 @@ namespace gazebo {
   			}
 
   		} else {
-  			gzerr << tag.str() << " doesn't have a name and will be ignored!" << std::endl;
+  			gzerr << "[PID Control Plugin] " << tag.str() << " doesn't have a name and will be ignored!" << std::endl;
   			currentJoint.valid = false;
   		}
 
