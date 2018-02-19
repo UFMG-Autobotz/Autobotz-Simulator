@@ -2,18 +2,20 @@
 
 namespace gazebo {
 
-  std::set<std::string> group1 = {"Torque", "AngularAccel", "AngularVel", "Force", "LinearAccel", "LinearVel", "AngularMomentum"};
-  std::set<std::string> group2 = {"Pose"};
-  std::set<std::string> group3 = {"Energy", "EnergyKinetic", "EnergyPotential"};
+  std::set<std::string> group1 = {"Torque", "AngularAccel", "AngularVel", "Force", "LinearAccel", "LinearVel", "AngularMomentum"}; // vector3
+  std::set<std::string> group2 = {"Pose"}; // pose
+  std::set<std::string> group3 = {"Energy", "EnergyKinetic", "EnergyPotential"}; // float
 
   /*-------------------*/
 
+  // check if a set contain a string
   bool contain(std::set<std::string> &group, std::string &variable) {
     return std::any_of(group.begin(), group.end(), [&variable](std::string i){return i.compare(variable) == 0;});
   }
 
   /*-------------------*/
 
+  // find group the variable belongs to
   int getVariableGroup(std::string &variable) {
     if (contain(group1, variable)) return 1;
     if (contain(group2, variable)) return 2;
@@ -66,7 +68,7 @@ namespace gazebo {
   			std::ostringstream validate_link;
   			validate_link << current_link.link;
 
-  			if (validate_link.str() == "0") {
+  			if (validate_link.str() == "0") { // the equivalent string is "0" if the link is invalid
   				gzerr << "[Debug Link Plugin] " << link_name << " isn't a valid link name, " << tag.str() << " will be ignored!" << std::endl;
   				valid = false;
   			} else {
@@ -77,7 +79,6 @@ namespace gazebo {
   			gzerr << "[Debug Link Plugin]" << tag.str() << " doesn't have a name and will be ignored!" << std::endl;
   			valid = false;
   		}
-
 
       if (valid)  {
         this->parseVariables(current_link, link_element); // read variables of the link
@@ -184,7 +185,6 @@ namespace gazebo {
       for (int j = 0; j < link.variables.size(); j++) {
         gzmsg << link.name << " - get " << link.variables[j].scope  << " "  << link.variables[j].name  << std::endl;
       }
-
     }
     std::cout << "------------------------" << std::endl << std::endl;
   }

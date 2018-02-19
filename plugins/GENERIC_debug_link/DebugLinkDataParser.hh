@@ -48,7 +48,6 @@ namespace gazebo {
     public: int GetVariableCount(int idx);
     public: variable_param *GetVariable(int link, int variable);
 
-
   	private: physics::ModelPtr model; // pointer to the parent model
   	private: sdf::ElementPtr sdf; // pointer to the sdfs
     private: std::vector<link_param> links;  // vector with each link data

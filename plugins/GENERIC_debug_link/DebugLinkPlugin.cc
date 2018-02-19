@@ -88,7 +88,6 @@ void DebugLinkPlugin::setTopics(physics::ModelPtr model) {
 	std::cout << "------------------------" << std::endl;
 
 	for (int i = 0; i < link_count; i++) {
-
 		// create maps for this link
 		current_link = this->link_data->GetLink(i);
 		this->createMap(current_link, i);
