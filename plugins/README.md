@@ -1,3 +1,5 @@
+> This directory contains plugins used to extend Gazebo functionalities
+
 # Status
 
 Plugin | Code Status | Documentation Status

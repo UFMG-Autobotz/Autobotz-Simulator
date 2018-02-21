@@ -1,6 +1,4 @@
-# Meshs directory
-
-This directory contains the 3D mesh used to create models for the Autobotz Simulator.
+> This directory contains the 3D mesh used to create models for the Autobotz Simulator.
 
 # Mesh formats
 

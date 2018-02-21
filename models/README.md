@@ -1,3 +1,5 @@
+> This directory contains models used to represent robots and elements of the scene on Gazebo simulations
+
 # Models list
 
 ## VSS

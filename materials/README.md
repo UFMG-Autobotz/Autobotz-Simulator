@@ -1,3 +1,5 @@
+> This directory contains textures and materials scripts used to add color or textures to models
+
 # Materials
 
 Gazebo materials use [OGRE](https://www.ogre3d.org/) scripts.

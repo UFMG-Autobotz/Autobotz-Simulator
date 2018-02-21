@@ -1,3 +1,5 @@
+> This directory contains Gazebo Simulations (worlds)
+
 # Worlds list
 
 ## VSS

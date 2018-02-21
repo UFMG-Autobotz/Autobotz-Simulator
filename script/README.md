@@ -1,3 +1,5 @@
+> This directory contains scripts that make it easier to use Gazebo
+
 # Scripts to rule them all
 
 These scripts are inspired by the [normalized script pattern that GitHub uses in its projects](https://githubengineering.com/scripts-to-rule-them-all/).
