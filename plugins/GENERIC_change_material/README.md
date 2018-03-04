@@ -30,6 +30,8 @@ Before running the world, add the lib directory to the GAZEBO_PLUGIN_PATH so tha
 export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
 ```
 
+If you use the `run` script to run your simulations, this command is already executed for you.
+
 ## Set Parameters
 To be able to have multiple instances of the same model with different materials this plugin receive a ROS parameter. The parameter name is the name of the model on the world and the its value is the name of the chosen material.
 

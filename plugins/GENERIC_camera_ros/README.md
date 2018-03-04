@@ -29,5 +29,7 @@ Before running the world, add the lib directory to the GAZEBO_PLUGIN_PATH so tha
 export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
 ```
 
+If you use the `run` script to run your simulations, this command is already executed for you.
+
 ### ROS Message
 The plugin publishes ROS messages of type `sensor_msgs/Image` to send the camera output.

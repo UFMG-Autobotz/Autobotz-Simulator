@@ -26,6 +26,8 @@ Before running the world, add the lib directory to the GAZEBO_PLUGIN_PATH so tha
 export GAZEBO_PLUGIN_PATH=$(pwd)/lib/plugins:${GAZEBO_PLUGIN_PATH}
 ```
 
+If you use the `run` script to run your simulations, this command is already executed for you.
+
 ## Settings
 To set a parameter use the `paramN tag`, where N is the number of the parameter.
 The plugin will look for params tags starting from `param1` and will stop searching when a param is not found, so always start from 1 and don't skip a number.
