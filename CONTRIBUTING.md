@@ -2,6 +2,10 @@
 
 If the resources already available are not enough for your application or if you are beginning a new project, you can add new files to improve the Autobotz Simulator. To do so, please follow the instructions presented here.
 
+## How to help
+
+You can also go to the repository issues to see what needs to be done if you are looking for ways to help improve the Autobotz Simulator.
+
 ## Choosing the directory
 
 The name of the subdirectories should give you a hint of its content, but, if it's not clear for you where to save your work, see the `README.md` of each subdirectory.
