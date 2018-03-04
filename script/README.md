@@ -30,6 +30,9 @@ script/run vss 1on1 -q
 
 # Open Gazebo without any world paused
 script/run generic none -u
+
+# Learn more about the run plugin
+script/run -h # or script/run --help
 ```
 
 ## script/compile
@@ -40,13 +43,16 @@ Use it after `git pull` or after changing a plugin to update the plugins binarie
 #### Example
 ```
 # compile only one plugin
-bash/compile GENERIC_camera_ros
+script/compile GENERIC_camera_ros
 
 # compile multiple plugins
-bash/compile GENERIC_camera_ros GENERIC_change_material GENERIC_debug_link
+script/compile GENERIC_camera_ros GENERIC_change_material GENERIC_debug_link
 
 # compile all plugins
-bash/compile all # or simply bash/compile
+script/compile all # or simply script/compile
+
+# Learn more about the compile plugin
+script/compile -h # or script/compile --help
 ```
 
 ## script/create
@@ -71,6 +77,9 @@ script/create world -p vss -n game
 
 # Create new plugin called GENERIC_stop_simulation
 script/create plugin -n stop_simulation
+
+# Learn more about the create plugin
+script/create -h # or script/create --help
 ```
 
 > **Note:**
@@ -99,6 +108,9 @@ script/remove world -p vss -n game
 
 # Remove plugin called GENERIC_stop_simulation
 script/remove plugin -n stop_simulation
+
+# Learn more about the remove plugin
+script/remove -h # or script/create --help
 ```
 
 > **Note:**
