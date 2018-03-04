@@ -28,8 +28,23 @@ function compile_plugin {
 
 # -------------- #
 
+# check for help
+if [[ "${1}" == "--help" ]]  || [[ "${1}" == "-h" ]]; then
+  echo -e "script/compile - compile Autobotz Simulator plugins"
+  echo -e "SINTAXE: script/compile [Plugins]"
+  echo -e "Plugins:"
+  echo -e "\t Name of each plugin you want to compile [Sintaxe: UPPERCASEPROJECT_snake_case_name]"
+  echo -e "\t all: compile all plugins"
+
+  exit 0
+fi
+
+# -------------- #
+
 # go to plugins directory
 cd plugins/
+
+# -------------- #
 
 # select plugins to be compiled
 if [[ "${1}" == "all" ]] || [[ ! ${1}  ]] ; then
@@ -37,6 +52,8 @@ if [[ "${1}" == "all" ]] || [[ ! ${1}  ]] ; then
 else
   list="${@}"
 fi
+
+# -------------- #
 
 # loop though selected plugins and compile them
 for dir in ${list} ; do

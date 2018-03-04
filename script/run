@@ -35,6 +35,20 @@ function check_value {
 
 # ============ #
 
+
+# check for help
+if [[ "${1}" == "--help" ]]  || [[ "${1}" == "-h" ]]; then
+  echo -e "script/run - run Autbotz Simulator worlds"
+  echo -e "SINTAXE: script/run [Project] [Name] [Options]\n"
+  echo -e "Project: VSS, VT, GENERIC or TEST, required"
+  echo -e "Name: String without spaces, required"
+  echo -e "Options:"
+  echo -e "\t -q: Run Gazebo on quiet mode (without the graphic interface)"
+  echo -e "\t -u: Start world paused"
+
+  exit 0
+fi
+
 # read project
 project=${1^^}
 
